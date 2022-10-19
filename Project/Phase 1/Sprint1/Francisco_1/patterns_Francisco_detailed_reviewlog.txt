@@ -1,0 +1,4 @@
+Behaviour Pattern (Revisto por João Oliveira)
+Estamos perante um padrão de comportamento onde na classe
+está o método getIconFilePrefix() que é depois alterado por 19
+classes que estendem a classe.

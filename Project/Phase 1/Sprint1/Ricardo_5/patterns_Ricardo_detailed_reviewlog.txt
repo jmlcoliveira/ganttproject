@@ -1,0 +1,4 @@
+Command pattern (Revisao feita por João Oliveira)
+As várias ações do programa, como o zoom, o scroll, etc,
+estão em classes separadas, encapsulando assim a informação
+necessária para executar cada uma das ações

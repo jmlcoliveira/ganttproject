@@ -1,0 +1,3 @@
+Deadcode (Revisto por João Oliveira)
+A classe GanttXMLFileFilter não está a ser usada pelo que
+pode ser apagada em segurança sem afetar o programa
