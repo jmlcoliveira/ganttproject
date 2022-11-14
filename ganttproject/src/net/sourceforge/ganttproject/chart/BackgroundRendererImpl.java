@@ -40,6 +40,6 @@ public class BackgroundRendererImpl extends ChartRendererBase {
   public void render() {
     getPrimitiveContainer().clear();
     Canvas.Rectangle r = getPrimitiveContainer().createRectangle(0, 0, getWidth(), getHeight());
-    r.setBackgroundColor(Color.WHITE);
+    r.setBackgroundColor(Color.RED);
   }
 }
