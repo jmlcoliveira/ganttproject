@@ -89,8 +89,13 @@ public class WeekendCalendarImpl extends GPCalendarBase implements GPCalendarCal
     for (int i = 0; i < myTypes.length; i++) {
       myTypes[i] = GPCalendar.DayType.WORKING;
     }
-    setWeekDayType(GregorianCalendar.SATURDAY, GPCalendar.DayType.WEEKEND);
-    setWeekDayType(GregorianCalendar.SUNDAY, GPCalendar.DayType.WEEKEND);
+    //setWeekDayType(GregorianCalendar.SATURDAY, GPCalendar.DayType.WEEKEND); //this is what decides if it is rendered?
+    //setWeekDayType(GregorianCalendar.SUNDAY, GPCalendar.DayType.WEEKEND);
+
+    setWeekDayType(GregorianCalendar.SATURDAY, GPCalendar.DayType.WORKING);
+    setWeekDayType(GregorianCalendar.SUNDAY, GPCalendar.DayType.WORKING);
+
+
     fireCalendarChanged();
   }
   
