@@ -171,6 +171,11 @@ public class RoleManagerImpl implements RoleManager {
     }
   }
 
+
+
+  //a criacao dos roles deve depender de primeiro obter os seus nomes (para traducao atual) e depois criar com esse nome.
+  //como e chato criar um role
+
   private void createRoleSet() {
     GanttLanguage language = GanttLanguage.getInstance();
 
