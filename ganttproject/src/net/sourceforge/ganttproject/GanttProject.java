@@ -108,6 +108,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
+
+//does it manage the data?
 /**
  * Main frame of the project
  */
@@ -189,6 +191,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
 
   public GanttProject(boolean isOnlyViewer) {
+    //isOnlyViewer = true; //this wad added by me but i didn't notice a different
     System.err.println("Creating main frame...");
     ToolTipManager.sharedInstance().setInitialDelay(200);
     ToolTipManager.sharedInstance().setDismissDelay(60000);

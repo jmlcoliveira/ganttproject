@@ -63,6 +63,7 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
+//esta e a class que gere tudo
 public class AbstractChartImplementation implements TimelineChart, ZoomListener {
   private final ChartModelBase myChartModel;
   private final IGanttProject myProject;
