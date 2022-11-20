@@ -132,10 +132,10 @@ public class GanttTree2 extends TreeTableContainer<Task, GanttTreeTable, GanttTr
         if (node == null) {
           return;
         }
-//        TreeNode parent = node.getParent();
-//        if (parent != null) {
-//          getTreeModel().removeNodeFromParent(node);
-//        }
+        TreeNode parent = node.getParent();
+        if (parent != null) {
+          getTreeModel().removeNodeFromParent(node);
+        }
       }
 
       @Override
