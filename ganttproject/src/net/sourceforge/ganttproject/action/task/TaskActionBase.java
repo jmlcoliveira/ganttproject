@@ -147,8 +147,8 @@ public abstract class TaskActionBase extends GPAction implements TaskSelectionMa
     // a resetChart to UIFacade?)
     // myUIFacade.getGanttChart().reset();
     // myUIFacade.getResourceChart().reset();
-    //myTaskManager.getAlgorithmCollection().getRecalculateTaskScheduleAlgorithm().run();
-    //getUIFacade().getTaskTree().getTreeComponent().repaint();
+    myTaskManager.getAlgorithmCollection().getRecalculateTaskScheduleAlgorithm().run();
+    getUIFacade().getTaskTree().getTreeComponent().repaint();
   }
 
   protected abstract boolean isEnabled(List<Task> selection);
