@@ -56,6 +56,9 @@ public class TaskPropertiesAction extends TaskActionBase {
 
   @Override
   protected void run(List<Task> selection) throws Exception {
+
+    System.out.println("Running properties task");
+
     if (selection.size() != 1) {
       return;
     }
