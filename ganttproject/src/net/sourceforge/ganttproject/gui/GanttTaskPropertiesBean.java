@@ -380,6 +380,9 @@ public class GanttTaskPropertiesBean extends JPanel {
 
   /** Apply the modified properties to the selected Tasks */
   public void applySettings() {
+
+    System.out.println("Applying modified settings to task(s)");
+
     for (int i = 0; i < selectedTasks.length; i++) {
       // TODO The originalXXX values should not be used,
       // but the original values should be read from each processed task to
