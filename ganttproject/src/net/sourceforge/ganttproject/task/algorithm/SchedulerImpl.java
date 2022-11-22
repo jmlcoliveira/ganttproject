@@ -89,7 +89,6 @@ public class SchedulerImpl extends AlgorithmBase {
 
   @Override
   public void run() {
-    /*
     if (!isEnabled() || isRunning) {
       return;
     }
@@ -99,8 +98,6 @@ public class SchedulerImpl extends AlgorithmBase {
     } finally {
       isRunning = false;
     }
-
-     */
   }
 
   private void doRun() {
