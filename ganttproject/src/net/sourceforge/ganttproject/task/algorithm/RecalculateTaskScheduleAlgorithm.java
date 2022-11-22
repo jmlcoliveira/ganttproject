@@ -86,6 +86,7 @@ public abstract class RecalculateTaskScheduleAlgorithm extends AlgorithmBase {
   }
 
   public void run(Collection<Task> taskSet) throws TaskDependencyException {
+    /*
     if (!isEnabled()) {
       return;
     }
@@ -104,10 +105,13 @@ public abstract class RecalculateTaskScheduleAlgorithm extends AlgorithmBase {
     myEntranceCounter--;
 
     isRunning = false;
+
+     */
   }
 
   @Override
   public void run() throws TaskDependencyException {
+    /*
     if (!isEnabled()) {
       return;
     }
@@ -123,6 +127,9 @@ public abstract class RecalculateTaskScheduleAlgorithm extends AlgorithmBase {
     fulfilDependencies();
     myDistance2dependencyList.clear();
     isRunning = false;
+
+
+     */
   }
 
   public boolean isRunning() {
