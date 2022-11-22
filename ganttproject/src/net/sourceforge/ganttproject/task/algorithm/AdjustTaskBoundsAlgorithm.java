@@ -51,15 +51,11 @@ public abstract class AdjustTaskBoundsAlgorithm extends AlgorithmBase {
   }
 
   public void run(Collection<Task> tasks) {
-    /*
     if (!isEnabled()) {
       return;
     }
     AlgorithmImpl algorithmImpl = new AlgorithmImpl();
     algorithmImpl.run(tasks);
-
-
-     */
   }
 
   public void adjustNestedTasks(Task supertask) throws TaskDependencyException {
