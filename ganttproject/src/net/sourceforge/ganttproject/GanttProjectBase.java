@@ -82,7 +82,7 @@ import java.util.Locale;
 abstract class GanttProjectBase extends JFrame implements IGanttProject, UIFacade {
   protected final static GanttLanguage language = GanttLanguage.getInstance();
   private final ViewManagerImpl myViewManager;
-  private final List<ProjectEventListener> myModifiedStateChangeListeners = new ArrayList<ProjectEventListener>(); //nota ricardo: devia se adicionar o task manager aqui
+  private final List<ProjectEventListener> myModifiedStateChangeListeners = new ArrayList<ProjectEventListener>();
   private final UIFacadeImpl myUIFacade;
   private final GanttStatusBar statusBar;
   private final TimeUnitStack myTimeUnitStack;
@@ -142,7 +142,7 @@ abstract class GanttProjectBase extends JFrame implements IGanttProject, UIFacad
   @Override
   public void addProjectEventListener(ProjectEventListener listener) {
     myModifiedStateChangeListeners.add(listener);
-  } //nota ricardo: a adicao faz se por este metodo
+  }
 
   @Override
   public void removeProjectEventListener(ProjectEventListener listener) {
