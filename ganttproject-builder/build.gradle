@@ -106,12 +106,14 @@ distBin.finalizedBy(updateEclipsito)
 
 def getBuildNum() {
     def stdout = new ByteArrayOutputStream()
-    exec {
+    /*exec {
         workingDir "."
         commandLine "git", "rev-list", "--count", "ganttproject-2.7.."
         standardOutput = stdout
     }
     return String.valueOf(Integer.valueOf("${stdout}".trim()) + 1891)
+   */
+    return 476
 }
 
 task distZip(type: Zip, dependsOn: distBin) {
