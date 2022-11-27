@@ -64,7 +64,7 @@ import java.util.logging.Logger;
  */
 public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
-
+/*
     private final DependencyGraph myGraph;
     private boolean isRunning;
     private final Supplier<TaskContainmentHierarchyFacade> myTaskHierarchy;
@@ -246,4 +246,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
             mutator.commit();
         }
     }
+
+    */
+ */
 }
