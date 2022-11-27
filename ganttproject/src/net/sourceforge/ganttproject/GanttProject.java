@@ -1022,7 +1022,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
           System.err.println("Main frame created");
           ganttFrame.fireProjectCreated();
           if (mainArgs.file != null && !mainArgs.file.isEmpty()) {
-            ganttFrame.openStartupDocument(mainArgs.file.get(0)); //nota ricardo: aberto ficheiro do projeto?
+            ganttFrame.openStartupDocument(mainArgs.file.get(0));
           }
           ganttFrame.setVisible(true);
           GPLogger.log(String.format("Bounds after setVisible: %s", ganttFrame.getBounds()));
