@@ -770,6 +770,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       try {
         getProjectUIFacade().openProject(document, getProject());
       } catch (DocumentException e) {
+        //nota ricardo: quando n se consegue abrir o ficheiro, cria se um projeto novo?
         fireProjectCreated(); // this will create columns in the tables, which are removed by previous call to openProject()
         if (!tryImportDocument(document)) {
           getUIFacade().showErrorDialog(e);
