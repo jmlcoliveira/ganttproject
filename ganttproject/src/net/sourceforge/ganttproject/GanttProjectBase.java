@@ -164,6 +164,7 @@ abstract class GanttProjectBase extends JFrame implements IGanttProject, UIFacad
   }
 
   protected void fireProjectCreated() {
+    System.out.println("fireProjectCreated() called");
     for (ProjectEventListener modifiedStateChangeListener : myModifiedStateChangeListeners) {
       modifiedStateChangeListener.projectCreated();
     }
