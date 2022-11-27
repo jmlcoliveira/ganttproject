@@ -259,12 +259,16 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
     }
     TaskManagerConfig taskConfig = new TaskManagerConfigImpl();
+
+    //nota ricardo: this is the creation of the task manager
     myTaskManager = TaskManager.Access.newInstance(new TaskContainmentHierarchyFacade.Factory() {
       @Override
       public TaskContainmentHierarchyFacade createFacade() {
         return GanttProject.this.getTaskContainment();
       }
     }, taskConfig);
+
+    //nota ricardo: wait isto ja esta a ser feito aqui
     addProjectEventListener(myTaskManager.getProjectListener());
     getActiveCalendar().addListener(myTaskManager.getCalendarListener());
     ImageIcon icon = new ImageIcon(getClass().getResource("/icons/ganttproject.png"));

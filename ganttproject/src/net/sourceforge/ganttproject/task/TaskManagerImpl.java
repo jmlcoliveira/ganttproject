@@ -312,6 +312,7 @@ public class TaskManagerImpl implements TaskManager {
     fireTaskModelReset();
   }
 
+  //nota ricardo: bruh ja esta aqui
   private void projectOpened() {
     processCriticalPath(getRootTask());
     myAlgorithmCollection.getRecalculateTaskCompletionPercentageAlgorithm().run(getRootTask());

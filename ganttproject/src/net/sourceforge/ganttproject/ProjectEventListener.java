@@ -18,6 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package net.sourceforge.ganttproject;
 
+//nota ricardo: o task manager tera de implementar isto
 public interface ProjectEventListener {
   void projectModified();
 
@@ -29,6 +30,7 @@ public interface ProjectEventListener {
 
   void projectCreated();
 
+  //nota ricardo: sera que o task manager podera extender isto?
   class Stub implements ProjectEventListener {
     @Override
     public void projectModified() {
