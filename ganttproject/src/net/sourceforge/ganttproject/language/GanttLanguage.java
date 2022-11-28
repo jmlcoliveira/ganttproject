@@ -207,6 +207,7 @@ public class GanttLanguage {
   public List<Locale> getAvailableLocales() {
     Set<Locale> removeLangOnly = new HashSet<Locale>();
     Set<Locale> result = new HashSet<Locale>();
+
     for (Locale l : Locale.getAvailableLocales()) {
       if (GanttLanguage.class.getResource("/language/i18n_" + l.getLanguage() + "_" + l.getCountry() + ".properties") != null) {
         removeLangOnly.add(new Locale(l.getLanguage()));

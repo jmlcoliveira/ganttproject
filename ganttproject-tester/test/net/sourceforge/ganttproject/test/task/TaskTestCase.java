@@ -75,6 +75,8 @@ public abstract class TaskTestCase extends TestCase {
     }
 
     protected Task createTask() {
+        System.out.println("Created a task 3" );
+
         Task result = getTaskManager().createTask();
         result.move(getTaskManager().getRootTask());
         result.setName(String.valueOf(result.getTaskID()));
@@ -82,14 +84,18 @@ public abstract class TaskTestCase extends TestCase {
     }
 
     protected Task createTask(GanttCalendar start) {
-      return createTask(start, 1);
+        System.out.println("Created a task 2");
+
+        return createTask(start, 1);
     }
 
     protected Task createTask(GanttCalendar start, int duration) {
-      Task result = createTask();
-      result.setStart(start);
-      result.setDuration(getTaskManager().createLength(duration));
-      return result;
+        System.out.println("Created a task 6");
+
+        Task result = createTask();
+        result.setStart(start);
+        result.setDuration(getTaskManager().createLength(duration));
+        return result;
     }
 
     protected TaskDependency createDependency(Task dependant, Task dependee) throws TaskDependencyException {

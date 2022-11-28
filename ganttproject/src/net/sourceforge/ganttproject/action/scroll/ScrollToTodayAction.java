@@ -31,9 +31,11 @@ public class ScrollToTodayAction extends GPAction {
     super("scroll.today");
     myChart = chart;
   }
-
+  //public int day = 25;
   @Override
   public void actionPerformed(ActionEvent e) {
+    System.out.println("[Debug-001]: Botao Hoje");
     myChart.setStartDate(new Date());
+    //day++;
   }
 }

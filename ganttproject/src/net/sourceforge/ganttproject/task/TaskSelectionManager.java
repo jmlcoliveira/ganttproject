@@ -70,6 +70,8 @@ public class TaskSelectionManager implements TaskSelectionContext {
    *          A task to add to the selected tasks.
    */
   public void addTask(Task task) {
+    System.out.println("[DEBUG-014]: ACHEI O ADD (GANT)TASK BRO");
+    //System.out.println(task.getClass());
     if (!selectedTasks.contains(task)) {
       selectedTasks.add(task);
       fireSelectionChanged();

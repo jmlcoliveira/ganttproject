@@ -156,6 +156,7 @@ public class TaskManagerImpl implements TaskManager {
       isModified = true;
     }
 
+
     Task getTask(int id) {
       return myId2task.get(new Integer(id));
     }
@@ -424,7 +425,12 @@ public class TaskManagerImpl implements TaskManager {
   }
 
   int getAndIncrementId() {
+    System.out.println("[Debug-015]: Mete o ID da TASK!!");
     return myMaxID.getAndIncrement();
+  }
+  //Author: Iago Paulo, para resolver o problema do id aumentar quando movemos uma task
+  public int getMaxIdTask(){
+    return myMaxID.get();
   }
 
   @Override

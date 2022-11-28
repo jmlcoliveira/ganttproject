@@ -93,7 +93,8 @@ public class ToolbarBuilder {
   }
 
   public ToolbarBuilder withBackground(Color background) {
-    myBackground = background;
+    System.out.println("[Debug-011]: Isto muda a cor de outra cena na Tool bar :o");
+    myBackground = new Color(100,155,222);
     return this;
   }
 
@@ -117,6 +118,7 @@ public class ToolbarBuilder {
   }
 
   public ToolbarBuilder withHeight(int baseHeight) {
+    System.out.println("[Debug-010]: ISTO EH A ESCALA DA BARRA LA EM CIMA");
     myBaseHeight = baseHeight;
     return this;
   }
@@ -199,6 +201,10 @@ public class ToolbarBuilder {
           public void mouseClicked(MouseEvent e) {
             onMouseClicked(e);
           }
+          @Override
+          public void mouseEntered(MouseEvent e) {
+            System.out.println("OLAAAA :D"); //maybe use later
+          }
         });
         setIcon(new ImageIcon(getClass().getResource("/icons/dropdown_16.png")) {
           @Override
@@ -243,6 +249,7 @@ public class ToolbarBuilder {
       private String formatActionName(Action a) {
         String name = getActionName(a);
         name = name.replace(" ", "&nbsp;");
+        //System.out.println(MessageFormat.format("<html><b>{0} Pao</b></html>", name));
         return MessageFormat.format("<html><b>{0}</b></html>", name);
       }
 
@@ -255,6 +262,7 @@ public class ToolbarBuilder {
       }
 
       private void showPopup() {
+        System.out.println("[Debug-012]: POPUP de quando clicas em 'Hoje' e mostra te as opcoes 'Inicio, hoje, fim ...'");
         JPopupMenu popupMenu = new JPopupMenu();
         for (final Action a : myActions) {
           popupMenu.add(new AbstractAction(a.getValue(Action.NAME).toString()) {

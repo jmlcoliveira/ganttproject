@@ -43,6 +43,8 @@ import biz.ganttproject.core.chart.canvas.Canvas.Rectangle;
 public class ChangeTaskProgressRulerTest extends TestCase {
 
     private static Task createTask(TaskManager taskManager) {
+        System.out.println("Created a task 7");
+
         Task result = taskManager.createTask();
         result.move(taskManager.getRootTask());
         result.setName(String.valueOf(result.getTaskID()));

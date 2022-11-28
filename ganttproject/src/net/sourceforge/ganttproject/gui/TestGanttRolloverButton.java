@@ -97,7 +97,9 @@ public class TestGanttRolloverButton extends JButton {
     } else {
       Action action = getAction();
       if (action != null) {
+        System.out.println("[Debug-013]: NOME DAS CENAS NA MEMA BARRA ONDE DIZ 'Hoje' em negrito");
         setText(String.valueOf(action.getValue(Action.NAME)));
+
       }
     }
   };
@@ -158,7 +160,9 @@ public class TestGanttRolloverButton extends JButton {
 
   @Override
   public void paintComponent(Graphics graphics) {
+    //System.out.println("[Debug-007]: paintComponent.. muita coisa 2d e assim a ser feita...");
     if (isFontAwesome) {
+      //System.out.println("[Debug-007.1]: is fontawesome");
       Graphics2D g2 = (Graphics2D) graphics;
       Rectangle innerArea = SwingUtilities.calculateInnerArea(this, myRect);
       Font f = getFont();
@@ -168,7 +172,8 @@ public class TestGanttRolloverButton extends JButton {
       int w = (int) bounds.getWidth();
       setTextHidden(true);
       super.paintComponent(graphics);
-      g2.setColor(isEnabled() ? UIUtil.PATINA_FOREGROUND : Color.GRAY);
+      //System.out.println("[Debug-007.1.1]: ISTO MUDA A COR DE ALGUNS ICONES");
+      g2.setColor(isEnabled() ? UIUtil.PATINA_FOREGROUND : Color.RED);
       g2.setRenderingHint(
           RenderingHints.KEY_TEXT_ANTIALIASING,
           RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -184,6 +189,7 @@ public class TestGanttRolloverButton extends JButton {
       }
     }
     else {
+      //System.out.println("[Debug-007.2]: is not fontawesome");
       super.paintComponent(graphics);
     }
   }
@@ -196,7 +202,9 @@ public class TestGanttRolloverButton extends JButton {
   class MouseOverHandler extends MouseAdapter {
     @Override
     public void mouseEntered(MouseEvent e) {
+      System.out.println("[Debug-008]: MouseEntered in MouseOverHandler...");
       if (isEnabled()) {
+        System.out.println("[Debug-008.1]: MouseEntered in MouseOverHandler AND isEnabled... EH  O QUE FAZ A BORDA BRILHAR NOS BOTOES QUASE TODOS");
         setBorderPainted(true);
         setContentAreaFilled(true);
       }
@@ -205,7 +213,7 @@ public class TestGanttRolloverButton extends JButton {
     @Override
     public void mouseExited(MouseEvent e) {
       setBorderPainted(false);
-      setContentAreaFilled(false);
+      setContentAreaFilled(true);
     }
   }
 }

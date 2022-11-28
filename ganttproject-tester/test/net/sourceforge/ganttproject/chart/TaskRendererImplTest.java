@@ -41,6 +41,7 @@ import java.util.List;
  */
 public class TaskRendererImplTest extends TaskTestCase {
   private List<Task> createTasks(TaskManager taskManager, int count) {
+    System.out.println("Created a task 1");
     List<Task> result = Lists.newArrayList();
     for (int i = 0; i < count; i++) {
       result.add(taskManager.newTaskBuilder().withId(i).build());

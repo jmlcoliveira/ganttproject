@@ -38,8 +38,11 @@ public abstract class MouseWheelListenerBase implements MouseWheelListener {
   @Override
   public void mouseWheelMoved(MouseWheelEvent e) {
     String text = MouseUtil.toString(e);
-    if (text.equals(myZoomKeyStroke)) {
-      if (isRotationUp(e)) {
+    //System.out.println(text);
+    if (text.equals(myZoomKeyStroke)) { //myZoomKeyStroke = Crtl+Wheel      que conveniente
+      //System.out.println(myZoomKeyStroke);
+      System.out.println("[Debug-017]: Isto faz o Zoom!");
+      if (isRotationUp(e)) { //verifica se da scroll pra cima ou pra baixo
         fireZoomIn();
       } else {
         fireZoomOut();

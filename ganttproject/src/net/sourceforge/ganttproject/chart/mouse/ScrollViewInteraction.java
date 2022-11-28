@@ -55,6 +55,8 @@ public class ScrollViewInteraction extends MouseInteractionBase implements Mouse
         // Vertical scroll
         myCurY += scrollIncrement;
       } else {
+        //Horizontal scroll
+        System.out.println("[Debug-018]: Isto faz o scroll horizontal da Timeline!!");
         myCurX += scrollIncrement;
       }
     } else {

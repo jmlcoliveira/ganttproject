@@ -333,6 +333,7 @@ class ProjectFileExporter {
       if (t.getTaskID() > maxID) {
         maxID = t.getTaskID();
       }
+
     }
     return maxID;
   }

@@ -209,6 +209,7 @@ public class AbstractChartImplementation implements TimelineChart, ZoomListener 
   }
 
   public void paintChart(Graphics g) {
+    System.out.println("[Debug-003]: paint chart using Graphics...");
     getChartModel().paint(g);
   }
 
@@ -313,6 +314,7 @@ public class AbstractChartImplementation implements TimelineChart, ZoomListener 
 
   @Override
   public void setStartDate(Date startDate) {
+    System.out.println("[Debug-002]: Set start date");
     startDate = getBottomTimeUnit().adjustLeft(startDate);
     getChartModel().setStartDate(startDate);
   }

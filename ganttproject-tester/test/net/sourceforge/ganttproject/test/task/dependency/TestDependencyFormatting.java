@@ -41,8 +41,12 @@ import net.sourceforge.ganttproject.test.task.TaskTestCase;
 public class TestDependencyFormatting extends TaskTestCase {
   private static Function<Integer, Task> createTaskIndex(final TaskManager taskManager) {
     return new Function<Integer, Task>() {
+      System.out.println("Created a task 4");
+
       @Override
       public Task apply(Integer id) {
+        System.out.println("Created a task 5");
+
         return taskManager.getTask(id);
       }
     };

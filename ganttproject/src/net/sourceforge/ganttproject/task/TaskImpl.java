@@ -161,7 +161,9 @@ public class TaskImpl implements Task {
     this.isUnplugged = isUnplugged;
     myManager = manager;
     // Use a new (unique) ID for the cloned task
-    myID = myManager.getAndIncrementId();
+    System.out.println("[Debug-016]: ISTO EH O QUE AUMENTA OS IDS ATOA");
+    //myID = myManager.getAndIncrement();  //(Isto era o que esta antes)
+    myID = myManager.getMaxIdTask();
 
     if (!isUnplugged) {
       myTaskHierarchyItem = myManager.getHierarchyManager().createItem(this);

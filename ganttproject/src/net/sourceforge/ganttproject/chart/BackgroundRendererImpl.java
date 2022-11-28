@@ -39,7 +39,11 @@ public class BackgroundRendererImpl extends ChartRendererBase {
   @Override
   public void render() {
     getPrimitiveContainer().clear();
+    //Isto sao as dimensoes desse retangulo grande
     Canvas.Rectangle r = getPrimitiveContainer().createRectangle(0, 0, getWidth(), getHeight());
-    r.setBackgroundColor(Color.WHITE);
+    Canvas.Text r1 = getPrimitiveContainer().createText(200,200,"Podre");
+    //System.out.println("[Debug-009]: Isto muda a cor de fundo !!");
+    r.setBackgroundColor(Color.CYAN);
+    r1.setBackgroundColor(Color.RED);
   }
 }

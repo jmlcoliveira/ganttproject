@@ -304,6 +304,8 @@ public abstract class ChartComponentBase extends JPanel implements TimelineChart
   /** draw the panel */
   @Override
   public void paintComponent(Graphics g) {
+    //g.drawLine(0,0,1000,1000); didn't work... hmm
+    //System.out.println("[Debug-005]: paintComponent... supostamente desenha o panel");
     super.paintComponent(g);
     getChartModel().setBounds(getSize());
     getImplementation().paintChart(g);

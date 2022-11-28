@@ -90,6 +90,7 @@ public class RenderedChartImage extends SimpleRenderedImage {
   }
 
   private BufferedImage getChart(int offsetx, int offsety, int width, int height, int chartWidth, int chartHeight) {
+    System.out.println("[Debug-004]: getChart... pintam retangulos e assim...");
     BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     Graphics g2 = result.getGraphics();
     g2.setColor(Color.white);

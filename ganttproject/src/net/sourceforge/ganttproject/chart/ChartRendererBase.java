@@ -81,5 +81,6 @@ public class ChartRendererBase extends AbstractSceneBuilder {
   }
 
   public void render() {
+
   }
 }

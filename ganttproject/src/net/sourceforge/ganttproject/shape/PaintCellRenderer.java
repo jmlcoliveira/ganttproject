@@ -52,6 +52,7 @@ public class PaintCellRenderer extends JPanel implements ListCellRenderer {
 
   @Override
   public void paintComponent(Graphics gc) {
+    System.out.println("[Debug-006]: paintComponent... onde usam Graphics2D");
     Graphics2D g = (Graphics2D) gc;
     int w = getSize().width;
     int h = getSize().height;

@@ -97,6 +97,7 @@ public class ZoomManager {
   }
 
   public void zoomIn() {
+    System.out.println("Zoomed in");
     int oldValue = myZooming--;
     fireZoomingChanged(oldValue, myZooming);
   }
