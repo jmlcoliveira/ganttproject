@@ -42,16 +42,7 @@ import net.sourceforge.ganttproject.gui.options.model.GP1XOptionConverter;
 import net.sourceforge.ganttproject.language.GanttLanguage;
 import net.sourceforge.ganttproject.resource.HumanResource;
 import net.sourceforge.ganttproject.resource.HumanResourceManager;
-import net.sourceforge.ganttproject.task.algorithm.AdjustTaskBoundsAlgorithm;
-import net.sourceforge.ganttproject.task.algorithm.AlgorithmCollection;
-import net.sourceforge.ganttproject.task.algorithm.CriticalPathAlgorithm;
-import net.sourceforge.ganttproject.task.algorithm.CriticalPathAlgorithmImpl;
-import net.sourceforge.ganttproject.task.algorithm.DependencyGraph;
-import net.sourceforge.ganttproject.task.algorithm.FindPossibleDependeesAlgorithm;
-import net.sourceforge.ganttproject.task.algorithm.FindPossibleDependeesAlgorithmImpl;
-import net.sourceforge.ganttproject.task.algorithm.RecalculateTaskCompletionPercentageAlgorithm;
-import net.sourceforge.ganttproject.task.algorithm.RecalculateTaskScheduleAlgorithm;
-import net.sourceforge.ganttproject.task.algorithm.SchedulerImpl;
+import net.sourceforge.ganttproject.task.algorithm.*;
 import net.sourceforge.ganttproject.task.dependency.EventDispatcher;
 import net.sourceforge.ganttproject.task.dependency.TaskDependency;
 import net.sourceforge.ganttproject.task.dependency.TaskDependency.Hardness;
@@ -224,6 +215,7 @@ public class TaskManagerImpl implements TaskManager {
       public void fireDependencyChanged(TaskDependency dep) {
         TaskManagerImpl.this.fireDependencyChanged(dep);
       }
+
     };
     myDependencyCollection = new TaskDependencyCollectionImpl(containmentFacadeFactory, dispatcher) {
       @Override
@@ -269,7 +261,10 @@ public class TaskManagerImpl implements TaskManager {
     };
     ChartBoundsAlgorithm alg5 = new ChartBoundsAlgorithm();
     CriticalPathAlgorithm alg6 = new CriticalPathAlgorithmImpl(this, getCalendar());
-    myAlgorithmCollection = new AlgorithmCollection(this, alg1, alg2, alg3, alg4, alg5, alg6, myScheduler);
+
+    ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, myHierarchySupplier);
+
+    myAlgorithmCollection = new AlgorithmCollection(this, alg1, alg2, alg3, alg4, alg5, alg6, myScheduler, alg7);
     addTaskListener(myScheduler.getTaskModelListener());
   }
 
@@ -315,6 +310,9 @@ public class TaskManagerImpl implements TaskManager {
   private void projectOpened() {
     processCriticalPath(getRootTask());
     myAlgorithmCollection.getRecalculateTaskCompletionPercentageAlgorithm().run(getRootTask());
+
+    myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().run();
+
   }
 
   @Override
