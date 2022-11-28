@@ -32,9 +32,14 @@ import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
 
+// @# here is the golden chest
+
+// nodes:
+// the even funnier thing is that both the panes, resource and
+// chart inherits from the very same class
 class GanttChartTabContentPanel extends ChartTabContentPanel implements GPView {
   private final Container myTaskTree;
-  private final JComponent myGanttChart;
+  private final JComponent myGanttChart; // very SUS
   private final TreeTableContainer myTreeFacade;
   private final UIFacade myWorkbenchFacade;
   private final CalculateCriticalPathAction myCriticalPathAction;
@@ -51,7 +56,7 @@ class GanttChartTabContentPanel extends ChartTabContentPanel implements GPView {
     // FIXME KeyStrokes of these 2 actions are not working...
     myCriticalPathAction = new CalculateCriticalPathAction(project.getTaskManager(), uiConfiguration, workbenchFacade);
     myBaselineAction = new BaselineDialogAction(project, workbenchFacade);
-    addChartPanel(createSchedulePanel());
+    addChartPanel(createSchedulePanel()); // fun fact
     addTableResizeListeners(myTaskTree, myTreeFacade.getTreeTable().getScrollPane().getViewport());
   }
 

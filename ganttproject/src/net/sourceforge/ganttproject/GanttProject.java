@@ -31,6 +31,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import es.group.work.feature.Statistics;
 import net.sourceforge.ganttproject.action.ActiveActionProvider;
 import net.sourceforge.ganttproject.action.ArtefactAction;
 import net.sourceforge.ganttproject.action.ArtefactDeleteAction;
@@ -81,6 +82,8 @@ import net.sourceforge.ganttproject.task.TaskContainmentHierarchyFacade;
 import net.sourceforge.ganttproject.task.TaskManager;
 import net.sourceforge.ganttproject.task.TaskManagerConfig;
 import net.sourceforge.ganttproject.task.TaskManagerImpl;
+import net.sourceforge.ganttproject.task.event.TaskHierarchyEvent;
+import net.sourceforge.ganttproject.task.event.TaskListenerAdapter;
 
 import javax.annotation.Nullable;
 import javax.swing.*;
@@ -122,12 +125,12 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
   /**
    * GanttGraphicArea for the calendar with Gantt
    */
-  private GanttGraphicArea area;
+  private GanttGraphicArea area; // for the chart
 
   /**
    * GanttPeoplePanel to edit person that work on the project
    */
-  private GanttResourcePanel resp;
+  private GanttResourcePanel resp; // for the resources :)
 
   private final EditMenu myEditMenu;
 
@@ -207,6 +210,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     } else {
       setTitle("GanttViewer");
     }
+
     setFocusable(true);
     System.err.println("1. loading look'n'feels");
     options = new GanttOptions(getRoleManager(), getDocumentManager(), isOnlyViewer);
@@ -304,6 +308,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     scrollingManager.addScrollingListener(getResourcePanel().area.getViewState());
 
     System.err.println("3. creating menus...");
+    // interesting things :)
     myResourceActions = getResourcePanel().getResourceActionSet();
     myZoomActions = new ZoomActionSet(getZoomManager());
     JMenuBar bar = new JMenuBar();
@@ -315,6 +320,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     mruMenu.setIcon(new ImageIcon(getClass().getResource("/icons/recent_16.gif")));
     getDocumentManager().addListener(mruMenu);
 
+    // all menus
     myProjectMenu = new ProjectMenu(this, mruMenu, "project");
     bar.add(myProjectMenu);
 
@@ -338,12 +344,15 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       mHuman.add(a);
     }
     mHuman.add(myResourceActions.getResourceSendMailAction());
-    bar.add(mHuman);
+    bar.add(mHuman); // resource menu
 
     HelpMenu helpMenu = new HelpMenu(getProject(), getUIFacade(), getProjectUIFacade());
-    bar.add(helpMenu.createMenu());
+    bar.add(helpMenu.createMenu()); // help menu
 
     System.err.println("4. creating views...");
+
+    // what are view??
+    // @#
     myGanttChartTabContent = new GanttChartTabContentPanel(getProject(), getUIFacade(), getTree(), area.getJComponent(),
         getUIConfiguration());
     getViewManager().createView(myGanttChartTabContent, new ImageIcon(getClass().getResource("/icons/tasks_16.gif")));
@@ -433,6 +442,9 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
     GPAction viewCycleBackwardAction = new ViewCycleAction(getViewManager(), false);
     UIUtil.pushAction(getTabs(), true, viewCycleBackwardAction.getKeyStroke(), viewCycleBackwardAction);
+
+    // our code goes here
+    getTaskManager().addTaskListener(new Statistics(getTaskManager(), getActiveCalendar()));
   }
 
 
@@ -583,7 +595,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
   /**
    * Create the button on toolbar
    */
-  private GPToolbar createToolbar() {
+  private GPToolbar createToolbar() { // @# look at this later .....
     ToolbarBuilder builder = new ToolbarBuilder()
         .withHeight(40)
         .withDpiOption(getUiFacadeImpl().getDpiOption())
@@ -670,6 +682,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       }
     });
 
+    // @# look at this later
     builder.addButton(new TestGanttRolloverButton(deleteAction))
         .addWhitespace()
         .addButton(new TestGanttRolloverButton(propertiesAction))
@@ -1014,13 +1027,21 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     } catch (InterruptedException e1) {
       GPLogger.log(e1);
     }
+    /*
+      sout:
+        Progress information:
+          -> today:
+          -> completed:
+          -> delayed:
+          -> number-of-tasks:
+    */
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
         try {
           final GanttProject ganttFrame = new GanttProject(false);
           System.err.println("Main frame created");
-          ganttFrame.fireProjectCreated();
+          ganttFrame.fireProjectCreated(); // we may need this thing :)
           if (mainArgs.file != null && !mainArgs.file.isEmpty()) {
             ganttFrame.openStartupDocument(mainArgs.file.get(0));
           }

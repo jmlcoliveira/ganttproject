@@ -48,6 +48,7 @@ abstract class ChartTabContentPanel {
   private Supplier<Integer> myHeaderHeight;
   private GanttImagePanel myImagePanel;
 
+
   ChartTabContentPanel(IGanttProject project, UIFacade workbenchFacade, TimelineChart chart) {
     NavigationPanel navigationPanel = new NavigationPanel(project, chart, workbenchFacade);
     ZoomingPanel zoomingPanel = new ZoomingPanel(workbenchFacade, chart);
@@ -64,6 +65,7 @@ abstract class ChartTabContentPanel {
   }
 
   JComponent createContentComponent() {
+    // @# here is the gold hahahahahhaha
     JPanel tabContentPanel = new JPanel(new BorderLayout());
     final JPanel left = new JPanel(new BorderLayout());
     final Box treeHeader = Box.createVerticalBox();
@@ -81,9 +83,12 @@ abstract class ChartTabContentPanel {
     //myImagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     treeHeader.add(imageWrapper);
 
-    left.add(treeHeader, BorderLayout.NORTH);
+    JPanel tmp = new JPanel();
+    tmp.add(new JLabel("Hello, world"));
 
+    left.add(treeHeader, BorderLayout.NORTH);
     left.add(getTreeComponent(), BorderLayout.CENTER);
+    left.add(tmp, BorderLayout.SOUTH);
     Dimension minSize = new Dimension(0, 0);
     left.setMinimumSize(minSize);
 
@@ -163,7 +168,7 @@ abstract class ChartTabContentPanel {
     mySplitPane.setDividerLocation(location);
   }
 
-  private JComponent createChartPanels() {
+  private JComponent createChartPanels() { // the panel above the months name
     Box panelsBox = Box.createHorizontalBox();
     for (Component panel : myPanels) {
       panelsBox.add(panel);

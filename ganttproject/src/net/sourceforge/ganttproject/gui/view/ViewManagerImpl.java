@@ -62,6 +62,7 @@ public class ViewManagerImpl implements GPViewManager {
 
       @Override
       public void stateChanged(ChangeEvent e) {
+        System.out.println("Changed :)");
         GPView selectedView = (GPView) myTabs.getSelectedUserObject();
         if (mySelectedView == selectedView) {
           return;
@@ -111,7 +112,7 @@ public class ViewManagerImpl implements GPViewManager {
 
   void updateActions() {
     ChartSelection selection = mySelectedView.getChart().getSelection();
-    myCopyAction.setEnabled(false == selection.isEmpty());
+    myCopyAction.setEnabled(false == selection.isEmpty()); // !isEmpty()
     myCutAction.setEnabled(false == selection.isEmpty() && selection.isDeletable().isOK());
   }
 
