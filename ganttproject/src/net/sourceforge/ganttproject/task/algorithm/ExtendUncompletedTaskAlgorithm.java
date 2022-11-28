@@ -62,7 +62,7 @@ import java.util.logging.Logger;
  * @author r.goncalo
  *
  */
-public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
+public class ExtendUncompletedTaskAlgorithm {
 
 /*
     private final DependencyGraph myGraph;
