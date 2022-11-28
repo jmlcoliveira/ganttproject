@@ -2146,3 +2146,4 @@ ganttproject/build/classes/java/main/ExtendUncompletedTaskAlgorithm.class
 ganttproject/build/classes/java/main/net/sourceforge/ganttproject/task/algorithm/ExtendUncompletedTaskAlgorithm$1.class
 ganttproject/build/classes/java/main/net/sourceforge/ganttproject/task/algorithm/ExtendUncompletedTaskAlgorithm$2.class
 ganttproject/build/classes/java/main/net/sourceforge/ganttproject/task/algorithm/ExtendUncompletedTaskAlgorithm.class
+ganttproject-tester/build/resources/test/issue1520.xml

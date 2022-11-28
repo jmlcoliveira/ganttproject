@@ -111,8 +111,20 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
     private void extendUncompletedTasks(Node node) {
 
-        System.out.println("Tried to run Extend Uncompleted Tasks " + node.getLevel());
+        Task task = node.getTask();
 
+        System.out.println("\nEvaluating task " + task.getName()+ " ends in " + task.getEnd().toString());
+
+        System.out.println(task.getEnd().toString() + " before");
+        System.out.println();
+        System.out.println();
+
+        if(task.getEnd().after(currentDate)){
+
+            System.out.println("Task ends before current date");
+            modifyTaskEnd(task, currentDate);
+
+        }
 
 
         /*
