@@ -90,6 +90,8 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
     }
 
     private void doRun() {
+
+        System.out.println("Tried to run Extend Uncompleted Tasks 1");
         int layers = myGraph.checkLayerValidity();
         for (int i = 0; i < layers; i++) {
             Collection<Node> layer = myGraph.getLayer(i);
@@ -105,7 +107,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
     private void extendUncompletedTasks(Node node) {
 
-        System.out.println("Tried to run Extend Uncompleted Tasks");
+        System.out.println("Tried to run Extend Uncompleted Tasks 2");
 
         /*
         Logger logger = GPLogger.getLogger(this);
