@@ -95,7 +95,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
             Collection<Node> layer = myGraph.getLayer(i);
             for (Node node : layer) {
                 try {
-                    extendUncompetedTasks(node);
+                    extendUncompletedTasks(node);
                 } catch (IllegalArgumentException e) {
                     GPLogger.log(e);
                 }
@@ -103,7 +103,11 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         }
     }
 
-    private void extendUncompetedTasks(Node node) {
+    private void extendUncompletedTasks(Node node) {
+
+        System.out.println("Tried to run Extend Uncompleted Tasks");
+
+        /*
         Logger logger = GPLogger.getLogger(this);
         GPLogger.debug(logger, "Scheduling node %s", node);
         Range<Date> startRange = Range.all();
@@ -190,6 +194,8 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
             }
             modifyTaskEnd(node.getTask(), endDate);
         }
+
+         */
     }
 
     private void modifyTaskEnd(Task task, Date newEnd) {
