@@ -64,13 +64,13 @@ import java.util.logging.Logger;
  */
 public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
-
+/*
     private final DependencyGraph myGraph;
     private boolean isRunning;
     private final Supplier<TaskContainmentHierarchyFacade> myTaskHierarchy;
     private final TaskListener myTaskListener;
 
-    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy) {
+    public SchedulerImpl(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy) {
         myGraph = graph;
         myGraph.addListener(new DependencyGraph.Listener() {
             @Override
@@ -246,4 +246,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
             mutator.commit();
         }
     }
+
+    */
+ */
 }
