@@ -16,45 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with GanttProject.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.sourceforge.ganttproject.task.algorithm;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import biz.ganttproject.core.time.TimeDuration;
-
-import net.sourceforge.ganttproject.task.Task;
-import net.sourceforge.ganttproject.task.TaskActivity;
-package net.sourceforge.ganttproject.task.algorithm;
-
-import biz.ganttproject.core.calendar.GPCalendar;
-import biz.ganttproject.core.calendar.GPCalendar.DayMask;
-import biz.ganttproject.core.calendar.GPCalendarCalc;
-import biz.ganttproject.core.time.CalendarFactory;
-import biz.ganttproject.core.time.GanttCalendar;
-import biz.ganttproject.core.time.TimeDuration;
-import biz.ganttproject.core.time.TimeUnit;
-import com.google.common.base.Supplier;
-import com.google.common.collect.BoundType;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Range;
-import net.sourceforge.ganttproject.GPLogger;
-import net.sourceforge.ganttproject.task.Task;
-import net.sourceforge.ganttproject.task.TaskContainmentHierarchyFacade;
-import net.sourceforge.ganttproject.task.TaskImpl;
-import net.sourceforge.ganttproject.task.TaskMutator;
-import net.sourceforge.ganttproject.task.algorithm.DependencyGraph.DependencyEdge;
-import net.sourceforge.ganttproject.task.algorithm.DependencyGraph.ImplicitSubSuperTaskDependency;
-import net.sourceforge.ganttproject.task.algorithm.DependencyGraph.Node;
-import net.sourceforge.ganttproject.task.event.TaskDependencyEvent;
-import net.sourceforge.ganttproject.task.event.TaskListener;
-import net.sourceforge.ganttproject.task.event.TaskListenerAdapter;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * For now this is equal to the squedulerImpl and should implement the first feature
