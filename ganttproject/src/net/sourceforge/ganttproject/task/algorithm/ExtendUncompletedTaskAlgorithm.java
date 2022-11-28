@@ -60,11 +60,13 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
     private boolean isRunning;
     private final Supplier<TaskContainmentHierarchyFacade> myTaskHierarchy;
     private final SchedulerImpl scheduler; //this will be called everytime we make a duration change
+    private Date currentDate;
 
-    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy, SchedulerImpl squeduler) {
+    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy, SchedulerImpl squeduler, Date currrentDate) {
         myGraph = graph;
         myTaskHierarchy = taskHierarchy;
         this.scheduler = squeduler;
+        this.currentDate = currrentDate;
 
     }
 
@@ -91,6 +93,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
     private void doRun() {
 
+        System.out.println("Date: " + currentDate.toString());
         System.out.println("Tried to run Extend Uncompleted Tasks 1");
         int layers = myGraph.checkLayerValidity();
         for (int i = 0; i < layers; i++) {
@@ -103,11 +106,14 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
                 }
             }
         }
+        scheduler.run();
     }
 
     private void extendUncompletedTasks(Node node) {
 
-        System.out.println("Tried to run Extend Uncompleted Tasks 2");
+        System.out.println("Tried to run Extend Uncompleted Tasks " + node.getLevel());
+
+
 
         /*
         Logger logger = GPLogger.getLogger(this);

@@ -100,6 +100,8 @@ public class TaskManagerImpl implements TaskManager {
 
   private final StringOption myTaskCopyNamePrefixOption = new DefaultStringOption("taskCopyNamePrefix", GanttLanguage.getInstance().getText("task.copy.prefix"));
 
+  private Date currentDate;
+
   private final EnumerationOption myDependencyHardnessOption = new DefaultEnumerationOption<Object>(
       "dependencyDefaultHardness", new String[] { "Strong", "Rubber" }) {
     {
@@ -195,7 +197,7 @@ public class TaskManagerImpl implements TaskManager {
 
   private Boolean isZeroMilestones = true;
 
-  TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config) {
+  TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config, Date currentDate) {
     myCustomPropertyListener = new CustomPropertyListenerImpl(this);
     myCustomColumnsManager = new CustomColumnsManager();
     myCustomColumnsManager.addListener(getCustomPropertyListener());
@@ -262,7 +264,9 @@ public class TaskManagerImpl implements TaskManager {
     ChartBoundsAlgorithm alg5 = new ChartBoundsAlgorithm();
     CriticalPathAlgorithm alg6 = new CriticalPathAlgorithmImpl(this, getCalendar());
 
-    ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, myHierarchySupplier, myScheduler);
+
+    this.currentDate = currentDate;
+    ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, myHierarchySupplier, myScheduler, currentDate);
 
     myAlgorithmCollection = new AlgorithmCollection(this, alg1, alg2, alg3, alg4, alg5, alg6, myScheduler, alg7);
     addTaskListener(myScheduler.getTaskModelListener());
@@ -1036,7 +1040,7 @@ public class TaskManagerImpl implements TaskManager {
 
   @Override
   public TaskManager emptyClone() {
-    TaskManagerImpl result = new TaskManagerImpl(null, myConfig);
+    TaskManagerImpl result = new TaskManagerImpl(null, myConfig, currentDate);
     result.myDependencyHardnessOption.setValue(this.myDependencyHardnessOption.getValue());
     return result;
   }

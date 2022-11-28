@@ -40,6 +40,9 @@ import net.sourceforge.ganttproject.task.event.TaskListener;
 
 import java.awt.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.Map;
 
@@ -190,7 +193,8 @@ public interface TaskManager {
   public class Access {
     public static TaskManager newInstance(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory,
         TaskManagerConfig config) {
-      return new TaskManagerImpl(containmentFacadeFactory, config);
+
+      return new TaskManagerImpl(containmentFacadeFactory, config, new Date());
     }
   }
 
