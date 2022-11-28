@@ -59,23 +59,13 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
     private final DependencyGraph myGraph;
     private boolean isRunning;
     private final Supplier<TaskContainmentHierarchyFacade> myTaskHierarchy;
-    private final TaskListener myTaskListener;
+    private final SchedulerImpl scheduler; //this will be called everytime we make a duration change
 
-    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy) {
+    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy, SchedulerImpl squeduler) {
         myGraph = graph;
-        myGraph.addListener(new DependencyGraph.Listener() {
-            @Override
-            public void onChange() {
-                run();
-            }
-        });
         myTaskHierarchy = taskHierarchy;
-        myTaskListener = new TaskListenerAdapter() {
-            @Override
-            public void dependencyChanged(TaskDependencyEvent e) {
-                run();
-            }
-        };
+        this.scheduler = squeduler;
+
     }
 
     @Override
@@ -84,10 +74,6 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         if (isEnabled()) {
             run();
         }
-    }
-
-    public TaskListener getTaskModelListener() {
-        return myTaskListener;
     }
 
     @Override
@@ -109,7 +95,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
             Collection<Node> layer = myGraph.getLayer(i);
             for (Node node : layer) {
                 try {
-                    schedule(node);
+                    extendUncompetedTasks(node);
                 } catch (IllegalArgumentException e) {
                     GPLogger.log(e);
                 }
@@ -117,7 +103,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         }
     }
 
-    private void schedule(Node node) {
+    private void extendUncompetedTasks(Node node) {
         Logger logger = GPLogger.getLogger(this);
         GPLogger.debug(logger, "Scheduling node %s", node);
         Range<Date> startRange = Range.all();
@@ -177,7 +163,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         }
         GPLogger.debug(logger, ".. finally, start range=%s", startRange);
         if (startRange.hasLowerBound()) {
-            modifyTaskStart(node.getTask(), startRange.lowerEndpoint());
+            //modifyTaskStart(node.getTask(), startRange.lowerEndpoint());
         }
         if (endRange.hasUpperBound()) {
             GPCalendarCalc cal = node.getTask().getManager().getCalendar();
@@ -219,23 +205,5 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         mutator.commit();
     }
 
-    private void modifyTaskStart(Task task, Date newStart) {
-        if (task.getStart().getTime().equals(newStart)) {
-            return;
-        }
-        GanttCalendar newStartCalendar = CalendarFactory.createGanttCalendar(newStart);
-        if (getDiagnostic() != null) {
-            getDiagnostic().addModifiedTask(task, newStart, null);
-        }
-        TaskMutator mutator = task.createMutator();
-        if (myTaskHierarchy.get().hasNestedTasks(task)) {
-            mutator.setStart(newStartCalendar);
-            mutator.commit();
-        } else {
-            TimeDuration shift = task.getManager().createLength(task.getDuration().getTimeUnit(), task.getStart().getTime(), newStart);
-            mutator.shift(shift);
-            mutator.commit();
-        }
-    }
 
 }
