@@ -53,11 +53,16 @@ class GanttChartTabContentPanel extends ChartTabContentPanel implements GPView {
     myTreeFacade = treeFacade;
     myTaskTree = (Container) treeFacade.getTreeComponent();
     myGanttChart = ganttChart;
+    newFeaturePanel = new JPanel();
     // FIXME KeyStrokes of these 2 actions are not working...
     myCriticalPathAction = new CalculateCriticalPathAction(project.getTaskManager(), uiConfiguration, workbenchFacade);
     myBaselineAction = new BaselineDialogAction(project, workbenchFacade);
     addChartPanel(createSchedulePanel()); // fun fact
     addTableResizeListeners(myTaskTree, myTreeFacade.getTreeTable().getScrollPane().getViewport());
+  }
+
+  JPanel getNewFeaturePane(){
+      return newFeaturePanel;
   }
 
   private Component createSchedulePanel() {

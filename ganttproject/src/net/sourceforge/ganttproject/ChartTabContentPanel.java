@@ -48,6 +48,8 @@ abstract class ChartTabContentPanel {
   private Supplier<Integer> myHeaderHeight;
   private GanttImagePanel myImagePanel;
 
+  protected JPanel newFeaturePanel;
+
 
   ChartTabContentPanel(IGanttProject project, UIFacade workbenchFacade, TimelineChart chart) {
     NavigationPanel navigationPanel = new NavigationPanel(project, chart, workbenchFacade);
@@ -62,6 +64,7 @@ abstract class ChartTabContentPanel {
         updateTimelineHeight();
       }
     });
+    newFeaturePanel = null;
   }
 
   JComponent createContentComponent() {
@@ -83,12 +86,12 @@ abstract class ChartTabContentPanel {
     //myImagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     treeHeader.add(imageWrapper);
 
-    JPanel tmp = new JPanel();
-    tmp.add(new JLabel("Hello, world"));
+    // we are genious
+    // turururu
+    if(newFeaturePanel!= null) left.add(newFeaturePanel, BorderLayout.SOUTH);
 
     left.add(treeHeader, BorderLayout.NORTH);
     left.add(getTreeComponent(), BorderLayout.CENTER);
-    left.add(tmp, BorderLayout.SOUTH);
     Dimension minSize = new Dimension(0, 0);
     left.setMinimumSize(minSize);
 
