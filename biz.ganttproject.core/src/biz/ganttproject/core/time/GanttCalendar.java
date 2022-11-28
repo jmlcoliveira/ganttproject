@@ -42,17 +42,27 @@ public class GanttCalendar extends java.util.GregorianCalendar {
     set(Calendar.SECOND, 0);
     set(Calendar.MILLISECOND, 0);
     myLocaleApi = localeApi;
+
+    System.out.println("Year: " + getYear() + " Month: " + getMonth() + " Day: " + getDay());
+
   }
 
   GanttCalendar(int year, int month, int date, CalendarFactory.LocaleApi localeApi) {
     super(year, month, date);
     myLocaleApi = localeApi;
+
+    System.out.println("Year: " + getYear() + " Month: " + getMonth() + " Day: " + getDay());
+
   }
 
   GanttCalendar(Date date, CalendarFactory.LocaleApi localeApi) {
     super();
     myLocaleApi = localeApi;
     setTime(date);
+
+    System.out.println("Year: " + getYear() + " Month: " + getMonth() + " Day: " + getDay());
+
+
   }
 
   public static GanttCalendar parseXMLDate(String s) {
