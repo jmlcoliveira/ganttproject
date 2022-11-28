@@ -119,7 +119,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         System.out.println();
         System.out.println();
 
-        if(task.getEnd().after(currentDate)){
+        if(task.getEnd().before(currentDate)){
 
             System.out.println("Task ends before current date");
             modifyTaskEnd(task, currentDate);
