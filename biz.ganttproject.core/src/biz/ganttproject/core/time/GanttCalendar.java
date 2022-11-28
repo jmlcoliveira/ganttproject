@@ -44,6 +44,7 @@ public class GanttCalendar extends java.util.GregorianCalendar {
     myLocaleApi = localeApi;
 
     System.out.println("Year: " + getYear() + " Month: " + getMonth() + " Day: " + getDay());
+    System.out.println("gettime() returns " + getTime().toString());
 
   }
 
@@ -52,6 +53,8 @@ public class GanttCalendar extends java.util.GregorianCalendar {
     myLocaleApi = localeApi;
 
     System.out.println("Year: " + getYear() + " Month: " + getMonth() + " Day: " + getDay());
+    System.out.println("gettime() returns " + getTime().toString());
+
 
   }
 
@@ -61,6 +64,8 @@ public class GanttCalendar extends java.util.GregorianCalendar {
     setTime(date);
 
     System.out.println("Year: " + getYear() + " Month: " + getMonth() + " Day: " + getDay());
+    System.out.println("gettime() returns " + getTime().toString());
+
 
 
   }
