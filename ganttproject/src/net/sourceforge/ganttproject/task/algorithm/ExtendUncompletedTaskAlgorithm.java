@@ -67,10 +67,9 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         myTaskHierarchy = taskHierarchy;
         this.scheduler = scheduler;
 
-        //this told me the problem is the date contructor
-        System.out.println("Year: " + currentDate.getYear() + " Month: " + currentDate.getMonth() + " Day: " + currentDate.getDay());
+        long currentMilliSeconds = System.currentTimeMillis();
 
-        this.tomorrowDate = new Date(currentDate.getYear(), currentDate.getMonth(), currentDate.getDay());
+        this.tomorrowDate = new Date(currentMilliSeconds + ( 23*60*60*1000 - (currentMilliSeconds % (24*60*60*1000)))); //create day tomorrow at 0h:00m
 
         System.out.println("Date received: " + currentDate.toString() + "\nDate generated: " + tomorrowDate.toString());
 
