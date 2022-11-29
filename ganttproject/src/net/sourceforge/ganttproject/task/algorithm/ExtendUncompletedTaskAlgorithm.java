@@ -22,10 +22,7 @@ package net.sourceforge.ganttproject.task.algorithm;
 import biz.ganttproject.core.calendar.GPCalendar;
 import biz.ganttproject.core.calendar.GPCalendar.DayMask;
 import biz.ganttproject.core.calendar.GPCalendarCalc;
-import biz.ganttproject.core.time.CalendarFactory;
-import biz.ganttproject.core.time.GanttCalendar;
-import biz.ganttproject.core.time.TimeDuration;
-import biz.ganttproject.core.time.TimeUnit;
+import biz.ganttproject.core.time.*;
 import com.google.common.base.Supplier;
 import com.google.common.collect.BoundType;
 import com.google.common.collect.Lists;
@@ -62,14 +59,14 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
     private final SchedulerImpl scheduler; //this will be called everytime we make a duration change
     private Date tomorrowDate;
 
-    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy, SchedulerImpl scheduler, Date currentDate) {
+    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy, SchedulerImpl scheduler, Date tomorrowDate) {
         myGraph = graph;
         myTaskHierarchy = taskHierarchy;
         this.scheduler = scheduler;
 
-        this.tomorrowDate = new Date(currentDate.getYear(), currentDate.getMonth(), currentDate.getDay());
+        this.tomorrowDate = tomorrowDate;
 
-        System.out.println("Date received: " + currentDate.toString() + "\nDate generated: " + tomorrowDate.toString());
+        System.out.println("Date received: " + tomorrowDate.toString());
 
     }
 

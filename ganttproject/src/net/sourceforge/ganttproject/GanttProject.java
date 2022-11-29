@@ -264,7 +264,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       public TaskContainmentHierarchyFacade createFacade() {
         return GanttProject.this.getTaskContainment();
       }
-    }, taskConfig);
+    }, taskConfig, getActiveCalendar());
     addProjectEventListener(myTaskManager.getProjectListener());
     getActiveCalendar().addListener(myTaskManager.getCalendarListener());
     ImageIcon icon = new ImageIcon(getClass().getResource("/icons/ganttproject.png"));
