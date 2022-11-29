@@ -2147,3 +2147,11 @@ ganttproject/build/classes/java/main/net/sourceforge/ganttproject/task/algorithm
 ganttproject/build/classes/java/main/net/sourceforge/ganttproject/task/algorithm/ExtendUncompletedTaskAlgorithm$2.class
 ganttproject/build/classes/java/main/net/sourceforge/ganttproject/task/algorithm/ExtendUncompletedTaskAlgorithm.class
 ganttproject-tester/build/resources/test/issue1520.xml
+ganttproject/build/classes/java/main/es/group/work/features/sliders/MyManager$MyEntry.class
+ganttproject/build/classes/java/main/es/group/work/features/sliders/MyManager.class
+ganttproject/build/classes/java/main/es/group/work/features/sliders/SimpleSlider.class
+ganttproject/build/classes/java/main/es/group/work/features/sliders/Slider.class
+ganttproject/build/classes/java/main/es/group/work/features/sliders/SliderManager.class
+ganttproject/build/classes/java/main/es/group/work/features/Statistics$1.class
+ganttproject/build/classes/java/main/es/group/work/features/Statistics.class
+ganttproject/build/classes/java/main/net/sourceforge/ganttproject/ChartPanel.class
