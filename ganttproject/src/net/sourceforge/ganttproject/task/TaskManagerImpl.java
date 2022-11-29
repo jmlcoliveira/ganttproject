@@ -197,7 +197,7 @@ public class TaskManagerImpl implements TaskManager {
 
   private Boolean isZeroMilestones = true;
 
-  TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config, Date currentDate) {
+  TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config) {
     myCustomPropertyListener = new CustomPropertyListenerImpl(this);
     myCustomColumnsManager = new CustomColumnsManager();
     myCustomColumnsManager.addListener(getCustomPropertyListener());
@@ -266,7 +266,7 @@ public class TaskManagerImpl implements TaskManager {
 
 
     this.currentDate = currentDate;
-    ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, myHierarchySupplier, myScheduler, currentDate);
+    ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, myHierarchySupplier, myScheduler);
 
     myAlgorithmCollection = new AlgorithmCollection(this, alg1, alg2, alg3, alg4, alg5, alg6, myScheduler, alg7);
     addTaskListener(myScheduler.getTaskModelListener());
@@ -1040,7 +1040,7 @@ public class TaskManagerImpl implements TaskManager {
 
   @Override
   public TaskManager emptyClone() {
-    TaskManagerImpl result = new TaskManagerImpl(null, myConfig, currentDate);
+    TaskManagerImpl result = new TaskManagerImpl(null, myConfig);
     result.myDependencyHardnessOption.setValue(this.myDependencyHardnessOption.getValue());
     return result;
   }

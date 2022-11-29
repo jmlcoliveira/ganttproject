@@ -194,7 +194,7 @@ public interface TaskManager {
     public static TaskManager newInstance(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory,
         TaskManagerConfig config) {
 
-      return new TaskManagerImpl(containmentFacadeFactory, config, new Date());
+      return new TaskManagerImpl(containmentFacadeFactory, config);
     }
   }
 
