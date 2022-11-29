@@ -95,7 +95,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
         Task task = node.getTask();
 
-        if(task.getEnd().getTime().before(tomorrowDate)){
+        if(task.getCompletionPercentage() < 100 && task.getEnd().getTime().before(tomorrowDate)){
 
             modifyTaskEnd(task, tomorrowDate);
 
