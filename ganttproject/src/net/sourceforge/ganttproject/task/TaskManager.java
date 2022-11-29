@@ -192,9 +192,9 @@ public interface TaskManager {
 
   public class Access {
     public static TaskManager newInstance(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory,
-        TaskManagerConfig config, GPCalendarCalc calendar) {
+        TaskManagerConfig config) {
 
-      return new TaskManagerImpl(containmentFacadeFactory, config, calendar.findClosestWorkingTime(new Date()));
+      return new TaskManagerImpl(containmentFacadeFactory, config, new Date());
     }
   }
 

@@ -66,7 +66,7 @@ public class GanttProjectImpl implements IGanttProject {
     myResourceManager = new HumanResourceManager(RoleManager.Access.getInstance().getDefaultRole(),
         new CustomColumnsManager());
     myTaskManagerConfig = new TaskManagerConfigImpl(myResourceManager, myCalendar, GanttLanguage.getInstance());
-    myTaskManager = TaskManager.Access.newInstance(null, myTaskManagerConfig, myCalendar);
+    myTaskManager = TaskManager.Access.newInstance(null, myTaskManagerConfig);
     myUIConfiguration = new UIConfiguration(Color.BLUE, true);
     myTaskCustomColumnManager = new CustomColumnsManager();
     myCalendar.addListener(new GPCalendarListener() {
