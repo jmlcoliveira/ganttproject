@@ -1,6 +1,5 @@
-package es.group.work.feature;
+package es.group.work.features;
 
-import biz.ganttproject.core.calendar.GPCalendar;
 import biz.ganttproject.core.calendar.GPCalendarCalc;
 import biz.ganttproject.core.calendar.GPCalendarListener;
 import net.sourceforge.ganttproject.ChartPanel;
@@ -18,6 +17,8 @@ public class Statistics implements TaskListener {
     private TaskManager manager;
     private GPCalendarCalc calendar;
 
+    // TODO: a new dispatcher (probably)
+    // TODO: have this thing working and look for potentials problems§
     public Statistics(GanttProject project, ChartPanel mainPanel) {
         this.manager = project.getTaskManager();
         this.calendar = project.getActiveCalendar();
@@ -67,7 +68,10 @@ public class Statistics implements TaskListener {
     public void taskModelReset() {}
 
     private void printStats(){
-        //
+        // completed, uncompleted, delayed
+        // VBox() => [<slide0, label0>,
+        //            <slide1, label1>,
+        //            <slide2, label2> ]
         final Task[] tasks = manager.getTasks();
         int completed = 0;
         for(Task t : tasks){
