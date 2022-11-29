@@ -16,18 +16,18 @@ public class Statistics implements TaskListener {
 
     private static final int MAX_COMPLETATION = 100;
     private TaskManager manager;
-    private GPCalendarCalc calender;
+    private GPCalendarCalc calendar;
 
     public Statistics(GanttProject project, ChartPanel mainPanel) {
         this.manager = project.getTaskManager();
-        this.calender = project.getActiveCalendar();
+        this.calendar = project.getActiveCalendar();
 
         // keep changing things from here :)
         JPanel featurePanel = new JPanel();
         mainPanel.getLeftPanel().add(featurePanel, BorderLayout.SOUTH);
         featurePanel.add(new JLabel("Hello, world"));
 
-        calender.addListener(new GPCalendarListener() {
+        calendar.addListener(new GPCalendarListener() {
             @Override
             public void onCalendarChange() {
                 printStats();

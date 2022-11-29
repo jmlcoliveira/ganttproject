@@ -3,7 +3,7 @@ package net.sourceforge.ganttproject;
 import javax.swing.*;
 
 /**
- * @author group ES
+ * @author SE group
  */
 public interface ChartPanel {
     JPanel getLeftPanel();
