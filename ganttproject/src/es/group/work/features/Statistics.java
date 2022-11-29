@@ -2,6 +2,9 @@ package es.group.work.features;
 
 import biz.ganttproject.core.calendar.GPCalendarCalc;
 import biz.ganttproject.core.calendar.GPCalendarListener;
+import es.group.work.features.sliders.MyManager;
+import es.group.work.features.sliders.Slider;
+import es.group.work.features.sliders.SliderManager;
 import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
 import net.sourceforge.ganttproject.task.TaskManager;
@@ -22,11 +25,9 @@ public class Statistics implements TaskListener {
     public Statistics(GanttProject project, ChartPanel mainPanel) {
         this.manager = project.getTaskManager();
         this.calendar = project.getActiveCalendar();
+        SliderManager sliders = new MyManager();
 
-        // keep changing things from here :)
-        JPanel featurePanel = new JPanel();
-        mainPanel.getLeftPanel().add(featurePanel, BorderLayout.SOUTH);
-        featurePanel.add(new JLabel("Hello, world"));
+        this.setupSliders(mainPanel);
 
         calendar.addListener(new GPCalendarListener() {
             @Override
@@ -36,6 +37,14 @@ public class Statistics implements TaskListener {
         });
     }
 
+    private void setupSliders(ChartPanel mainPanel){
+        SliderManager manager = new MyManager();
+        mainPanel.getLeftPanel().add(manager.getComponent(), BorderLayout.SOUTH);
+        Slider aux = manager.newSlider("completed", 99.8f);
+        manager.newSlider("uncompleted", 50);
+        manager.newSlider("delayed", 30);
+        aux.setProgress(30.88f);
+    }
     @Override
     public void taskScheduleChanged(TaskScheduleEvent e) {}
 
