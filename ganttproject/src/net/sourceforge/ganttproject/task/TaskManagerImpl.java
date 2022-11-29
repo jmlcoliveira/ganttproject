@@ -426,6 +426,9 @@ public class TaskManagerImpl implements TaskManager {
   int getAndIncrementId() {
     return myMaxID.getAndIncrement();
   }
+  int getMaxId(){
+    return myMaxID.intValue();
+  }
 
   @Override
   public void registerTask(Task task) {
