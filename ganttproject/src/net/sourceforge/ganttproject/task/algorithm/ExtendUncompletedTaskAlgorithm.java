@@ -49,7 +49,7 @@ import java.util.logging.Logger;
 
 
 /**
- * For now this is equal to the squedulerImpl but should implement the first feature
+ * For now this is equal to the schedulerImpl but should implement the first feature
  *
  * @author r.goncalo
  *
@@ -60,13 +60,16 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
     private boolean isRunning;
     private final Supplier<TaskContainmentHierarchyFacade> myTaskHierarchy;
     private final SchedulerImpl scheduler; //this will be called everytime we make a duration change
-    private Date currentDate;
+    private Date tomorrowDate;
 
-    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy, SchedulerImpl squeduler, Date currrentDate) {
+    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy, SchedulerImpl scheduler, Date currentDate) {
         myGraph = graph;
         myTaskHierarchy = taskHierarchy;
-        this.scheduler = squeduler;
-        this.currentDate = currrentDate;
+        this.scheduler = scheduler;
+
+        this.tomorrowDate = new Date(currentDate.getYear(), currentDate.getMonth(), currentDate.getDay());
+
+        System.out.println("Date received: " + currentDate.toString() + "\nDate generated: " + tomorrowDate.toString());
 
     }
 
@@ -93,8 +96,8 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
     private void doRun() {
 
-        System.out.println("Date: " + currentDate.toString());
-        System.out.println("Tried to run Extend Uncompleted Tasks 1");
+        System.out.println("Date: " + tomorrowDate.toString());
+        System.out.println("Running Extend Uncompleted Tasks 1");
         int layers = myGraph.checkLayerValidity();
         for (int i = 0; i < layers; i++) {
             Collection<Node> layer = myGraph.getLayer(i);
@@ -113,16 +116,12 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
         Task task = node.getTask();
 
-        System.out.println("\nEvaluating task " + task.getName()+ " ends in " + task.getEnd().toString());
+        System.out.println("\nEvaluating task " + task.getName()+ " ends in " + task.getEnd().toString() + "(" + task.getEnd().getTime().toString() + ")");
 
-        System.out.println(task.getEnd().toString() + " before");
-        System.out.println();
-        System.out.println();
-
-        if(task.getEnd().getTime().before(currentDate)){
+        if(task.getEnd().getTime().before(tomorrowDate)){
 
             System.out.println("Task ends before current date");
-            modifyTaskEnd(task, currentDate);
+            modifyTaskEnd(task, tomorrowDate);
 
         }
 
