@@ -443,9 +443,8 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     GPAction viewCycleBackwardAction = new ViewCycleAction(getViewManager(), false);
     UIUtil.pushAction(getTabs(), true, viewCycleBackwardAction.getKeyStroke(), viewCycleBackwardAction);
 
-    JPanel newFeaturePanel = myGanttChartTabContent.getNewFeaturePane();
     // our code goes here
-    getTaskManager().addTaskListener(new Statistics(this, newFeaturePanel));
+    getTaskManager().addTaskListener(new Statistics(this, myGanttChartTabContent));
   }
 
 

@@ -39,7 +39,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class ChartTabContentPanel {
+abstract class ChartTabContentPanel implements  ChartPanel{
   private final TimelineChart myChart;
   private JSplitPane mySplitPane;
   private final List<Component> myPanels = new ArrayList<>();
@@ -47,8 +47,9 @@ abstract class ChartTabContentPanel {
   private int myImageHeight;
   private Supplier<Integer> myHeaderHeight;
   private GanttImagePanel myImagePanel;
+  private  JPanel leftPanel;
+  private  JPanel rightPanel;
 
-  protected JPanel newFeaturePanel;
 
 
   ChartTabContentPanel(IGanttProject project, UIFacade workbenchFacade, TimelineChart chart) {
@@ -64,16 +65,28 @@ abstract class ChartTabContentPanel {
         updateTimelineHeight();
       }
     });
-    newFeaturePanel = null;
+    leftPanel = new JPanel(new BorderLayout());
+    rightPanel = new JPanel(new BorderLayout());
+  }
+
+  public JPanel getLeftPanel() {
+    return leftPanel;
+  }
+
+  public JPanel getRightPanel() {
+    return rightPanel;
   }
 
   JComponent createContentComponent() {
     // @# here is the gold hahahahahhaha
+    final JPanel left = leftPanel;//new JPanel(new BorderLayout());
+    final JPanel right = rightPanel;
+
     JPanel tabContentPanel = new JPanel(new BorderLayout());
-    final JPanel left = new JPanel(new BorderLayout());
+    JPanel buttonWrapper = new JPanel(new BorderLayout());
+
     final Box treeHeader = Box.createVerticalBox();
     final JComponent buttonPanel = (JComponent) createButtonPanel();
-    JPanel buttonWrapper = new JPanel(new BorderLayout());
     buttonWrapper.add(buttonPanel, BorderLayout.WEST);
     //button.setAlignmentX(Component.LEFT_ALIGNMENT);
     treeHeader.add(buttonWrapper);
@@ -88,14 +101,12 @@ abstract class ChartTabContentPanel {
 
     // we are genious
     // turururu
-    if(newFeaturePanel!= null) left.add(newFeaturePanel, BorderLayout.SOUTH);
 
     left.add(treeHeader, BorderLayout.NORTH);
     left.add(getTreeComponent(), BorderLayout.CENTER);
     Dimension minSize = new Dimension(0, 0);
     left.setMinimumSize(minSize);
 
-    JPanel right = new JPanel(new BorderLayout());
     final JComponent chartPanels = createChartPanels();
     right.add(chartPanels, BorderLayout.NORTH);
     right.setBackground(new Color(0.93f, 0.93f, 0.93f));

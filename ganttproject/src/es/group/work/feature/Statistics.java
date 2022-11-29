@@ -3,12 +3,14 @@ package es.group.work.feature;
 import biz.ganttproject.core.calendar.GPCalendar;
 import biz.ganttproject.core.calendar.GPCalendarCalc;
 import biz.ganttproject.core.calendar.GPCalendarListener;
+import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
 import net.sourceforge.ganttproject.task.TaskManager;
 import net.sourceforge.ganttproject.task.event.*;
 import net.sourceforge.ganttproject.task.*;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Statistics implements TaskListener {
 
@@ -16,9 +18,13 @@ public class Statistics implements TaskListener {
     private TaskManager manager;
     private GPCalendarCalc calender;
 
-    public Statistics(GanttProject project, JPanel featurePanel) {
+    public Statistics(GanttProject project, ChartPanel mainPanel) {
         this.manager = project.getTaskManager();
         this.calender = project.getActiveCalendar();
+
+        // keep changing things from here :)
+        JPanel featurePanel = new JPanel();
+        mainPanel.getLeftPanel().add(featurePanel, BorderLayout.SOUTH);
         featurePanel.add(new JLabel("Hello, world"));
 
         calender.addListener(new GPCalendarListener() {
