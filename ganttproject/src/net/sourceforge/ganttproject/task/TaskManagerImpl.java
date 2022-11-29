@@ -38,6 +38,8 @@ import net.sourceforge.ganttproject.ProjectEventListener;
 import net.sourceforge.ganttproject.gui.NotificationChannel;
 import net.sourceforge.ganttproject.gui.NotificationItem;
 import net.sourceforge.ganttproject.gui.NotificationManager;
+import net.sourceforge.ganttproject.gui.UIFacade;
+import net.sourceforge.ganttproject.gui.options.GeneralOptionPanel;
 import net.sourceforge.ganttproject.gui.options.model.GP1XOptionConverter;
 import net.sourceforge.ganttproject.language.GanttLanguage;
 import net.sourceforge.ganttproject.resource.HumanResource;
@@ -62,6 +64,7 @@ import net.sourceforge.ganttproject.task.event.TaskScheduleEvent;
 import net.sourceforge.ganttproject.task.hierarchy.TaskHierarchyManagerImpl;
 import net.sourceforge.ganttproject.util.collect.Pair;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,6 +105,8 @@ public class TaskManagerImpl implements TaskManager {
 
   private Date currentDate;
 
+  private UIFacade uiFacade;
+
   private final EnumerationOption myDependencyHardnessOption = new DefaultEnumerationOption<Object>(
       "dependencyDefaultHardness", new String[] { "Strong", "Rubber" }) {
     {
@@ -129,6 +134,7 @@ public class TaskManagerImpl implements TaskManager {
   });
 
   private final SchedulerImpl myScheduler = new SchedulerImpl(myDependencyGraph, myHierarchySupplier);
+
 
   private boolean areEventsEnabled = true;
 
@@ -197,7 +203,7 @@ public class TaskManagerImpl implements TaskManager {
 
   private Boolean isZeroMilestones = true;
 
-  TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config) {
+  TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config, UIFacade uiFacade) {
     myCustomPropertyListener = new CustomPropertyListenerImpl(this);
     myCustomColumnsManager = new CustomColumnsManager();
     myCustomColumnsManager.addListener(getCustomPropertyListener());
@@ -270,6 +276,9 @@ public class TaskManagerImpl implements TaskManager {
 
     myAlgorithmCollection = new AlgorithmCollection(this, alg1, alg2, alg3, alg4, alg5, alg6, myScheduler, alg7);
     addTaskListener(myScheduler.getTaskModelListener());
+
+    this.uiFacade = uiFacade;
+
   }
 
   private CustomPropertyListener getCustomPropertyListener() {
@@ -312,11 +321,26 @@ public class TaskManagerImpl implements TaskManager {
   }
 
   private void projectOpened() {
+
     processCriticalPath(getRootTask());
     myAlgorithmCollection.getRecalculateTaskCompletionPercentageAlgorithm().run(getRootTask());
 
-    myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().run();
+    if(myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().couldRun()) {
 
+        UIFacade.Choice saveChoice = uiFacade.showConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
+                "Uncompleted past tasks detected");
+
+        if (UIFacade.Choice.YES == saveChoice) {
+          try {
+
+            myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().run();
+
+
+          } catch (Exception e) {
+            uiFacade.showErrorDialog(e);
+          }
+        }
+    }
   }
 
   @Override
@@ -1040,7 +1064,7 @@ public class TaskManagerImpl implements TaskManager {
 
   @Override
   public TaskManager emptyClone() {
-    TaskManagerImpl result = new TaskManagerImpl(null, myConfig);
+    TaskManagerImpl result = new TaskManagerImpl(null, myConfig, null);
     result.myDependencyHardnessOption.setValue(this.myDependencyHardnessOption.getValue());
     return result;
   }

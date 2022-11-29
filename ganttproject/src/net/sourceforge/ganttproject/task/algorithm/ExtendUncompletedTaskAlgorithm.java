@@ -75,6 +75,41 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         }
     }
 
+    public boolean couldRun() {
+        if (!isEnabled() || isRunning) {
+
+            return false;
+
+        }else {
+
+            int layers = myGraph.checkLayerValidity();
+            for (int i = 0; i < layers; i++) {
+                Collection<Node> layer = myGraph.getLayer(i);
+                for (Node node : layer) {
+                    try {
+
+                        Task task = node.getTask();
+
+                        if(task.getCompletionPercentage() < 100 && task.getEnd().getTime().before(tomorrowDate)){
+
+                            return true;
+
+                        }
+
+
+                    } catch (IllegalArgumentException e) {
+                        GPLogger.log(e);
+                    }
+                }
+            }
+
+
+        }
+
+        return false;
+
+    }
+
     private void doRun() {
 
         int layers = myGraph.checkLayerValidity();
