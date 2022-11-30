@@ -1,0 +1,2 @@
+Long Method (revisto por James Furtado)
+Também acho que isto pode ser considerado um code smell.
