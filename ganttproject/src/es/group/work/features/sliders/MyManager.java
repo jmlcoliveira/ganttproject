@@ -80,8 +80,6 @@ public class MyManager implements  SliderManager{
         wrapper.setFont(LABEL_FONT);
        // wrapper.setMaximumSize(new Dimension(10, 10));
 
-        // fun stuffs :)
-        // TODO: solve this problem
         wrapper.setHorizontalAlignment(JLabel.CENTER);
         board.add(wrapper);
         board.add(slider.getComponent());

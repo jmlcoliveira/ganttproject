@@ -39,7 +39,6 @@ public class SimpleSlider implements Slider{
 
         // think about the sizes later :)
         setProgress(progress); // this??
-        container.setAlignmentX(JPanel.LEFT_ALIGNMENT);
     }
 
     @Override

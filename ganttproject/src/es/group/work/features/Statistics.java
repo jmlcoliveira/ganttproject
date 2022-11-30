@@ -5,6 +5,7 @@ import es.group.work.features.event.ChangeAdapter;
 import es.group.work.features.event.ChangeListener;
 import es.group.work.features.event.TaskChange;
 import es.group.work.features.sliders.MyManager;
+import es.group.work.features.sliders.Slider;
 import es.group.work.features.sliders.SliderManager;
 import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
@@ -106,24 +107,14 @@ public class Statistics{
         int uncompleted = tasks.length - completed;
         int total = tasks.length;
 
-        System.out.println("----------------------------------");
-        System.out.println("uncompleted = " + uncompleted);
-        System.out.println("completed = " + completed);
-        System.out.println("delayed = " + delayed);
-        System.out.println("total = " + total);
+        String[] keys = {COMPLETED, UNCOMPLETED, DELAYED};
+        int[] values = {completed, uncompleted, delayed};
 
-        System.out.println("calcPercentage(completed, total) = " + calcPercentage(completed, total));
-        System.out.println("calcPercentage(uncompleted, total) = " + calcPercentage(uncompleted, total));
-        System.out.println("calcPercentage(delayed, total) = " + calcPercentage(delayed, total));
-
-        sliderManager.getSlider(COMPLETED).setProgress(calcPercentage(completed, total));
-        sliderManager.getSlider(UNCOMPLETED).setProgress(calcPercentage(uncompleted, total));
-        sliderManager.getSlider(DELAYED).setProgress(calcPercentage(delayed, total));
-    }
-
-    private  float calcPercentage(int portion, int total){
-        if(total == 0) return 0f;
-        return (float) portion / total * 100.0f;
+        for(int i = 0; i < keys.length; i++){
+            float progress = total == 0 ? 0f : (float) values[i] / total * 100.0f;
+            Slider slider  = sliderManager.getSlider(keys[i]);
+            slider.setProgress(progress);
+        }
     }
 
 
