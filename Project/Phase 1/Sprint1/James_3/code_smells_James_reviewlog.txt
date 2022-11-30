@@ -1,0 +1,3 @@
+Switch Statement (Revisto por Ricardo Gonçalo)
+
+Sim, no mínimo substituir por um Enum
