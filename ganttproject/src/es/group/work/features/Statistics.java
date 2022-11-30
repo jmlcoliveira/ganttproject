@@ -71,16 +71,25 @@ public class Statistics{
     }
 
     private Component setupButton(){
-
+        JPanel buttonPanel = new JPanel();
         JButton button = new JButton(EXTEND_MESSAGE);
+
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 extendTasks.run();
             }
         });
 
-        return button;
+        // set's the panel layout
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
+        buttonPanel.add(new JSeparator());
+        buttonPanel.add(button);
+
+        // ask to be placed in the center
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return buttonPanel;
     }
 
     private void setupGui(ChartPanel mainPanel){
