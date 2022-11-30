@@ -62,7 +62,6 @@ public class ViewManagerImpl implements GPViewManager {
 
       @Override
       public void stateChanged(ChangeEvent e) {
-        System.out.println("Changed :)");
         GPView selectedView = (GPView) myTabs.getSelectedUserObject();
         if (mySelectedView == selectedView) {
           return;

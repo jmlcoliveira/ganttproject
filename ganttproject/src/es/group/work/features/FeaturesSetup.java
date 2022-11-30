@@ -69,9 +69,11 @@ public class FeaturesSetup {
         return title_panel;
     }
     private Component setupSliders(){
+        // think about this later :)
         sliderManager.newSlider(COMPLETED);
         sliderManager.newSlider(UNCOMPLETED);
         sliderManager.newSlider(DELAYED);
+        this.syncSliders();
         return sliderManager.getComponent();
     }
 
@@ -110,7 +112,10 @@ public class FeaturesSetup {
 
     private void updateSliders(){
         stats.calcParameters();
+        syncSliders();
+    }
 
+    private void syncSliders(){
         String[] keys = {COMPLETED, UNCOMPLETED, DELAYED};
         int[] values = {
                 stats.getCompletedTasks(),
@@ -125,5 +130,4 @@ public class FeaturesSetup {
             slider.setProgress(progress);
         }
     }
-
 }
