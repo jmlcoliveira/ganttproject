@@ -22,11 +22,13 @@ import java.util.Date;
 public class Statistics{
 
     private static final int MAX_COMPLETION = 100;
-
     private static final String COMPLETED = "completed";
     private static final String DELAYED = "delayed";
     private static final String UNCOMPLETED = "uncompleted";
     private static final String EXTEND_MESSAGE = "Extend late tasks";
+    private static  final String STATS_TITLE = "Statistics";
+    private static  final Font TITLE_FONT = new Font("Courier", Font.BOLD,15);
+
     private TaskManager manager;
     private GPCalendarCalc calendar;
 
@@ -56,8 +58,8 @@ public class Statistics{
         manager.addTaskListener(adapter);
     }
     private  Component setupTitle(){
-        JLabel title = new JLabel("Statistics");
-        title.setFont(new Font("Courier", Font.BOLD,15));
+        JLabel title = new JLabel(STATS_TITLE);
+        title.setFont(TITLE_FONT);
         title.setHorizontalAlignment(JLabel.CENTER);
         JPanel title_panel = new JPanel();
         title_panel.add(title);
@@ -82,7 +84,6 @@ public class Statistics{
 
         // set's the panel layout
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
         buttonPanel.add(new JSeparator());
         buttonPanel.add(button);
 
@@ -125,7 +126,5 @@ public class Statistics{
             slider.setProgress(progress);
         }
     }
-
-
 
 }
