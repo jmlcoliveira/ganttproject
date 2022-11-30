@@ -32,7 +32,7 @@ import java.util.Date;
 
 
 /**
- * For now this is equal to the schedulerImpl but should implement the first feature
+ * This algorithm extends tasks that are not complete but ended in the past
  *
  * @author r.goncalo
  *
@@ -43,7 +43,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
     private boolean isRunning;
     private final Supplier<TaskContainmentHierarchyFacade> myTaskHierarchy;
     private final SchedulerImpl scheduler; //this will be called everytime we make a duration change
-    private Date tomorrowDate;
+    private Date tomorrowDate; // this is the day tomorrow at 0:00:00
 
     public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy, SchedulerImpl scheduler) {
         myGraph = graph;
