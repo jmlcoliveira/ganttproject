@@ -29,6 +29,7 @@ import net.sourceforge.ganttproject.CustomPropertyDefinition;
 import net.sourceforge.ganttproject.CustomPropertyManager;
 import net.sourceforge.ganttproject.GanttTask;
 import net.sourceforge.ganttproject.ProjectEventListener;
+import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.resource.HumanResource;
 import net.sourceforge.ganttproject.resource.HumanResourceManager;
 import net.sourceforge.ganttproject.task.Task.Priority;
@@ -40,6 +41,9 @@ import net.sourceforge.ganttproject.task.event.TaskListener;
 
 import java.awt.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.Map;
 
@@ -189,8 +193,9 @@ public interface TaskManager {
 
   public class Access {
     public static TaskManager newInstance(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory,
-        TaskManagerConfig config) {
-      return new TaskManagerImpl(containmentFacadeFactory, config);
+                                          TaskManagerConfig config, UIFacade uiFacade) {
+
+      return new TaskManagerImpl(containmentFacadeFactory, config, uiFacade);
     }
   }
 

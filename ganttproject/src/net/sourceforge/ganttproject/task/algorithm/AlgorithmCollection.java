@@ -41,12 +41,17 @@ public class AlgorithmCollection {
 
   private final SchedulerImpl myScheduler;
 
+  private final ExtendUncompletedTaskAlgorithm myExtendUncompletedTaskAlgorithm;
+
   public AlgorithmCollection(TaskManagerImpl taskManager,
       FindPossibleDependeesAlgorithm myFindPossibleDependeesAlgorithm,
       RecalculateTaskScheduleAlgorithm recalculateTaskScheduleAlgorithm,
       AdjustTaskBoundsAlgorithm adjustTaskBoundsAlgorithm,
       RecalculateTaskCompletionPercentageAlgorithm completionPercentageAlgorithm,
-      ChartBoundsAlgorithm projectBoundsAlgorithm, CriticalPathAlgorithm criticalPathAlgorithm, SchedulerImpl scheduler) {
+      ChartBoundsAlgorithm projectBoundsAlgorithm, CriticalPathAlgorithm criticalPathAlgorithm, SchedulerImpl scheduler,
+      ExtendUncompletedTaskAlgorithm extendUncompletedTaskAlgorithm) {
+
+
     myScheduler = scheduler;
     this.myFindPossibleDependeesAlgorithm = myFindPossibleDependeesAlgorithm;
     myRecalculateTaskScheduleAlgorithm = recalculateTaskScheduleAlgorithm;
@@ -55,6 +60,9 @@ public class AlgorithmCollection {
     myProjectBoundsAlgorithm = projectBoundsAlgorithm;
     myShiftTaskTreeAlgorithm = new ShiftTaskTreeAlgorithm(taskManager, recalculateTaskScheduleAlgorithm);
     myCriticalPathAlgorithm = criticalPathAlgorithm;
+    myExtendUncompletedTaskAlgorithm = extendUncompletedTaskAlgorithm;
+
+
   }
 
   public FindPossibleDependeesAlgorithm getFindPossibleDependeesAlgorithm() {
@@ -88,4 +96,7 @@ public class AlgorithmCollection {
   public AlgorithmBase getScheduler() {
     return myScheduler;
   }
+
+  public ExtendUncompletedTaskAlgorithm getExtendUncompletedTaskAlgorithm() {return myExtendUncompletedTaskAlgorithm;}
+
 }
