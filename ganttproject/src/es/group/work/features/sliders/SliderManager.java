@@ -4,7 +4,7 @@ import java.awt.*;
 
 public interface SliderManager {
 
-    Slider newSlider(String name, float progress);
+    Slider newSlider(String name, float progress); // number, total
     Slider newSlider(String name);
     Slider getSlider(String name);
     void removeSlider(String name);

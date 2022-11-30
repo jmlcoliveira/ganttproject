@@ -7,6 +7,11 @@ import java.util.TreeMap;
 
 public class MyManager implements  SliderManager{
 
+    // <title> <barra>
+    // <title> <anything>
+    // <title> /// slider
+    // total:  numero
+    private  static final Font LABEL_FONT = new Font("Courier", Font.BOLD,12);
     private JPanel board;
     private Map<String, Map.Entry<Component, Slider>> sliders;
 
@@ -56,7 +61,7 @@ public class MyManager implements  SliderManager{
 
     @Override
     public Slider getSlider(String name) {
-        Map.Entry<Component, Slider> tmp = sliders.remove(name);;
+        Map.Entry<Component, Slider> tmp = sliders.get(name);;
         if(tmp != null) return tmp.getValue();
         return null;
     }
@@ -69,11 +74,10 @@ public class MyManager implements  SliderManager{
 
     private Slider newSlider(String name, Slider slider){
         this.removeSlider(name); // if there's a slider with the same name remove it first
-        board.add(slider.getComponent());
 
         // setting up the title
         JLabel wrapper = new JLabel(name); // do something :)
-        wrapper.setFont(new Font("Courier", Font.BOLD,12));
+        wrapper.setFont(LABEL_FONT);
        // wrapper.setMaximumSize(new Dimension(10, 10));
 
         // fun stuffs :)

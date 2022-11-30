@@ -12,18 +12,16 @@ public class SimpleSlider implements Slider{
     private static final int MAX_SLIDE_PROGRESS = (int) MAX_PROGRESS * M_FACTOR;
     private static final int MIN_SLIDE_PROGRESS = (int) MIN_PROGRESS * M_FACTOR;
 
-    private static  final String FORMAT = String.format(" %%.%df%%%%", N_DECIMAL_CASE);
+    private static  final String FORMAT = String.format(" %%6.%df%%%%", N_DECIMAL_CASE);
 
     private float progress;
     private JProgressBar bar;
     private JLabel label;
     private JPanel container;
 
-
     public SimpleSlider() {
         this(0);
     }
-
 
     public SimpleSlider(float progress){
         container = new JPanel();
@@ -72,9 +70,7 @@ public class SimpleSlider implements Slider{
     }
 
     private String formatProgress(){
-        String initial =  String.format(FORMAT, this.progress);
-        // TODO: constants
-        return String.format("%7s", initial);
+        return String.format(FORMAT, this.progress);
     }
 
     private void set_slide_progress(){

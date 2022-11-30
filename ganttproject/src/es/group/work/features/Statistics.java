@@ -1,105 +1,110 @@
 package es.group.work.features;
 
 import biz.ganttproject.core.calendar.GPCalendarCalc;
-import biz.ganttproject.core.calendar.GPCalendarListener;
+import es.group.work.features.event.ChangeAdapter;
+import es.group.work.features.event.ChangeListener;
+import es.group.work.features.event.TaskChange;
 import es.group.work.features.sliders.MyManager;
-import es.group.work.features.sliders.Slider;
 import es.group.work.features.sliders.SliderManager;
 import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
 import net.sourceforge.ganttproject.task.TaskManager;
-import net.sourceforge.ganttproject.task.event.*;
 import net.sourceforge.ganttproject.task.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Date;
 
-public class Statistics implements TaskListener {
+public class Statistics{
 
-    private static final int MAX_COMPLETATION = 100;
+    private static final int MAX_COMPLETION = 100;
+
+    private static final String COMPLETED = "completed";
+    private static final String DELAYED = "delayed";
+    private static final String UNCOMPLETED = "uncompleted";
     private TaskManager manager;
     private GPCalendarCalc calendar;
 
-    // TODO: a new dispatcher (probably)
-    // TODO: have this thing working and look for potentials problems§
+    private SliderManager sliderManager;
+
     public Statistics(GanttProject project, ChartPanel mainPanel) {
         this.manager = project.getTaskManager();
         this.calendar = project.getActiveCalendar();
-        SliderManager sliders = new MyManager();
+        this.sliderManager = new MyManager();
+        this.setupGui(mainPanel);
+        this.setupEvents();
+    }
 
-        this.setupSliders(mainPanel);
-
-        calendar.addListener(new GPCalendarListener() {
+    private  void setupEvents(){
+        ChangeAdapter adapter = new TaskChange();
+        adapter.setListener(new ChangeListener() {
             @Override
-            public void onCalendarChange() {
+            public void changed() {
                 printStats();
             }
         });
+
+        calendar.addListener(adapter);
+        manager.addTaskListener(adapter);
+    }
+    private  Component setupTitle(){
+        JLabel title = new JLabel("Statistics");
+        title.setFont(new Font("Courier", Font.BOLD,15));
+        title.setHorizontalAlignment(JLabel.CENTER);
+        JPanel title_panel = new JPanel();
+        title_panel.add(title);
+        return title_panel;
+    }
+    private Component setupSliders(){
+        sliderManager.newSlider(COMPLETED);
+        sliderManager.newSlider(UNCOMPLETED);
+        sliderManager.newSlider(DELAYED);
+        return sliderManager.getComponent();
     }
 
-    private void setupSliders(ChartPanel mainPanel){
-        SliderManager manager = new MyManager();
-        mainPanel.getLeftPanel().add(manager.getComponent(), BorderLayout.SOUTH);
-        Slider aux = manager.newSlider("completed", 99.8f);
-        manager.newSlider("uncompleted", 50);
-        manager.newSlider("delayed", 30);
-        aux.setProgress(30.88f);
+    private void setupGui(ChartPanel mainPanel){
+        JPanel statsPanel =  new JPanel();
+        statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+        mainPanel.getLeftPanel().add(statsPanel, BorderLayout.SOUTH);
+
+        statsPanel.add(this.setupTitle());
+        statsPanel.add(this.setupSliders());
     }
-    @Override
-    public void taskScheduleChanged(TaskScheduleEvent e) {}
-
-    @Override
-    public void dependencyAdded(TaskDependencyEvent e) {}
-
-    @Override
-    public void dependencyRemoved(TaskDependencyEvent e) {}
-
-
-    @Override
-    public void dependencyChanged(TaskDependencyEvent e) {}
-
-    @Override
-    public void taskMoved(TaskHierarchyEvent e) {
-        printStats();
-    }
-
-    @Override
-    public void taskPropertiesChanged(TaskPropertyEvent e) {
-        printStats();
-    }
-
-    @Override
-    public void taskProgressChanged(TaskPropertyEvent e) {
-        printStats();
-    }
-
-    @Override
-    public void taskModelReset() {}
 
     private void printStats(){
-        // completed, uncompleted, delayed
-        // VBox() => [<slide0, label0>,
-        //            <slide1, label1>,
-        //            <slide2, label2> ]
+
         final Task[] tasks = manager.getTasks();
+        Date today = new Date();
         int completed = 0;
+        int delayed = 0;
+
         for(Task t : tasks){
-            if(t.getCompletionPercentage() == MAX_COMPLETATION) completed++;
+            if(t.getCompletionPercentage() == MAX_COMPLETION) completed++;
+            else if(t.getEnd().getTime().before(today)) delayed++;
         }
+        int uncompleted = tasks.length - completed;
+        int total = tasks.length;
 
-        System.out.println("------------------------------------------");
-        System.out.printf("total tasks     : %d\n", tasks.length);
-        System.out.printf("completed tasks : %d\n", completed);
-        System.out.println("------------------------------------------");
-    }
-    @Override
-    public void taskAdded(TaskHierarchyEvent e) {
-        printStats();
+        System.out.println("----------------------------------");
+        System.out.println("uncompleted = " + uncompleted);
+        System.out.println("completed = " + completed);
+        System.out.println("delayed = " + delayed);
+        System.out.println("total = " + total);
+
+        System.out.println("calcPercentage(completed, total) = " + calcPercentage(completed, total));
+        System.out.println("calcPercentage(uncompleted, total) = " + calcPercentage(uncompleted, total));
+        System.out.println("calcPercentage(delayed, total) = " + calcPercentage(delayed, total));
+
+        sliderManager.getSlider(COMPLETED).setProgress(calcPercentage(completed, total));
+        sliderManager.getSlider(UNCOMPLETED).setProgress(calcPercentage(uncompleted, total));
+        sliderManager.getSlider(DELAYED).setProgress(calcPercentage(delayed, total));
     }
 
-    @Override
-    public void taskRemoved(TaskHierarchyEvent e) {
-        printStats();
+    private  float calcPercentage(int portion, int total){
+        if(total == 0) return 0f;
+        return (float) portion / total * 100.0f;
     }
+
+
 
 }

@@ -186,6 +186,8 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
   private RoleManager myRoleManager;
 
+  private  Statistics feature;
+
   private static Runnable ourQuitCallback;
 
 
@@ -442,7 +444,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     UIUtil.pushAction(getTabs(), true, viewCycleBackwardAction.getKeyStroke(), viewCycleBackwardAction);
 
     // our code goes here
-    getTaskManager().addTaskListener(new Statistics(this, myGanttChartTabContent));
+    this.feature = new Statistics(this, myGanttChartTabContent);
   }
 
 
