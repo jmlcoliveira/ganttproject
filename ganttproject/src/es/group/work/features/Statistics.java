@@ -10,9 +10,12 @@ import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
 import net.sourceforge.ganttproject.task.TaskManager;
 import net.sourceforge.ganttproject.task.*;
+import net.sourceforge.ganttproject.task.algorithm.ExtendUncompletedTaskAlgorithm;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 
 public class Statistics{
@@ -22,10 +25,13 @@ public class Statistics{
     private static final String COMPLETED = "completed";
     private static final String DELAYED = "delayed";
     private static final String UNCOMPLETED = "uncompleted";
+    private static final String EXTEND_MESSAGE = "Extend late tasks";
     private TaskManager manager;
     private GPCalendarCalc calendar;
 
     private SliderManager sliderManager;
+
+    private ExtendUncompletedTaskAlgorithm extendTasks;
 
     public Statistics(GanttProject project, ChartPanel mainPanel) {
         this.manager = project.getTaskManager();
@@ -33,6 +39,7 @@ public class Statistics{
         this.sliderManager = new MyManager();
         this.setupGui(mainPanel);
         this.setupEvents();
+        this.extendTasks = project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
     }
 
     private  void setupEvents(){
@@ -64,7 +71,12 @@ public class Statistics{
 
     private Component setupButton(){
 
-        JButton button = new JButton();
+        JButton button = new JButton(EXTEND_MESSAGE);
+        button.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                extendTasks.run();
+            }
+        });
 
         return button;
 
