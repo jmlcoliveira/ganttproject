@@ -327,7 +327,7 @@ public class TaskManagerImpl implements TaskManager {
 
     if(myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().couldRun()) {
 
-        UIFacade.Choice saveChoice = uiFacade.showConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
+        UIFacade.Choice saveChoice = uiFacade.showYesNoConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
                 "Uncompleted past tasks detected");
 
         if (UIFacade.Choice.YES == saveChoice) {

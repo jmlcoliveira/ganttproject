@@ -85,6 +85,8 @@ public interface UIFacade {
 
   Choice showConfirmationDialog(String message, String title);
 
+  Choice showYesNoConfirmationDialog(String message, String title);
+
   void showPopupMenu(Component invoker, Action[] actions, int x, int y);
 
   void showPopupMenu(Component invoker, Collection<Action> actions, int x, int y);

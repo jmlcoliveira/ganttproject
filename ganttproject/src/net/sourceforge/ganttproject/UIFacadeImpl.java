@@ -265,6 +265,22 @@ class UIFacadeImpl extends ProgressProvider implements UIFacade {
   }
 
   @Override
+  public Choice showYesNoConfirmationDialog(String message, String title) {
+    String yes = GanttLanguage.getInstance().getText("yes");
+    String no = GanttLanguage.getInstance().getText("no");
+    int result = JOptionPane.showOptionDialog(myMainFrame, message, title, JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE, null, new String[] { yes, no }, yes);
+    switch (result) {
+      case JOptionPane.YES_OPTION:
+        return Choice.YES;
+      case JOptionPane.NO_OPTION:
+        return Choice.NO;
+      default:
+        return Choice.NO;
+    }
+  }
+
+  @Override
   public void showPopupMenu(Component invoker, Action[] actions, int x, int y) {
     showPopupMenu(invoker, Arrays.asList(actions), x, y);
   }
@@ -323,6 +339,7 @@ class UIFacadeImpl extends ProgressProvider implements UIFacade {
       }
     }
   }
+
 
   @Override
   public NotificationManager getNotificationManager() {

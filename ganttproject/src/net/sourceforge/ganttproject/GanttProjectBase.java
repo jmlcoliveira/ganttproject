@@ -279,6 +279,11 @@ abstract class GanttProjectBase extends JFrame implements IGanttProject, UIFacad
   }
 
   @Override
+  public UIFacade.Choice showYesNoConfirmationDialog(String message, String title) {
+    return myUIFacade.showYesNoConfirmationDialog(message, title);
+  }
+
+  @Override
   public void showOptionDialog(int messageType, String message, Action[] actions) {
     myUIFacade.showOptionDialog(messageType, message, actions);
   }
