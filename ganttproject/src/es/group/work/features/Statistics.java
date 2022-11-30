@@ -87,9 +87,11 @@ public class Statistics{
         buttonPanel.add(new JSeparator());
         buttonPanel.add(button);
 
-        // ask to be placed in the center
-        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // set the button and buttonPanel position to center
+        for(JComponent cmp : new JComponent[]{button, buttonPanel}){
+            cmp.setAlignmentX(Component.CENTER_ALIGNMENT);
+        }
+
         return buttonPanel;
     }
 
