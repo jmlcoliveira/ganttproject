@@ -2155,3 +2155,4 @@ ganttproject/build/classes/java/main/es/group/work/features/sliders/SliderManage
 ganttproject/build/classes/java/main/es/group/work/features/Statistics$1.class
 ganttproject/build/classes/java/main/es/group/work/features/Statistics.class
 ganttproject/build/classes/java/main/net/sourceforge/ganttproject/ChartPanel.class
+*.class
