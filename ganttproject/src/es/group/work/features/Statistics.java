@@ -62,6 +62,14 @@ public class Statistics{
         return sliderManager.getComponent();
     }
 
+    private Component setupButton(){
+
+        JButton button = new JButton();
+
+        return button;
+
+    }
+
     private void setupGui(ChartPanel mainPanel){
         JPanel statsPanel =  new JPanel();
         statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
@@ -69,6 +77,7 @@ public class Statistics{
 
         statsPanel.add(this.setupTitle());
         statsPanel.add(this.setupSliders());
+        statsPanel.add(this.setupButton());
     }
 
     private void printStats(){
