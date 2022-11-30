@@ -7,21 +7,20 @@ import es.group.work.features.event.TaskChange;
 import es.group.work.features.sliders.MyManager;
 import es.group.work.features.sliders.Slider;
 import es.group.work.features.sliders.SliderManager;
+import es.group.work.features.statistics.Statistics;
 import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
 import net.sourceforge.ganttproject.task.TaskManager;
-import net.sourceforge.ganttproject.task.*;
 import net.sourceforge.ganttproject.task.algorithm.ExtendUncompletedTaskAlgorithm;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 
-public class Statistics{
+public class FeaturesSetup {
 
-    private static final int MAX_COMPLETION = 100;
+    // some gui related constants
     private static final String COMPLETED = "completed";
     private static final String DELAYED = "delayed";
     private static final String UNCOMPLETED = "uncompleted";
@@ -29,33 +28,37 @@ public class Statistics{
     private static  final String STATS_TITLE = "Statistics";
     private static  final Font TITLE_FONT = new Font("Courier", Font.BOLD,15);
 
-    private TaskManager manager;
-    private GPCalendarCalc calendar;
-
+    // feature 1 variables
     private SliderManager sliderManager;
+    private Statistics stats;
 
+    // feature 2 variables
     private ExtendUncompletedTaskAlgorithm extendTasks;
 
-    public Statistics(GanttProject project, ChartPanel mainPanel) {
-        this.manager = project.getTaskManager();
-        this.calendar = project.getActiveCalendar();
+
+    public FeaturesSetup(GanttProject project, ChartPanel mainPanel) {
+        this.stats = new Statistics(project.getTaskManager());
         this.sliderManager = new MyManager();
-        this.setupGui(mainPanel);
-        this.setupEvents();
         this.extendTasks = project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
+
+        // set's up the gui and the events
+        this.setupGui(mainPanel);
+        this.setupEvents(project);
     }
 
-    private  void setupEvents(){
+    private  void setupEvents(GanttProject project){
         ChangeAdapter adapter = new TaskChange();
+
         adapter.setListener(new ChangeListener() {
             @Override
             public void changed() {
-                printStats();
+                updateSliders();
             }
         });
 
-        calendar.addListener(adapter);
-        manager.addTaskListener(adapter);
+        // set's some events listeners :)
+        project.getActiveCalendar().addListener(adapter);
+        project.getTaskManager().addTaskListener(adapter);
     }
     private  Component setupTitle(){
         JLabel title = new JLabel(STATS_TITLE);
@@ -105,23 +108,17 @@ public class Statistics{
         statsPanel.add(this.setupButton());
     }
 
-    private void printStats(){
-
-        final Task[] tasks = manager.getTasks();
-        Date today = new Date();
-        int completed = 0;
-        int delayed = 0;
-
-        for(Task t : tasks){
-            if(t.getCompletionPercentage() == MAX_COMPLETION) completed++;
-            else if(t.getEnd().getTime().before(today)) delayed++;
-        }
-        int uncompleted = tasks.length - completed;
-        int total = tasks.length;
+    private void updateSliders(){
+        stats.calcParameters();
 
         String[] keys = {COMPLETED, UNCOMPLETED, DELAYED};
-        int[] values = {completed, uncompleted, delayed};
+        int[] values = {
+                stats.getCompletedTasks(),
+                stats.getUncompletedTasks(),
+                stats.getDelayedTasks()
+        };
 
+        int total = stats.getTotalTask();
         for(int i = 0; i < keys.length; i++){
             float progress = total == 0 ? 0f : (float) values[i] / total * 100.0f;
             Slider slider  = sliderManager.getSlider(keys[i]);

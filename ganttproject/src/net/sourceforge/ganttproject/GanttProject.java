@@ -31,7 +31,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import es.group.work.features.Statistics;
+import es.group.work.features.FeaturesSetup;
 import net.sourceforge.ganttproject.action.ActiveActionProvider;
 import net.sourceforge.ganttproject.action.ArtefactAction;
 import net.sourceforge.ganttproject.action.ArtefactDeleteAction;
@@ -186,7 +186,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
 
   private RoleManager myRoleManager;
 
-  private  Statistics feature;
+  private FeaturesSetup feature;
 
   private static Runnable ourQuitCallback;
 
@@ -444,7 +444,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     UIUtil.pushAction(getTabs(), true, viewCycleBackwardAction.getKeyStroke(), viewCycleBackwardAction);
 
     // our code goes here
-    this.feature = new Statistics(this, myGanttChartTabContent);
+    this.feature = new FeaturesSetup(this, myGanttChartTabContent);
   }
 
 
