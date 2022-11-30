@@ -1,0 +1,6 @@
+Deadcode (Revisto por João Oliveira)
+A classe GanttXMLFileFilter não está a ser usada pelo que
+pode ser apagada em segurança sem afetar o programa
+
+No Comment (Revisto por James Furtado)
+A classe não tem nenhum comentário. Então eu concordo que isso é um code smell.
