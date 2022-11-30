@@ -3,3 +3,7 @@ O método está de facto demasiado grande, apesar de ter todo
 o objetivo de inicializar a UI. Podiam ter sido usadas funções
 auxiliares para tornar mais claro o que é feito no método. Há também
 pedaços de código comentados que deviam ser apagados.
+
+Over Comment (Revisto por James Furtado)
+Ao contrário do restante do código (que quase não tem comentários) 
+essa classe tem comentários e são muitos, assim sendo, claramente é um code smell.
