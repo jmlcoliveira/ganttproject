@@ -1,2 +1,5 @@
 Long Method (revisto por James Furtado)
 Também acho que isto pode ser considerado um code smell.
+
+Dead Code (revisto por Ricardo Goncalo)
+Sim realmente é verdade e como é privada não é acessível de fora, a única coisa que poe estar a fazer é a impedir objetos de serem apanhados pelo garbage collector.
