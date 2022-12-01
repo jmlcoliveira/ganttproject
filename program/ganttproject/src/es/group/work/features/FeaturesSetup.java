@@ -39,31 +39,13 @@ public class FeaturesSetup {
 
 
     public FeaturesSetup(GanttProject project, ChartPanel mainPanel) {
-
-
-        firstFeatureSetup(project);
-        secondFeatureSetup(project, mainPanel);
-
-    }
-
-    private void firstFeatureSetup(GanttProject project){
-
-        //the new algorithm is added to the collection as an ExtendUncompletedTaskAgorithm class inside the package of algorithm collectons
-        this.extendTasks = project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
-
-
-    }
-
-    private void secondFeatureSetup(GanttProject project, ChartPanel mainPanel){
-
         this.stats = new Statistics(project.getTaskManager());
         this.sliderManager = new MyManager();
+        this.extendTasks = project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
 
         // set's up the gui and the events
         this.setupGui(mainPanel);
         this.setupEvents(project);
-
-
     }
 
     private  void setupEvents(GanttProject project){
