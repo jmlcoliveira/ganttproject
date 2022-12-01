@@ -43,6 +43,7 @@ public class FeaturesSetup {
 
     //an algorithm that extends the duration of unfinished tasks that should have ended in the past, with implementation in the task's algorithms package
     private TaskManager taskManager;
+    private GanttProject project;
 
 
 
@@ -50,6 +51,7 @@ public class FeaturesSetup {
         this.stats = new Statistics(project.getTaskManager());
         this.sliderManager = new MyManager();
 
+        this.project = project;
         this.taskManager = project.getTaskManager();
 
         // set's up the gui and the events
@@ -57,7 +59,7 @@ public class FeaturesSetup {
         this.setupEvents(project);
     }
 
-    private  void setupEvents(GanttProject project){
+    private  void setupEvents(final GanttProject project){
         ChangeAdapter adapter = new TaskChange();
 
         adapter.setListener(new ChangeListener() {
@@ -78,9 +80,10 @@ public class FeaturesSetup {
 
                 Task task = e.getTask();
                 ExtendUncompletedTaskAlgorithm extendAlg = taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
-                if(task.getCompletionPercentage() == 100 && extendAlg.taskAfterNextWorkingEnd(task)){
+                if(task.getCompletionPercentage() == 100 && extendAlg.taskAfterNextWorkingEnd(task) && extendAlg.taskStartsBeforeNextWorkingEnd(task)){
 
                     taskManager.taskCommitYesNo(extendAlg.modifyTaskEndToNextWorkingEnd(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
+                    project.refresh();
                 }
 
             }

@@ -26,6 +26,8 @@ import net.sourceforge.ganttproject.GPLogger;
 import net.sourceforge.ganttproject.task.Task;
 import net.sourceforge.ganttproject.task.TaskMutator;
 import net.sourceforge.ganttproject.task.algorithm.DependencyGraph.Node;
+import net.sourceforge.ganttproject.task.dependency.TaskDependency;
+
 import java.util.Collection;
 import java.util.Date;
 
@@ -196,6 +198,9 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
     }
 
+    public boolean taskStartsBeforeNextWorkingEnd(Task task){
 
+        return task.getStart().getTime().before(nextWorkingDayEnd);
 
+    }
 }
