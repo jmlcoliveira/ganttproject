@@ -75,15 +75,18 @@ public class FeaturesSetup {
 
         taskManager.addTaskListener(new TaskProgressListener() {
 
+
+
             @Override
             public void taskProgressChanged(TaskPropertyEvent e) {
 
                 Task task = e.getTask();
                 ExtendUncompletedTaskAlgorithm extendAlg = taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
+
                 if(task.getCompletionPercentage() == 100 && extendAlg.taskAfterNextWorkingEnd(task) && extendAlg.taskStartsBeforeNextWorkingEnd(task)){
 
                     taskManager.taskCommitYesNo(extendAlg.modifyTaskEndToNextWorkingEnd(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
-                    project.refresh();
+
                 }
 
             }
@@ -115,6 +118,7 @@ public class FeaturesSetup {
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().run();
+                project.refresh();
             }
         });
 
