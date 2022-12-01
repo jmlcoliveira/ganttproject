@@ -1,0 +1,3 @@
+Selecionar e poder apagar dependências (setas) clicando nelas
+
+Poder fazer uma ação de reorganização automática de tarefas para as depêndencias serem mais simples de se verem

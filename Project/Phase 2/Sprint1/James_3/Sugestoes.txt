@@ -1,0 +1,3 @@
+Forma de extender tarefas não completadas para a data atual de forma automática, quando a sua data final é passada
+
+Estatísticas a revelar o estado do projeto em relação ao quão acabado está

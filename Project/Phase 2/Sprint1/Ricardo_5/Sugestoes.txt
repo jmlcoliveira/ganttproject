@@ -1,0 +1,3 @@
+Poder exportar o projeto para um formato de diagrama/imagem
+
+Eixo a mostrar o dia atual, com coisas no passado, presente e futuro distinguidas vizualmente

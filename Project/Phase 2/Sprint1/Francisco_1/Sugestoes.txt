@@ -1,0 +1,3 @@
+Ter views que apenas mostraria certas tarefas, com o propósito de melhor as dividir entre equipas
+
+Fazer com que as tasks apareçam na data correspondente a onde se tem o rato quando criadas
