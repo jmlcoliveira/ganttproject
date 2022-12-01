@@ -327,47 +327,8 @@ public class TaskManagerImpl implements TaskManager {
 
     processCriticalPath(getRootTask());
     myAlgorithmCollection.getRecalculateTaskCompletionPercentageAlgorithm().run(getRootTask());
-/*
-    if(myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().couldRun()) {
 
-        UIFacade.Choice saveChoice = uiFacade.showYesNoConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
-                "Uncompleted past tasks detected");
-
-        if (UIFacade.Choice.YES == saveChoice) {
-          try {
-
-            myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().run();
-
-
-          } catch (Exception e) {
-            uiFacade.showErrorDialog(e);
-          }
-        }
-    }
-    */
  }
-
- @Override
-  public void test(){
-
-    if(myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().couldRun()) {
-
-      UIFacade.Choice saveChoice = uiFacade.showYesNoConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
-              "Uncompleted past tasks detected");
-
-      if (UIFacade.Choice.YES == saveChoice) {
-        try {
-
-          myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().run();
-
-
-        } catch (Exception e) {
-          uiFacade.showErrorDialog(e);
-        }
-      }
-    }
-
-  }
 
   @Override
   public void deleteTask(Task tasktoRemove) {

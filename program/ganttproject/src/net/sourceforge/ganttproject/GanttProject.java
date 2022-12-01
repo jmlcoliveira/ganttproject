@@ -1327,12 +1327,4 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     }
     super.repaint();
   }
-
-  @Override
-  protected void fireProjectOpened() {
-    super.fireProjectOpened();
-    myTaskManager.test();
-
-  }
-
 }

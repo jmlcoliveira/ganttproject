@@ -53,8 +53,6 @@ import java.util.Map;
  */
 public interface TaskManager {
 
-  public void test();
-
   void taskCommitYesNo(TaskMutator mutatorToCommit, String message, String title);
   abstract class TaskBuilder {
     String myName;
