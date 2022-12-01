@@ -1,0 +1,19 @@
+1.Name: Create task
+  Description: Create a new task on the chart
+  Actors: User
+
+2.Name:Edit task
+  Description: Edit an existing task's properties 
+  Actors: User
+
+3.Name: Move up or down
+  Description: Moves the task on the chart, relative to other tasks
+  Actors: User
+
+4.Name: Create dependency
+  Description: creates a dependency between 2 tasks
+  Actors: User
+
+5.Name: Make child of another task
+  Description: the selected task becomes a requirement for another task
+  Actors: User
