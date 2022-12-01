@@ -464,3 +464,4 @@ ganttproject/.gradle/
 ganttproject/.idea/
 /**/build
 /**/dist-bin
+.DS_Store
