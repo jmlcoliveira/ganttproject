@@ -79,7 +79,7 @@ public class FeaturesSetup {
                 Task task = e.getTask();
                 ExtendUncompletedTaskAlgorithm extendAlg = taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
                 AlgorithmBase squedImpl = taskManager.getAlgorithmCollection().getScheduler();
-                if(task.getCompletionPercentage() == 100 && taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().taskAfterNextWorkingEnd(task)){
+                if(task.getCompletionPercentage() == 100 && extendAlg.taskAfterNextWorkingEnd(task)){
 
                     taskManager.taskCommitYesNo(extendAlg.modifyTaskEndToNextWorkingEnd(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
                     squedImpl.run();

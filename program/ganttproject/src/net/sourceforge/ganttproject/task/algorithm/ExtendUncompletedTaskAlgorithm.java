@@ -166,9 +166,10 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
             return mutator;
         }else {
 
-            if(task.getStart().after(nextWorkingDayEnd) || task.getStart().equals(nextWorkingDayEnd)){
+            if(task.getStart().getTime().after(nextWorkingDayEnd) || task.getStart().getTime().equals(nextWorkingDayEnd)){
 
                 GanttCalendar newStartCalendar = CalendarFactory.createGanttCalendar(new Date (nextWorkingDayEnd.getTime() - 24*60*60*1000));
+                
                 mutator.setStart(newStartCalendar);
 
             }
