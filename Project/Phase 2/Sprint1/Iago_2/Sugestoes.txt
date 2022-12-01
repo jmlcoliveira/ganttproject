@@ -1,3 +1,3 @@
-Quase se tem o rato por cima das opções que têm icon imagens, aparecer um textinho por baixo a dizer o t+itulo da opção
+Quase se tem o rato por cima das opções que têm icon imagens, aparecer um textinho por baixo a dizer o título da opção
 
 Opção de gravação automática
