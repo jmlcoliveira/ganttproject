@@ -1,0 +1,20 @@
+Feature 1:
+
+	Descrição:
+
+		Quando um ficheiro é caregado na aplicação, haverá uma opção para o utilizador extender a duração de tarefas supostas acabarem no passado para ficarem para acabar algures durante o dia atual, reorganizando também as tarefas de acordo com as suas dependências. Adicionalmente, haverá um botão que também terá esta feature.
+
+	User Story:
+
+		As a project manager, I want to see the task duration changing dynamically in	case a task takes more or less time than anticipated so that I may have a more accurate project duration time.
+
+
+Feature 2:
+
+	Descrição:
+
+		Eixo a mostrar o dia atual, com coisas no passado, presente e futuro distinguidas vizualmente.
+
+	User Story:
+
+		As a user, I want to easily see the current day, so that I can follow the project evolution.
