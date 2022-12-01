@@ -28,11 +28,13 @@ public class FeaturesSetup {
     private static  final String STATS_TITLE = "Statistics";
     private static  final Font TITLE_FONT = new Font("Courier", Font.BOLD,15);
 
-    // feature 1 variables
+    // feature 2 variables
     private SliderManager sliderManager;
     private Statistics stats;
 
-    // feature 2 variables
+    // feature 1 variables
+
+    //an algorithm that extends the duration of unfinished tasks that should have ended in the past
     private ExtendUncompletedTaskAlgorithm extendTasks;
 
 

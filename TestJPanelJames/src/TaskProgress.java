@@ -14,12 +14,15 @@ public class TaskProgress {
     private final int DEFAULT_TASK_W = 300;
     private final int DEFAULT_TASK_H = 30;
 
+
     private int panelW;
     private int panelH;
 
     private int taskPanelW;
     private int taskPanelH;
-    Map<String,JProgressBar> task_progress;
+
+    private Map<String,JProgressBar> task_progress;
+    private Map<String,JLabel> task_progress_n;
 
     //Painel principal
     private JPanel painel;
@@ -29,6 +32,7 @@ public class TaskProgress {
     private int gap;
     private boolean centered;
     private int n_format;
+
 
     public TaskProgress(int panelW, int panelH, int taskPanelW, int taskPanelH) {
         init(panelW,panelH,taskPanelW,taskPanelH);
@@ -51,7 +55,9 @@ public class TaskProgress {
         this.taskPanelW = taskPanelW;
         this.taskPanelH = taskPanelH;
         task_progress = new HashMap<>();
+        task_progress_n = new HashMap<>();
         painel = new JPanel();  //Painel principal
+        painel.setBackground(Color.YELLOW);
         painel.setLayout(null);
         painel.setBounds(0,0,this.panelW,this.panelH);
     }
@@ -62,6 +68,7 @@ public class TaskProgress {
             tmp.setBackground(Color.CYAN);                                                      //Mete esta cor bonita para diferenciar do Fundo :)
             int x = centered ? centeredX() : 0;                                                 //Se a variavel "centered" for true, a task fica centrada no Painel PRINCIPAL
             tmp.setBounds(x,(taskPanelH+gap)*task_progress.size(),taskPanelW,taskPanelH);    //Altera a posicao e tamanho do painel
+            n_format = Math.max(n_format,name.length());
             String n = format ? formatName(name) : name;                                        //Formato ou nao o name? (Para as progress bars nao ficarem desalinhadas)
             tmp.add(new JLabel(n));
             JProgressBar p = new JProgressBar();
@@ -69,7 +76,10 @@ public class TaskProgress {
             p.setMinimum(0);
             p.setValue(progress);
             tmp.add(p);
+            JLabel perc = new JLabel(String.valueOf(progress + "%"));
+            tmp.add(perc);
             task_progress.put(name, p);                                                       //Talvez desnecessario o facto de ser um Mapa mas sla,
+            task_progress_n.put(name, perc);
             painel.add(tmp);                                                                    //queria garantir de alguma forma mais tarde que nao
         }                                                                                       //podem haver tasks com nomes iguais
     }
@@ -83,13 +93,31 @@ public class TaskProgress {
             String n = format ? formatName(name) : name;                                        //Formato ou nao o name? (Para as progress bars nao ficarem desalinhadas)
             tmp.add(new JLabel(n));
             tmp.add(progressBar);
+            JLabel perc = new JLabel((progressBar.getValue()) + "%");
+            tmp.add(perc);
             task_progress.put(name, progressBar);
+            task_progress_n.put(name, perc);
             painel.add(tmp);
         }
     }
 
-    public JProgressBar getProgressBarByTask(String name){
-        return task_progress.get(name);
+    public void addProgress(String task, int v){
+        int currV = task_progress.get(task).getValue();
+        int sum = Math.min(currV + v, 100);
+        sum = Math.max(0,sum);
+        task_progress.get(task).setValue(sum);
+        task_progress_n.get(task).setText((sum) + "%");
+    }
+
+    public void setProgress(String task, int v){
+        int value = Math.min(v, 100);
+        value = Math.max(0,value);
+        task_progress.get(task).setValue(value);
+        task_progress_n.get(task).setText((value) + "%");
+    }
+
+    public int getProgress(String task){
+        return task_progress.get(task).getValue();
     }
 
     /**
@@ -124,6 +152,9 @@ public class TaskProgress {
     }
     public void isCentered(boolean b){
         centered = b;
+    }
+    public void setBounds(int x, int y){
+        painel.setBounds(x,y,panelW,panelH);
     }
 
 
