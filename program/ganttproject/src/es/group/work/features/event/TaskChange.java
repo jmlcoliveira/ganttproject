@@ -58,6 +58,16 @@ public class TaskChange implements ChangeAdapter{
     public void onCalendarChange() {
         this.fire();
     }
+
+    @Override
+    public void projectOpened() {
+        this.fire();
+    }
+
+    @Override
+    public void projectCreated() {
+        this.fire();
+    }
     @Override
     public void dependencyAdded(TaskDependencyEvent e) {}
 
@@ -68,6 +78,15 @@ public class TaskChange implements ChangeAdapter{
     public void dependencyChanged(TaskDependencyEvent e) {}
     @Override
     public void taskModelReset() {}
+
+    @Override
+    public void projectModified() {}
+
+    @Override
+    public void projectSaved() {}
+
+    @Override
+    public void projectClosed() {}
 
 
 }

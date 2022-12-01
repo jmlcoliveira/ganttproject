@@ -72,6 +72,7 @@ public class FeaturesSetup {
         // set's some events listeners :)
         project.getActiveCalendar().addListener(adapter);
         project.getTaskManager().addTaskListener(adapter);
+        project.addProjectEventListener(adapter);
 
         taskManager.addTaskListener(new TaskProgressListener() {
 
