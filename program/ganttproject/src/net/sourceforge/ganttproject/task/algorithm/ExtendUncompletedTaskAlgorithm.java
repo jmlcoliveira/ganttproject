@@ -42,12 +42,10 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
     private final DependencyGraph myGraph;
     private boolean isRunning;
-    private final SchedulerImpl scheduler; //this will be called everytime we make a duration change
     private Date nextWorkingDayEnd; // this is the end of the next working day, at 0:00:00
 
     public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, WeekendCalendarImpl weekendCalendar, SchedulerImpl scheduler) {
         myGraph = graph;
-        this.scheduler = scheduler;
 
         defineEndOfNextWorkingDay(weekendCalendar);
 
