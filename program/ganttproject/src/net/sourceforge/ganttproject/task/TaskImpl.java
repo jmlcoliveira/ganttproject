@@ -629,6 +629,9 @@ public class TaskImpl implements Task {
         if (myCompletionPercentageChange != null) {
           int newValue = getCompletionPercentage();
           TaskImpl.this.setCompletionPercentage(newValue);
+
+
+
         }
         if (myEndChange != null) {
           GanttCalendar end = getEnd();
@@ -1283,4 +1286,9 @@ public class TaskImpl implements Task {
   public Cost getCost() {
     return myCost;
   }
+
+
+
+
+
 }

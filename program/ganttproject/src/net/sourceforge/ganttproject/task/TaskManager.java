@@ -20,6 +20,7 @@ package net.sourceforge.ganttproject.task;
 
 import biz.ganttproject.core.calendar.GPCalendarCalc;
 import biz.ganttproject.core.calendar.GPCalendarListener;
+import biz.ganttproject.core.calendar.WeekendCalendarImpl;
 import biz.ganttproject.core.option.ColorOption;
 import biz.ganttproject.core.option.EnumerationOption;
 import biz.ganttproject.core.option.StringOption;
@@ -51,6 +52,8 @@ import java.util.Map;
  * @author bard
  */
 public interface TaskManager {
+
+  void taskCommitYesNo(TaskMutator mutatorToCommit, String message, String title);
   abstract class TaskBuilder {
     String myName;
     Integer myId;
@@ -193,9 +196,9 @@ public interface TaskManager {
 
   public class Access {
     public static TaskManager newInstance(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory,
-                                          TaskManagerConfig config, UIFacade uiFacade) {
+                                          TaskManagerConfig config, UIFacade uiFacade, WeekendCalendarImpl weekendCalendar) {
 
-      return new TaskManagerImpl(containmentFacadeFactory, config, uiFacade);
+      return new TaskManagerImpl(containmentFacadeFactory, config, uiFacade, weekendCalendar);
     }
   }
 
@@ -246,4 +249,6 @@ public interface TaskManager {
   ProjectEventListener getProjectListener();
 
   GPCalendarListener getCalendarListener();
+
+
 }

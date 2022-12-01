@@ -7,6 +7,7 @@ package net.sourceforge.ganttproject.task;
 import biz.ganttproject.core.calendar.AlwaysWorkingTimeCalendarImpl;
 import biz.ganttproject.core.calendar.GPCalendarCalc;
 import biz.ganttproject.core.calendar.GPCalendarListener;
+import biz.ganttproject.core.calendar.WeekendCalendarImpl;
 import biz.ganttproject.core.chart.scene.BarChartActivity;
 import biz.ganttproject.core.chart.scene.gantt.ChartBoundsAlgorithm;
 import biz.ganttproject.core.chart.scene.gantt.ChartBoundsAlgorithm.Result;
@@ -107,6 +108,8 @@ public class TaskManagerImpl implements TaskManager {
 
   private UIFacade uiFacade;
 
+  private WeekendCalendarImpl weekendCalendar;
+
   private final EnumerationOption myDependencyHardnessOption = new DefaultEnumerationOption<Object>(
       "dependencyDefaultHardness", new String[] { "Strong", "Rubber" }) {
     {
@@ -203,7 +206,7 @@ public class TaskManagerImpl implements TaskManager {
 
   private Boolean isZeroMilestones = true;
 
-  TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config, UIFacade uiFacade) {
+  TaskManagerImpl(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory, TaskManagerConfig config, UIFacade uiFacade, WeekendCalendarImpl weekendCalendar) {
     myCustomPropertyListener = new CustomPropertyListenerImpl(this);
     myCustomColumnsManager = new CustomColumnsManager();
     myCustomColumnsManager.addListener(getCustomPropertyListener());
@@ -272,7 +275,7 @@ public class TaskManagerImpl implements TaskManager {
 
 
     this.currentDate = currentDate;
-    ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, myHierarchySupplier, myScheduler);
+    ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, weekendCalendar, myScheduler);
 
     myAlgorithmCollection = new AlgorithmCollection(this, alg1, alg2, alg3, alg4, alg5, alg6, myScheduler, alg7);
     addTaskListener(myScheduler.getTaskModelListener());
@@ -325,23 +328,7 @@ public class TaskManagerImpl implements TaskManager {
     processCriticalPath(getRootTask());
     myAlgorithmCollection.getRecalculateTaskCompletionPercentageAlgorithm().run(getRootTask());
 
-    if(myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().couldRun()) {
-
-        UIFacade.Choice saveChoice = uiFacade.showYesNoConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
-                "Uncompleted past tasks detected");
-
-        if (UIFacade.Choice.YES == saveChoice) {
-          try {
-
-            myAlgorithmCollection.getExtendUncompletedTaskAlgorithm().run();
-
-
-          } catch (Exception e) {
-            uiFacade.showErrorDialog(e);
-          }
-        }
-    }
-  }
+ }
 
   @Override
   public void deleteTask(Task tasktoRemove) {
@@ -1067,7 +1054,7 @@ public class TaskManagerImpl implements TaskManager {
 
   @Override
   public TaskManager emptyClone() {
-    TaskManagerImpl result = new TaskManagerImpl(null, myConfig, null);
+    TaskManagerImpl result = new TaskManagerImpl(null, myConfig, uiFacade, weekendCalendar);
     result.myDependencyHardnessOption.setValue(this.myDependencyHardnessOption.getValue());
     return result;
   }
@@ -1287,4 +1274,27 @@ public class TaskManagerImpl implements TaskManager {
   public DependencyGraph getDependencyGraph() {
     return myDependencyGraph;
   }
+
+  @Override
+  public void taskCommitYesNo(TaskMutator mutatorToCommit, String message, String title){
+
+
+      UIFacade.Choice saveChoice = uiFacade.showYesNoConfirmationDialog(message,
+              title);
+
+      if (UIFacade.Choice.YES == saveChoice) {
+        try {
+
+          mutatorToCommit.commit();
+
+
+        } catch (Exception e) {
+          uiFacade.showErrorDialog(e);
+        }
+
+    }
+
+
+  }
+
 }
