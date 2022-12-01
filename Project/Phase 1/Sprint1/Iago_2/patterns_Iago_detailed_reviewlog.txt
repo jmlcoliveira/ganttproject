@@ -3,7 +3,3 @@ Abstract Factory Pattern (Revisao feita por João Oliveira)
 Estamos perante um Factory Pattern. Pois o construtor foi
 alterado para as funcões createGanttCalendar que recebem alguns
 parâmetros e devolvem um produto
-
-Builder Pattern (Revisao feita por Ricardo Gonçalo)
-
-Sim, dá os métodos necessários para construir a aplicação

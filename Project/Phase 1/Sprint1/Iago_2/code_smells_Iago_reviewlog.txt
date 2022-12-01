@@ -1,5 +1,2 @@
 Data clump (Revisto por João Oliveira)
 É de facto uma data clump
-
-No comments (Revisto por Ricardo Goncalo)
-Sim, para uma class de 380 linhas tem muitos poucos comentários

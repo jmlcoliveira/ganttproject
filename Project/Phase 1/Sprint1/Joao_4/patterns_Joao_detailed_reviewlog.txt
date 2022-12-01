@@ -1,6 +1,3 @@
 Template Method (Revisto por James Furtado)
 Revisão: Sim de facto isto é um template método. A classe 
 é abstrata e as subclasses rescrevem esses e outros métodos.
-
-Memento Pattern (Revisto por Ricardo Goncalo)
-Revisão: Correto, é possível restaurar o estado anterior do documento a partir do método undo() ao manter uma snapshot do estado anterior
