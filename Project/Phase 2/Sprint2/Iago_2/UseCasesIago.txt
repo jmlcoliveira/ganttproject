@@ -1,0 +1,23 @@
+Change project info: 
+	desc: User can change/add things like the name of the project, Organization,
+	Web Link and description
+
+Add Roles:
+	desc: User can add cutsom roles that are not on the default roles yet
+
+Remove Roles:
+	desc: User can remove those custom roles
+
+Manage days off:
+	desc: User can use this to set the days that he will have a break
+
+	(Extends)
+	- Add custom day-off
+		desc: User can add a specific day off, no holiday and no 
+		weekend day, just an arbitrary day off
+	- Choose weekend days
+		desc: User can set the weekend days instead of the default Saturday and Sunday 
+		(example: Some companies also work on Saturday, so Sunday is the only Weekend day)
+	- Choose holiday calendar
+		desc: User can choose his holidays on this calendar from several countries, making it
+		easy to put the custom days-off from each contry
