@@ -34,6 +34,7 @@ import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import es.group.work.features.FeaturesSetup;
 import net.sourceforge.ganttproject.GPLogger;
 import net.sourceforge.ganttproject.IGanttProject;
 import net.sourceforge.ganttproject.action.GPAction;
@@ -88,6 +89,8 @@ class ProjectOpenStrategy implements AutoCloseable {
     myUiFacade = Preconditions.checkNotNull(uiFacade);
     myDiagnostics = new ProjectOpenDiagnosticImpl(myUiFacade);
     myAlgs = myProject.getTaskManager().getAlgorithmCollection();
+
+
     myEnableAlgorithmsCmd = new AutoCloseable() {
       public void close() throws Exception {
         myAlgs.getScheduler().setEnabled(true);
@@ -301,7 +304,9 @@ class ProjectOpenStrategy implements AutoCloseable {
           processTasks(tasks);
         }
       };
+      FeaturesSetup.askToRunExtendAlg();
       SwingUtilities.invokeLater(wrapper);
+
     }
   }
 }

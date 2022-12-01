@@ -10,6 +10,7 @@ import es.group.work.features.sliders.SliderManager;
 import es.group.work.features.statistics.Statistics;
 import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
+import net.sourceforge.ganttproject.IGanttProject;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.task.Task;
 import net.sourceforge.ganttproject.task.TaskManager;
@@ -43,7 +44,7 @@ public class FeaturesSetup {
 
     //an algorithm that extends the duration of unfinished tasks that should have ended in the past, with implementation in the task's algorithms package
     private TaskManager taskManager;
-    private GanttProject project;
+    private static GanttProject project;
 
 
 
@@ -165,4 +166,28 @@ public class FeaturesSetup {
             slider.setProgress(progress);
         }
     }
+
+    public static void askToRunExtendAlg(){
+
+        if(project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().couldRun()) {
+
+            UIFacade.Choice saveChoice = project.getUIFacade().showYesNoConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
+                    "Uncompleted past tasks detected");
+
+            if (UIFacade.Choice.YES == saveChoice) {
+                try {
+
+                    project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().run();
+                    project.refresh();
+
+
+                } catch (Exception e) {
+                    project.getUIFacade().showErrorDialog(e);
+                }
+            }
+        }
+
+
+    }
+
 }
