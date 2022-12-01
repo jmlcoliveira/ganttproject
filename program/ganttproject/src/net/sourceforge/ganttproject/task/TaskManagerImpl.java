@@ -104,8 +104,6 @@ public class TaskManagerImpl implements TaskManager {
 
   private final StringOption myTaskCopyNamePrefixOption = new DefaultStringOption("taskCopyNamePrefix", GanttLanguage.getInstance().getText("task.copy.prefix"));
 
-  private Date currentDate;
-
   private UIFacade uiFacade;
 
   private WeekendCalendarImpl weekendCalendar;
@@ -273,8 +271,6 @@ public class TaskManagerImpl implements TaskManager {
     ChartBoundsAlgorithm alg5 = new ChartBoundsAlgorithm();
     CriticalPathAlgorithm alg6 = new CriticalPathAlgorithmImpl(this, getCalendar());
 
-
-    this.currentDate = currentDate;
     ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, weekendCalendar, myScheduler);
 
     myAlgorithmCollection = new AlgorithmCollection(this, alg1, alg2, alg3, alg4, alg5, alg6, myScheduler, alg7);
