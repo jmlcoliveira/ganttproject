@@ -1,3 +1,6 @@
 Template Method (Revisto por James Furtado)
 Revisão: Sim de facto isto é um template método. A classe 
 é abstrata e as subclasses rescrevem esses e outros métodos.
+
+Singleton (Revisto por Francisco Vasco)
+Correto, implementação normal com Singleton Pattern.

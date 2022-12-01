@@ -1,0 +1,3 @@
+Observer Pattern (Revisto por Francisco Vasco)
+Implementações de GPCalendar (o Subject) mantêm uma coleção de GPCalendarListener (adicionados através do método addListener)
+e notificam cada um ao efetuar mudanças ao calendário, o padrão parece-me correto.

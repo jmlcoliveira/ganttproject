@@ -1,2 +1,6 @@
 Data clump (Revisto por João Oliveira)
 É de facto uma data clump
+
+DeadCode (Revisto por Francisco Vasco)
+Concordo que é DeadCode, não é utilizado e que pode ser também
+uma situação de preparação/”over-engineering” em antecipação de funcionalidades futuras.

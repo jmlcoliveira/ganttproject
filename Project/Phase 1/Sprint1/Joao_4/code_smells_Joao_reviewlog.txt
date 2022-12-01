@@ -1,2 +1,7 @@
 Long Method (revisto por James Furtado)
 Também acho que isto pode ser considerado um code smell.
+
+Duplicated Code (revisto por Francisco Vasco)
+Parece-me correta a identificação.
+Embora se trate de apenas uma linha podem surgir erros
+após um futuro refactoring que se evitam com esta solução.

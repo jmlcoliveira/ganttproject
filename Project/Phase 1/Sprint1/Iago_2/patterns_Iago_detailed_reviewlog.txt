@@ -3,3 +3,7 @@ Abstract Factory Pattern (Revisao feita por João Oliveira)
 Estamos perante um Factory Pattern. Pois o construtor foi
 alterado para as funcões createGanttCalendar que recebem alguns
 parâmetros e devolvem um produto
+
+Singleton (Revisto por Francisco Vasco)
+De facto este método em conjunto com a variável ourInstance
+assegura que apenas existe uma instância de GPCalendarProvider.
