@@ -4,14 +4,20 @@ import biz.ganttproject.core.calendar.GPCalendarCalc;
 import es.group.work.features.event.ChangeAdapter;
 import es.group.work.features.event.ChangeListener;
 import es.group.work.features.event.TaskChange;
+import es.group.work.features.event.TaskProgressListener;
 import es.group.work.features.sliders.MyManager;
 import es.group.work.features.sliders.Slider;
 import es.group.work.features.sliders.SliderManager;
 import es.group.work.features.statistics.Statistics;
 import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
+import net.sourceforge.ganttproject.gui.UIFacade;
+import net.sourceforge.ganttproject.task.Task;
 import net.sourceforge.ganttproject.task.TaskManager;
+import net.sourceforge.ganttproject.task.algorithm.AlgorithmBase;
 import net.sourceforge.ganttproject.task.algorithm.ExtendUncompletedTaskAlgorithm;
+import net.sourceforge.ganttproject.task.algorithm.SchedulerImpl;
+import net.sourceforge.ganttproject.task.event.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,20 +34,25 @@ public class FeaturesSetup {
     private static  final String STATS_TITLE = "Statistics";
     private static  final Font TITLE_FONT = new Font("Courier", Font.BOLD,15);
 
+    private static final String TASK_ENDED_EARLY_MESSAGE = "Do you want to end the task completed today?";
+    private static final String TASK_ENDED_EARLY_TITLE = "Task completed early";
+
     // feature 2 variables
     private SliderManager sliderManager;
     private Statistics stats;
 
     // feature 1 variables
 
-    //an algorithm that extends the duration of unfinished tasks that should have ended in the past
-    private ExtendUncompletedTaskAlgorithm extendTasks;
+    //an algorithm that extends the duration of unfinished tasks that should have ended in the past, with implementation in the task's algorithms package
+    private TaskManager taskManager;
+
 
 
     public FeaturesSetup(GanttProject project, ChartPanel mainPanel) {
         this.stats = new Statistics(project.getTaskManager());
         this.sliderManager = new MyManager();
-        this.extendTasks = project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
+
+        this.taskManager = project.getTaskManager();
 
         // set's up the gui and the events
         this.setupGui(mainPanel);
@@ -61,6 +72,24 @@ public class FeaturesSetup {
         // set's some events listeners :)
         project.getActiveCalendar().addListener(adapter);
         project.getTaskManager().addTaskListener(adapter);
+
+        taskManager.addTaskListener(new TaskProgressListener() {
+
+            @Override
+            public void taskProgressChanged(TaskPropertyEvent e) {
+
+                Task task = e.getTask();
+                ExtendUncompletedTaskAlgorithm extendAlg = taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
+                AlgorithmBase squedImpl = taskManager.getAlgorithmCollection().getScheduler();
+                if(task.getCompletionPercentage() == 100 && taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().taskAfterToday(task)){
+
+                    taskManager.taskCommitYesNo(extendAlg.modifyTaskEndToToday(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
+                    squedImpl.run();
+                }
+
+            }
+        });
+
     }
     private  Component setupTitle(){
         JLabel title = new JLabel(STATS_TITLE);
@@ -85,7 +114,7 @@ public class FeaturesSetup {
 
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                extendTasks.run();
+                taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().run();
             }
         });
 

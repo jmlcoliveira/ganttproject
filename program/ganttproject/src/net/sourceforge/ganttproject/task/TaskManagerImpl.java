@@ -1287,4 +1287,27 @@ public class TaskManagerImpl implements TaskManager {
   public DependencyGraph getDependencyGraph() {
     return myDependencyGraph;
   }
+
+  @Override
+  public void taskCommitYesNo(TaskMutator mutatorToCommit, String message, String title){
+
+
+      UIFacade.Choice saveChoice = uiFacade.showYesNoConfirmationDialog(message,
+              title);
+
+      if (UIFacade.Choice.YES == saveChoice) {
+        try {
+
+          mutatorToCommit.commit();
+
+
+        } catch (Exception e) {
+          uiFacade.showErrorDialog(e);
+        }
+
+    }
+
+
+  }
+
 }

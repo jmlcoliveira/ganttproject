@@ -32,7 +32,7 @@ import java.util.Date;
 
 
 /**
- * This algorithm extends tasks that are not complete but ended in the past
+ * This algorithm extends tasks that are not complete but ended in the past, with some extra functionalities public to the outside
  *
  * @author r.goncalo
  *
@@ -90,7 +90,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
                         Task task = node.getTask();
 
-                        if(task.getCompletionPercentage() < 100 && task.getEnd().getTime().before(tomorrowDate)){
+                        if(task.getCompletionPercentage() < 100 && taskBeforeToday(task)){
 
                             return true;
 
@@ -132,25 +132,45 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
         if(task.getCompletionPercentage() < 100 && task.getEnd().getTime().before(tomorrowDate)){
 
-            modifyTaskEnd(task, tomorrowDate);
+            modifyTaskEndToToday(task).commit();
 
         }
 
     }
 
-    private void modifyTaskEnd(Task task, Date newEnd) {
 
-        if (task.getEnd().getTime().equals(newEnd)) {
-            return;
-        }
-        GanttCalendar newEndCalendar = CalendarFactory.createGanttCalendar(newEnd);
-        if (getDiagnostic() != null) {
-            getDiagnostic().addModifiedTask(task, null, newEnd);
-        }
+    public TaskMutator modifyTaskEndToToday(Task task) {
+
         TaskMutator mutator = task.createMutator();
+        if (task.getEnd().getTime().equals(tomorrowDate)) {
+            return mutator;
+        }
+        GanttCalendar newEndCalendar = CalendarFactory.createGanttCalendar(tomorrowDate);
+        if (getDiagnostic() != null) {
+            getDiagnostic().addModifiedTask(task, null, tomorrowDate);
+        }
         mutator.setEnd(newEndCalendar);
-        mutator.commit();
+        return mutator;
     }
+
+    public boolean taskBeforeToday(Task task){
+
+        return task.getEnd().getTime().before(tomorrowDate);
+
+    }
+
+    public boolean taskAfterToday(Task task){
+
+        return task.getEnd().getTime().after(tomorrowDate);
+
+    }
+
+    public Date currentDate(){
+
+        return tomorrowDate;
+
+    }
+
 
 
 }

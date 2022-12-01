@@ -51,6 +51,8 @@ import java.util.Map;
  * @author bard
  */
 public interface TaskManager {
+
+  void taskCommitYesNo(TaskMutator mutatorToCommit, String message, String title);
   abstract class TaskBuilder {
     String myName;
     Integer myId;
@@ -246,4 +248,6 @@ public interface TaskManager {
   ProjectEventListener getProjectListener();
 
   GPCalendarListener getCalendarListener();
+
+
 }
