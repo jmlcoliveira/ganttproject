@@ -17,7 +17,7 @@ public class Main {
         progressBar.setMaximum(100);
 
         //Iniciando a minha framework :)
-        TaskProgress tp = new TaskProgress(width,heigth);
+        TaskProgress tp = new TaskProgress(width/2 - 5,heigth);
         tp.isCentered(true);
         tp.isFormatted(true);
 
@@ -36,25 +36,27 @@ public class Main {
 
         JPanel panel = tp.panel();  //Recebe o painel magicamente criado com as tasks
 
+        TaskProgress tp2 = new TaskProgress(width/2 - 5,heigth);
+        tp2.isCentered(false);
+        tp2.isFormatted(true);
+        tp2.setGap(5);
+        tp2.setBounds(width/2 + 5,0);
+        tp2.addTask("Task Boazona",95);
+        tp2.addTask("Taskzona",5);
+        JPanel panel2 = tp2.panel();
+
         frame.add(panel);  //Adiciona ele na frame
+        frame.add(panel2);
         frame.setVisible(true);
 
         //Tests with Progress bar...
-        JProgressBar p2 = tp.getProgressBarByTask("Task2");
-        int currV2 = p2.getValue();
-        while(currV1 < 100){
+        int a = tp.getProgress("Task2");
+        while(a < 100){
             Thread.sleep(1000);
-            //System.out.print("Task1 value: ");
-            currV1 += 10;
-            progressBar.setValue(currV1);
-            //System.out.println(currV1);
-
-            //System.out.print("Task2 value: ");
-            currV2 += 5;
-            p2.setValue(currV2);
-            //System.out.println(currV2);
-
-
+            tp.addProgress("Task2",5);
+            tp.addProgress("Task1Banana",7);
+            tp2.setProgress("Taskzona",55);
+            a = tp.getProgress("Task2");
 
         }
 
