@@ -268,7 +268,7 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
       public TaskContainmentHierarchyFacade createFacade() {
         return GanttProject.this.getTaskContainment();
       }
-    }, taskConfig, getUIFacade());
+    }, taskConfig, getUIFacade(), myCalendar);
     addProjectEventListener(myTaskManager.getProjectListener());
     getActiveCalendar().addListener(myTaskManager.getCalendarListener());
     ImageIcon icon = new ImageIcon(getClass().getResource("/icons/ganttproject.png"));
@@ -1327,4 +1327,12 @@ public class GanttProject extends GanttProjectBase implements ResourceView, Gant
     }
     super.repaint();
   }
+
+  @Override
+  protected void fireProjectOpened() {
+    super.fireProjectOpened();
+    myTaskManager.test();
+
+  }
+
 }

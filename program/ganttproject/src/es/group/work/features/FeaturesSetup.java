@@ -1,6 +1,5 @@
 package es.group.work.features;
 
-import biz.ganttproject.core.calendar.GPCalendarCalc;
 import es.group.work.features.event.ChangeAdapter;
 import es.group.work.features.event.ChangeListener;
 import es.group.work.features.event.TaskChange;
@@ -16,7 +15,6 @@ import net.sourceforge.ganttproject.task.Task;
 import net.sourceforge.ganttproject.task.TaskManager;
 import net.sourceforge.ganttproject.task.algorithm.AlgorithmBase;
 import net.sourceforge.ganttproject.task.algorithm.ExtendUncompletedTaskAlgorithm;
-import net.sourceforge.ganttproject.task.algorithm.SchedulerImpl;
 import net.sourceforge.ganttproject.task.event.*;
 
 import javax.swing.*;
@@ -81,14 +79,15 @@ public class FeaturesSetup {
                 Task task = e.getTask();
                 ExtendUncompletedTaskAlgorithm extendAlg = taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
                 AlgorithmBase squedImpl = taskManager.getAlgorithmCollection().getScheduler();
-                if(task.getCompletionPercentage() == 100 && taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().taskAfterToday(task)){
+                if(task.getCompletionPercentage() == 100 && taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().taskAfterNextWorkingEnd(task)){
 
-                    taskManager.taskCommitYesNo(extendAlg.modifyTaskEndToToday(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
+                    taskManager.taskCommitYesNo(extendAlg.modifyTaskEndToNextWorkingEnd(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
                     squedImpl.run();
                 }
 
             }
         });
+
 
     }
     private  Component setupTitle(){

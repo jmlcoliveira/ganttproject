@@ -19,12 +19,11 @@ along with GanttProject.  If not, see <http://www.gnu.org/licenses/>.
 
 package net.sourceforge.ganttproject.task.algorithm;
 
+import biz.ganttproject.core.calendar.WeekendCalendarImpl;
 import biz.ganttproject.core.time.CalendarFactory;
 import biz.ganttproject.core.time.GanttCalendar;
-import com.google.common.base.Supplier;
 import net.sourceforge.ganttproject.GPLogger;
 import net.sourceforge.ganttproject.task.Task;
-import net.sourceforge.ganttproject.task.TaskContainmentHierarchyFacade;
 import net.sourceforge.ganttproject.task.TaskMutator;
 import net.sourceforge.ganttproject.task.algorithm.DependencyGraph.Node;
 import java.util.Collection;
@@ -41,17 +40,34 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
     private final DependencyGraph myGraph;
     private boolean isRunning;
-    private final Supplier<TaskContainmentHierarchyFacade> myTaskHierarchy;
     private final SchedulerImpl scheduler; //this will be called everytime we make a duration change
-    private Date tomorrowDate; // this is the day tomorrow at 0:00:00
+    private Date nextWorkingDayEnd; // this is the end of the next working day, at 0:00:00
 
-    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, Supplier<TaskContainmentHierarchyFacade> taskHierarchy, SchedulerImpl scheduler) {
+    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, WeekendCalendarImpl weekendCalendar, SchedulerImpl scheduler) {
         myGraph = graph;
-        myTaskHierarchy = taskHierarchy;
         this.scheduler = scheduler;
 
+        defineEndOfNextWorkingDay(weekendCalendar);
+
+    }
+
+    private void defineEndOfNextWorkingDay(WeekendCalendarImpl weekendCalendar){
+
         long currentMilliSeconds = System.currentTimeMillis();
-        this.tomorrowDate = new Date(currentMilliSeconds + ( 23*60*60*1000 - (currentMilliSeconds % (24*60*60*1000)))); //create day tomorrow at 0h:00m
+        Date currentDate = new Date(currentMilliSeconds);
+        Date closestWorkingDate = weekendCalendar.findClosestWorkingTime(currentDate);
+
+        while(!closestWorkingDate.equals(currentDate)){
+
+
+            currentMilliSeconds = currentMilliSeconds + 24*60*60*1000;
+            currentDate = new Date(currentMilliSeconds);
+            closestWorkingDate = weekendCalendar.findClosestWorkingTime(currentDate);
+
+        }
+
+        this.nextWorkingDayEnd = new Date(currentMilliSeconds + ( 23*60*60*1000 - (currentMilliSeconds % (24*60*60*1000))));
+
     }
 
     @Override
@@ -90,7 +106,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
                         Task task = node.getTask();
 
-                        if(task.getCompletionPercentage() < 100 && taskBeforeToday(task)){
+                        if(task.getCompletionPercentage() < 100 && taskBeforeNextWorkingEnd(task)){
 
                             return true;
 
@@ -113,6 +129,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
     private void doRun() {
 
         int layers = myGraph.checkLayerValidity();
+
         for (int i = 0; i < layers; i++) {
             Collection<Node> layer = myGraph.getLayer(i);
             for (Node node : layer) {
@@ -123,51 +140,58 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
                 }
             }
         }
-        scheduler.run();
+
     }
 
     private void extendUncompletedTasks(Node node) {
 
         Task task = node.getTask();
 
-        if(task.getCompletionPercentage() < 100 && task.getEnd().getTime().before(tomorrowDate)){
 
-            modifyTaskEndToToday(task).commit();
+        if(task.getCompletionPercentage() < 100 && task.getEnd().getTime().before(nextWorkingDayEnd)){
+
+            modifyTaskEndToNextWorkingEnd(task).commit();
 
         }
+
+
 
     }
 
 
-    public TaskMutator modifyTaskEndToToday(Task task) {
+    public TaskMutator modifyTaskEndToNextWorkingEnd(Task task) {
 
         TaskMutator mutator = task.createMutator();
-        if (task.getEnd().getTime().equals(tomorrowDate)) {
+        if(task.getEnd().getTime().equals(nextWorkingDayEnd)) {
             return mutator;
+        }else {
+
+            if(task.getStart().after(nextWorkingDayEnd) || task.getStart().equals(nextWorkingDayEnd)){
+
+                GanttCalendar newStartCalendar = CalendarFactory.createGanttCalendar(new Date (nextWorkingDayEnd.getTime() - 24*60*60*1000));
+                mutator.setStart(newStartCalendar);
+
+            }
+
+            GanttCalendar newEndCalendar = CalendarFactory.createGanttCalendar(nextWorkingDayEnd);
+            if (getDiagnostic() != null) {
+                getDiagnostic().addModifiedTask(task, null, nextWorkingDayEnd);
+            }
+            mutator.setEnd(newEndCalendar);
+            return mutator;
+
         }
-        GanttCalendar newEndCalendar = CalendarFactory.createGanttCalendar(tomorrowDate);
-        if (getDiagnostic() != null) {
-            getDiagnostic().addModifiedTask(task, null, tomorrowDate);
-        }
-        mutator.setEnd(newEndCalendar);
-        return mutator;
     }
 
-    public boolean taskBeforeToday(Task task){
+    public boolean taskBeforeNextWorkingEnd(Task task){
 
-        return task.getEnd().getTime().before(tomorrowDate);
+        return task.getEnd().getTime().before(nextWorkingDayEnd);
 
     }
 
-    public boolean taskAfterToday(Task task){
+    public boolean taskAfterNextWorkingEnd(Task task){
 
-        return task.getEnd().getTime().after(tomorrowDate);
-
-    }
-
-    public Date currentDate(){
-
-        return tomorrowDate;
+        return task.getEnd().getTime().after(nextWorkingDayEnd);
 
     }
 
