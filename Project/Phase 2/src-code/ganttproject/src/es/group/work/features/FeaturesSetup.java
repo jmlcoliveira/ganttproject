@@ -58,10 +58,10 @@ public class FeaturesSetup {
 
         // set's up the gui and the events
         this.setupGui(mainPanel);
-        this.setupEvents(project);
+        this.setupEvents();
     }
 
-    private  void setupEvents(final GanttProject project){
+    private  void setupEvents(){
         ChangeAdapter adapter = new TaskChange();
 
         adapter.setListener(new ChangeListener() {
