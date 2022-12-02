@@ -1,0 +1,22 @@
+1.Name: Create new Project
+  Description: The actor can create a new project that will hold a set of tasks.
+ 	The actor will have to give some informations in order to do so, such as the project name.
+  Actors: User
+
+2.Name: Save Project
+  Description: The actor can save the project (with all it's tasks) in a file that can later be opened.
+  Actors: User
+
+3.Name: Open Project
+  Description: The actor selects a project (from a file or an url - webserver). The system closes the current 
+	opened project (if any) and loads the selected project's (tasks, resources, etc...) so the project can be edited.
+  Actors: User
+
+4.Name: Export
+  Description: The actor can export (save to a file) the project to a format other the the default gantt project.
+  Actors: User
+
+5.Name: Import
+  Description: The actor chooses a file (or an url) that was previously export as a project and the system
+	adds the task (resources, etc...) of such project to the current opened project. 
+  Actors: User
