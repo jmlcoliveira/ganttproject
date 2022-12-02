@@ -22,6 +22,7 @@ package net.sourceforge.ganttproject.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -73,6 +74,7 @@ class ProjectOpenStrategy implements AutoCloseable {
     return ourConvertMilestonesOption;
   }
 
+  private final AtomicBoolean done = new AtomicBoolean();
   private final UIFacade myUiFacade;
   private final IGanttProject myProject;
   private final ProjectOpenDiagnosticImpl myDiagnostics;
@@ -304,7 +306,10 @@ class ProjectOpenStrategy implements AutoCloseable {
           processTasks(tasks);
         }
       };
-      FeaturesSetup.askToRunExtendAlg();
+
+      if (done.compareAndSet(false, true)) {
+        FeaturesSetup.askToRunExtendAlg();
+      }
       SwingUtilities.invokeLater(wrapper);
 
     }

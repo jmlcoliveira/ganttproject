@@ -2,9 +2,6 @@ package es.group.work.features.tests;
 
 import es.group.work.features.statistics.Statistics;
 import junit.framework.TestCase;
-import net.sourceforge.ganttproject.task.Task;
-import net.sourceforge.ganttproject.task.TaskManager;
-import net.sourceforge.ganttproject.task.TaskManagerImpl;
 
 import java.util.Calendar;
 import java.util.Date;

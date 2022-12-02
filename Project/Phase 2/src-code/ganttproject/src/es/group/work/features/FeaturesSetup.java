@@ -40,12 +40,12 @@ public class FeaturesSetup {
     private SliderManager sliderManager;
     private Statistics stats;
 
-    // feature 1 variables
 
-    //an algorithm that extends the duration of unfinished tasks that should have ended in the past, with implementation in the task's algorithms package
     private TaskManager taskManager;
-    private static GanttProject project;
-    private static boolean askedToExtendTasks; //can only ask once
+    private static GanttProject project; // TODO: look at this later
+
+    // feature 1 variables
+    //an algorithm that extends the duration of unfinished tasks that should have ended in the past, with implementation in the task's algorithms package
 
 
 
@@ -59,9 +59,6 @@ public class FeaturesSetup {
         // set's up the gui and the events
         this.setupGui(mainPanel);
         this.setupEvents(project);
-
-        askedToExtendTasks = false;
-
     }
 
     private  void setupEvents(final GanttProject project){
@@ -124,7 +121,7 @@ public class FeaturesSetup {
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().run();
-                project.refresh();
+                project.refresh(); // this smells @RICARDO try to do this thing in the algorithm
             }
         });
 
@@ -174,29 +171,22 @@ public class FeaturesSetup {
 
     public static void askToRunExtendAlg() {
 
-        if (!askedToExtendTasks) {
+        if (project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().couldRun()) {
 
-            askedToExtendTasks = true;
+            UIFacade.Choice saveChoice = project.getUIFacade().showYesNoConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
+                    "Uncompleted past tasks detected");
 
-            if (project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().couldRun()) {
+            if (UIFacade.Choice.YES == saveChoice) {
+                try {
 
-                UIFacade.Choice saveChoice = project.getUIFacade().showYesNoConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
-                        "Uncompleted past tasks detected");
-
-                if (UIFacade.Choice.YES == saveChoice) {
-                    try {
-
-                        project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().run();
-                        project.refresh();
+                    project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().run();
+                    project.refresh();
 
 
-                    } catch (Exception e) {
-                        project.getUIFacade().showErrorDialog(e);
-                    }
+                } catch (Exception e) {
+                    project.getUIFacade().showErrorDialog(e);
                 }
             }
-
-
         }
 
     }
