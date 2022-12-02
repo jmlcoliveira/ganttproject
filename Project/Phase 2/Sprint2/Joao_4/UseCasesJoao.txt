@@ -1,0 +1,17 @@
+Use case refering to the timeline manager.
+Has two actors, one primary and one secondary. 
+The primary is the user that interacts with the system
+The secondary is the time.
+
+Do Zoom:
+	Action that allows the user to zoom in and out.
+
+Navigate to specific day:
+	The user can navigate in the time line to select the date range he want to see.
+	Can be done by dragging the time line or by selecting some options, like "Past", "Future", "Project Start", "Today", "Project End" or "Selection".
+
+See critical path:
+	The user can choose an option to see the critical path.
+
+Change current day:
+	The secondary actor, the time, updates the day to the current one.
