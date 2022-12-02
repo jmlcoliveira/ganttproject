@@ -1,0 +1,79 @@
+Code Smells
+
+Deadcode (Revisto por João Oliveira)
+A classe GanttXMLFileFilter não está a ser usada pelo que
+pode ser apagada em segurança sem afetar o programa.
+
+Data clump (Revisto por João Oliveira)
+É de facto uma data clump.
+
+Long Method (Revisto por João Oliveira)
+O método está de facto demasiado grande, apesar de ter todo
+o objetivo de inicializar a UI. Podiam ter sido usadas funções
+auxiliares para tornar mais claro o que é feito no método. Há também
+pedaços de código comentados que deviam ser apagados.
+
+No Comment (Revisto por James Furtado)
+A classe não tem nenhum comentário. Então eu concordo que isso é um code smell.
+
+Long Method (revisto por James Furtado)
+Também acho que isto pode ser considerado um code smell.
+
+Over Comment (Revisto por James Furtado)
+Ao contrário do restante do código (que quase não tem comentários) 
+essa classe tem comentários e são muitos, assim sendo, claramente é um code smell.
+
+DeadCode (Revisto por Francisco Vasco)
+Concordo que é DeadCode, não é utilizado e que pode ser também
+uma situação de preparação/”over-engineering” em antecipação de funcionalidades futuras.
+
+Data Class (revisto por Francisco Vasco)
+Confirma-se que a classe só tem “getters”.
+A solução sugerida parece-me aceitável, outra solução seria
+guardar estas informações nas classes que as utilizam.
+
+Duplicated Code (revisto por Francisco Vasco)
+Parece-me correta a identificação.
+Embora se trate de apenas uma linha podem surgir erros
+após um futuro refactoring que se evitam com esta solução.
+
+----------------------Design Patterns-------------------------------------------
+
+Behaviour Pattern (Revisto por João Oliveira)
+Estamos perante um padrão de comportamento onde na classe
+está o método getIconFilePrefix() que é depois alterado por 19
+classes que estendem a classe.
+
+Command pattern (Revisao feita por João Oliveira)
+As várias ações do programa, como o zoom, o scroll, etc,
+estão em classes separadas, encapsulando assim a informação
+necessária para executar cada uma das ações
+
+Abstract Factory Pattern (Revisao feita por João Oliveira)
+Estamos perante um Factory Pattern. Pois o construtor foi
+alterado para as funcões createGanttCalendar que recebem alguns
+parâmetros e devolvem um produto
+
+Singleton (Revisto por James Furtado)
+A inner class Access da class RoleManager usa mesmo o pattern singleton.
+Singleton (Revisto por Francisco Vasco)
+De facto este método em conjunto com a variável ourInstance
+assegura que apenas existe uma instância de GPCalendarProvider.
+
+Facade pattern (Revisto por James Furtado)
+O nome da classe é bem descritivo, tudo o que posso dizer é que concordo.
+
+Template Method (Revisto por James Furtado)
+Revisão: Sim de facto isto é um template método. A classe 
+é abstrata e as subclasses rescrevem esses e outros métodos.
+
+Observer Pattern (Revisto por Francisco Vasco)
+Implementações de GPCalendar (o Subject) mantêm uma coleção de GPCalendarListener (adicionados através do método addListener)
+e notificam cada um ao efetuar mudanças ao calendário, o padrão parece-me correto.
+
+Singleton (Revisto por Francisco Vasco)
+De facto este método em conjunto com a variável ourInstance
+assegura que apenas existe uma instância de GPCalendarProvider.
+
+Singleton (Revisto por Francisco Vasco)
+Correto, implementação normal com Singleton Pattern.
