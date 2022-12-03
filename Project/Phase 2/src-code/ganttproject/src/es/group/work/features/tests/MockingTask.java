@@ -277,9 +277,4 @@ public class MockingTask implements Task {
     public List<Document> getAttachments() {
         return null;
     }
-
-    @Override
-    public boolean endsInWorkDay() {
-        return false;
-    }
 }

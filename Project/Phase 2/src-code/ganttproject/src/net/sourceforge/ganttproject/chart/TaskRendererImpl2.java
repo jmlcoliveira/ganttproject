@@ -587,15 +587,6 @@ public class TaskRendererImpl2 extends ChartRendererBase {
     }
   }
 
-  private float trueLength(Task task, float calculatedLength){
-
-    if(task.endsInWorkDay())
-        return calculatedLength;
-    else
-      return calculatedLength - 1 + ((task.getEnd().getTime().getTime() % (24*60*60*1000))/60*60*1000);
-
-  }
-
   private void renderProgressBar(List<Polygon> rectangles) {
     if (rectangles.isEmpty()) {
       return;
@@ -603,10 +594,7 @@ public class TaskRendererImpl2 extends ChartRendererBase {
     final Canvas container = getPrimitiveContainer().getLayer(0);
     final TimeUnit timeUnit = getChartModel().getTimeUnitStack().getDefaultTimeUnit();
     final Task task = ((TaskActivity) rectangles.get(0).getModelObject()).getOwner();
-    float length = trueLength(task, task.getDuration().getLength(timeUnit));
-
-    System.out.println(length);
-
+    float length = task.getDuration().getLength(timeUnit);
     float completed = task.getCompletionPercentage() * length / 100f;
     Polygon lastProgressRectangle = null;
 

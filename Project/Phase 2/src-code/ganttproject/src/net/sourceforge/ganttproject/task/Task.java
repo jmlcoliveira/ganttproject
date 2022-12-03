@@ -188,6 +188,4 @@ public interface Task extends MutableTask {
   boolean isSupertask();
 
   List<Document> getAttachments();
-
-  boolean endsInWorkDay();
 }

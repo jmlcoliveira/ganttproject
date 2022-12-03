@@ -81,16 +81,11 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
             //this is because we want to render us completing the task before the pause of working days
             currentMilliSeconds -= 24 * 60 * 60 * 1000;
-            this.workingDayEnd = new Date(currentMilliSeconds + ( 23*60*60*1000 - (currentMilliSeconds % (24*60*60*1000))));
-
-        }else {
-
-            this.workingDayEnd = new Date(currentMilliSeconds);
 
         }
 
         //we want the end of the day
-        //this.workingDayEnd = new Date(currentMilliSeconds + ( 23*60*60*1000 - (currentMilliSeconds % (24*60*60*1000))));
+        this.workingDayEnd = new Date(currentMilliSeconds + ( 23*60*60*1000 - (currentMilliSeconds % (24*60*60*1000))));
 
     }
 
