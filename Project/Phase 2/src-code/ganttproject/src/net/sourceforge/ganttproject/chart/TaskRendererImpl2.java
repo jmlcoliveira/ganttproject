@@ -589,12 +589,10 @@ public class TaskRendererImpl2 extends ChartRendererBase {
 
   private float trueLength(Task task, float calculatedLength){
 
-    System.out.println(((task.getEnd().getTime().getTime() % (24*60*60*1000))/(60*60*1000)));
-
     if(task.endsInWorkDay())
         return calculatedLength;
     else
-      return calculatedLength - 1 + ((task.getEnd().getTime().getTime() % (24*60*60*1000))/(60*60*1000));
+      return calculatedLength - 1 + ((task.getEnd().getTime().getTime() % (24*60*60*1000))/60*60*1000);
 
   }
 
