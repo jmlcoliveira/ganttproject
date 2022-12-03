@@ -2,3 +2,7 @@ Data Class (revisto por Francisco Vasco)
 Confirma-se que a classe só tem “getters”.
 A solução sugerida parece-me aceitável, outra solução seria
 guardar estas informações nas classes que as utilizam.
+
+Switch Statement (revisto por Ricardo Gonçalo)
+Fazer duas subclasses. Além de eliminar o atributo myType
+vai eliminar a exceção o que já é muito bom.
