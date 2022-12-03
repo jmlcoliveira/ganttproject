@@ -4,3 +4,7 @@ Data clump (Revisto por João Oliveira)
 DeadCode (Revisto por Francisco Vasco)
 Concordo que é DeadCode, não é utilizado e que pode ser também
 uma situação de preparação/”over-engineering” em antecipação de funcionalidades futuras.
+
+No comments (Revisto por Ricardo Gonçalo)
+Sim, para uma class de 380 linhas tem muitos poucos
+comentários.
