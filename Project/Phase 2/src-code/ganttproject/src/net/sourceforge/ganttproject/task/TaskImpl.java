@@ -155,6 +155,7 @@ public class TaskImpl implements Task {
     myColor = null;
 
     customValues = new CustomColumnsValues(myManager.getCustomPropertyManager());
+
   }
 
   protected TaskImpl(TaskManagerImpl manager, TaskImpl copy, boolean isUnplugged) {
@@ -1287,7 +1288,10 @@ public class TaskImpl implements Task {
     return myCost;
   }
 
-
+  @Override
+  public boolean endsInWorkDay() {
+    return RESTLESS_CALENDAR.findClosestWorkingTime(myEnd.getTime()).equals(myEnd.getTime());
+  }
 
 
 
