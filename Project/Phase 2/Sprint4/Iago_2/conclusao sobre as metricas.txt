@@ -1,0 +1,7 @@
+Conclusao:
+Como podemos ver na Folha 1 e Folha 2
+Na folha 1 conseguimos observar o numero de metodos total do gantproject (6862)
+E na folha 2, esta apontado o numero de metodos sem comentarios no ganttproject num todo (6030)
+
+Logo, apenas 12% dos metodos no gantproject estao comentados, o que tornou muito complicada a
+compreensao do projecto ao longo destas semanas.

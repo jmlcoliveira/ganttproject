@@ -26,10 +26,7 @@ import biz.ganttproject.core.option.EnumerationOption;
 import biz.ganttproject.core.option.StringOption;
 import biz.ganttproject.core.time.TimeDuration;
 import biz.ganttproject.core.time.TimeUnit;
-import net.sourceforge.ganttproject.CustomPropertyDefinition;
-import net.sourceforge.ganttproject.CustomPropertyManager;
-import net.sourceforge.ganttproject.GanttTask;
-import net.sourceforge.ganttproject.ProjectEventListener;
+import net.sourceforge.ganttproject.*;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.resource.HumanResource;
 import net.sourceforge.ganttproject.resource.HumanResourceManager;
@@ -196,9 +193,9 @@ public interface TaskManager {
 
   public class Access {
     public static TaskManager newInstance(TaskContainmentHierarchyFacade.Factory containmentFacadeFactory,
-                                          TaskManagerConfig config, UIFacade uiFacade, WeekendCalendarImpl weekendCalendar) {
+                                          TaskManagerConfig config, UIFacade uiFacade, WeekendCalendarImpl weekendCalendar, GanttProject project) {
 
-      return new TaskManagerImpl(containmentFacadeFactory, config, uiFacade, weekendCalendar);
+      return new TaskManagerImpl(containmentFacadeFactory, config, uiFacade, weekendCalendar, project);
     }
   }
 

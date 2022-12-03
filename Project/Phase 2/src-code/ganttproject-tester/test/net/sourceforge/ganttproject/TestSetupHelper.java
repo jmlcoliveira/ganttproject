@@ -72,8 +72,9 @@ public class TestSetupHelper {
             return this;
         }
 
+        //this is wrong and if used we should do it better
         public TaskManager build() {
-            return TaskManager.Access.newInstance(null, this);
+            return TaskManager.Access.newInstance(null, this, null, null, null);
         }
 
         @Override

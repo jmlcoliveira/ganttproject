@@ -1,0 +1,36 @@
+Delete resource: 
+	desc: The user can delete a resource from the system
+
+Edit Resource:
+	desc: User can remove those custom roles
+	Inherited by:
+
+		Add Resource
+
+	Extended By:
+
+		Set Personal Info
+		Set Role
+		Set Standart Rate
+		Edit Days Off
+
+Add Resource:
+	desc: The user can add a resource to the system, setting its values (Edit Resource)
+
+Set Personal Info:
+	desc: The user can set the name, phone number and mail of the Resource
+
+Set Role:
+	desc: The user can set the role of the resource, choosing from available values
+
+Set Standart Rate:
+	desc: The user can set the standart rate of the resource
+
+Edit Days Off:
+	desc: The user can add or remove intervals of days off
+
+Send Email:
+	desc: The user can send an email to the resource
+
+Manage columns:
+	desc: The user can show, hide, create columns, delete created columns and set values in the columns of the Resources Chart. 

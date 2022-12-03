@@ -7,3 +7,7 @@ pedaços de código comentados que deviam ser apagados.
 Over Comment (Revisto por James Furtado)
 Ao contrário do restante do código (que quase não tem comentários) 
 essa classe tem comentários e são muitos, assim sendo, claramente é um code smell.
+
+
+Data Class (Revisto por Iago Paulo)
+Seria uma solução viável tendo em conta a redução de complexidade

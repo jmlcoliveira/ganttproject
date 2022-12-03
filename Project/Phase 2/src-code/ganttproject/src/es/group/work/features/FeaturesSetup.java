@@ -10,11 +10,9 @@ import es.group.work.features.sliders.SliderManager;
 import es.group.work.features.statistics.Statistics;
 import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
-import net.sourceforge.ganttproject.IGanttProject;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.task.Task;
 import net.sourceforge.ganttproject.task.TaskManager;
-import net.sourceforge.ganttproject.task.algorithm.AlgorithmBase;
 import net.sourceforge.ganttproject.task.algorithm.ExtendUncompletedTaskAlgorithm;
 import net.sourceforge.ganttproject.task.event.*;
 
@@ -35,6 +33,8 @@ public class FeaturesSetup {
 
     private static final String TASK_ENDED_EARLY_MESSAGE = "Do you want to end the task completed today?";
     private static final String TASK_ENDED_EARLY_TITLE = "Task completed early";
+    private static final String DELAY_MESSAGE = "Do you want to delay uncompleted tasks in the pass?";
+    private static final String DELAY_TITLE = "Uncompleted past tasks detected";
 
     // feature 2 variables
     private SliderManager sliderManager;
@@ -42,7 +42,7 @@ public class FeaturesSetup {
 
 
     private TaskManager taskManager;
-    private static GanttProject project; // TODO: look at this later
+    private static GanttProject project;
 
     // feature 1 variables
     //an algorithm that extends the duration of unfinished tasks that should have ended in the past, with implementation in the task's algorithms package
@@ -75,9 +75,14 @@ public class FeaturesSetup {
         project.getActiveCalendar().addListener(adapter);
         project.getTaskManager().addTaskListener(adapter);
         project.addProjectEventListener(adapter);
+        addEndTaskEarlyListener();
+
+
+    }
+
+    private void addEndTaskEarlyListener(){
 
         taskManager.addTaskListener(new TaskProgressListener() {
-
 
 
             @Override
@@ -86,9 +91,9 @@ public class FeaturesSetup {
                 Task task = e.getTask();
                 ExtendUncompletedTaskAlgorithm extendAlg = taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
 
-                if(task.getCompletionPercentage() == 100 && extendAlg.taskAfterNextWorkingEnd(task) && extendAlg.taskStartsBeforeNextWorkingEnd(task)){
+                if(task.getCompletionPercentage() == 100 && extendAlg.taskAfterPrevWorkEnd(task) && extendAlg.taskStartsBefPrevWorkEnd(task)){
 
-                    taskManager.taskCommitYesNo(extendAlg.modifyTaskEndToNextWorkingEnd(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
+                    taskManager.taskCommitYesNo(extendAlg.endEarlyCompletedTask(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
 
                 }
 
@@ -97,6 +102,7 @@ public class FeaturesSetup {
 
 
     }
+
     private  Component setupTitle(){
         JLabel title = new JLabel(STATS_TITLE);
         title.setFont(TITLE_FONT);
@@ -121,7 +127,6 @@ public class FeaturesSetup {
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().run();
-                project.refresh(); // this smells @RICARDO try to do this thing in the algorithm
             }
         });
 
@@ -169,12 +174,18 @@ public class FeaturesSetup {
         }
     }
 
+    /**
+     *
+     * This is for outside objects ask to run the algorithm for verifying if there are tasks to extend
+     *
+     *
+     */
     public static void askToRunExtendAlg() {
 
         if (project.getTaskManager().getAlgorithmCollection().getExtendUncompletedTaskAlgorithm().couldRun()) {
 
-            UIFacade.Choice saveChoice = project.getUIFacade().showYesNoConfirmationDialog("Do you want to delay uncompleted tasks in the pass?",
-                    "Uncompleted past tasks detected");
+            UIFacade.Choice saveChoice = project.getUIFacade().showYesNoConfirmationDialog(DELAY_MESSAGE,
+                    DELAY_TITLE);
 
             if (UIFacade.Choice.YES == saveChoice) {
                 try {

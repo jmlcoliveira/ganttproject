@@ -5,3 +5,6 @@ necessária para executar cada uma das ações
 
 Facade pattern (Revisto por James Furtado)
 O nome da classe é bem descritivo, tudo o que posso dizer é que concordo.
+
+Builder Pattern (Revisto por Iago Paulo)
+Tem as características de de um builder pattern padrão e aparenta funcionar como tal

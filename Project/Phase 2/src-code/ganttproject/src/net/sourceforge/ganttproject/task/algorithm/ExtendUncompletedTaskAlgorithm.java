@@ -23,10 +23,10 @@ import biz.ganttproject.core.calendar.WeekendCalendarImpl;
 import biz.ganttproject.core.time.CalendarFactory;
 import biz.ganttproject.core.time.GanttCalendar;
 import net.sourceforge.ganttproject.GPLogger;
+import net.sourceforge.ganttproject.GanttProject;
 import net.sourceforge.ganttproject.task.Task;
 import net.sourceforge.ganttproject.task.TaskMutator;
 import net.sourceforge.ganttproject.task.algorithm.DependencyGraph.Node;
-import net.sourceforge.ganttproject.task.dependency.TaskDependency;
 
 import java.util.Collection;
 import java.util.Date;
@@ -34,38 +34,89 @@ import java.util.Date;
 
 /**
  * This algorithm extends tasks that are not complete but ended in the past, with some extra functionalities public to the outside
+ * Sometimes we refer to "end of current or previous work day", this refers to the end of the current day if it is an work day
+ * Or the end of the previous work day if today is not an work day
  *
  * @author r.goncalo
  *
  */
 public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
-    private final DependencyGraph myGraph;
+    private final DependencyGraph myGraph; //used to go through the tasks
     private boolean isRunning;
-    private Date nextWorkingDayEnd; // this is the end of the next working day, at 0:00:00
+    private Date nextWorkingDayEnd; //this is the end of the previous working day, at 0:00:00 of the next day
+    private Date previousWorkingDayEnd; //this is the end of the next working day, at 0:00:00 of the day
+    private  GanttProject project;
 
-    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, WeekendCalendarImpl weekendCalendar, SchedulerImpl scheduler) {
+    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, WeekendCalendarImpl weekendCalendar, SchedulerImpl scheduler, GanttProject project) {
         myGraph = graph;
 
-        defineEndOfNextWorkingDay(weekendCalendar);
+        long currentTimeMillis = System.currentTimeMillis();
+
+        defineEndNextWorkDay(weekendCalendar, currentTimeMillis);
+        defineEndPreviousWorkDay(weekendCalendar, currentTimeMillis);
+
+        this.project = project;
+
 
     }
 
-    private void defineEndOfNextWorkingDay(WeekendCalendarImpl weekendCalendar){
+        /**
+         *
+         * defines the end of the current or previous working day
+         *this is public for testing purposes
+         *
+         * @param weekendCalendar
+         */
+    public void defineEndPreviousWorkDay(WeekendCalendarImpl weekendCalendar, long milliSecondsNow){
 
-        long currentMilliSeconds = System.currentTimeMillis();
+        //current date
+        long currentMilliSeconds = milliSecondsNow;
         Date currentDate = new Date(currentMilliSeconds);
+
+        //is it a work date?
         Date closestWorkingDate = weekendCalendar.findClosestWorkingTime(currentDate);
 
-        while(!closestWorkingDate.equals(currentDate)){
+        if(!closestWorkingDate.equals(currentDate)) {
+
+            //while it's not, we go backwards in time until we find one
+            while (!closestWorkingDate.equals(currentDate)) {
 
 
-            currentMilliSeconds = currentMilliSeconds + 24*60*60*1000;
+                currentMilliSeconds -= 24 * 60 * 60 * 1000; //we move to yesterday
+                currentDate = new Date(currentMilliSeconds);
+                closestWorkingDate = weekendCalendar.findClosestWorkingTime(currentDate);
+
+            }
+
+        }
+
+        //we want the end of the day
+        this.previousWorkingDayEnd = new Date(currentMilliSeconds + ( 23*60*60*1000 - (currentMilliSeconds % (24*60*60*1000))));
+
+    }
+
+    public void defineEndNextWorkDay(WeekendCalendarImpl weekendCalendar, long milliSecondsNow){
+
+        //current date
+        long currentMilliSeconds = milliSecondsNow;
+        Date currentDate = new Date(currentMilliSeconds);
+
+        //is it a work date?
+        Date closestWorkingDate = weekendCalendar.findClosestWorkingTime(currentDate);
+
+
+            //while it's not, we go backwards in time until we find one
+        while (!closestWorkingDate.equals(currentDate)) {
+
+            currentMilliSeconds += 24 * 60 * 60 * 1000; //we move to tommoroow
             currentDate = new Date(currentMilliSeconds);
             closestWorkingDate = weekendCalendar.findClosestWorkingTime(currentDate);
 
         }
 
+
+        //we want the end of the day
         this.nextWorkingDayEnd = new Date(currentMilliSeconds + ( 23*60*60*1000 - (currentMilliSeconds % (24*60*60*1000))));
 
     }
@@ -86,6 +137,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         isRunning = true;
         try {
             doRun();
+            project.refresh();//because we need to re-render
         } finally {
             isRunning = false;
         }
@@ -106,8 +158,9 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
                         Task task = node.getTask();
 
-                        if(task.getCompletionPercentage() < 100 && taskBeforeNextWorkingEnd(task)){
+                        if(task.getCompletionPercentage() < 100 && taskBeforePrevWorkEnd(task)){
 
+                            //yes the algorithm would make changes
                             return true;
 
                         }
@@ -126,15 +179,25 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
     }
 
+    //in a similar fashion to the SchedulerImpl
     private void doRun() {
 
         int layers = myGraph.checkLayerValidity();
+        Task task;
 
         for (int i = 0; i < layers; i++) {
             Collection<Node> layer = myGraph.getLayer(i);
             for (Node node : layer) {
                 try {
-                    extendUncompletedTasks(node);
+
+                    task = node.getTask();
+                    if(task.getCompletionPercentage() < 100 && task.getEnd().getTime().before(nextWorkingDayEnd)) {
+
+                        extendUncompletedTask(node.getTask()).commit();
+
+                    }
+
+
                 } catch (IllegalArgumentException e) {
                     GPLogger.log(e);
                 }
@@ -143,40 +206,53 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
     }
 
-    private void extendUncompletedTasks(Node node) {
 
-        Task task = node.getTask();
+    /**
+     *
+     * extends the time of an uncompleted task to end of the current or next work day
+     *
+     * @param task
+     */
+    public TaskMutator extendUncompletedTask(Task task) {
 
 
-        if(task.getCompletionPercentage() < 100 && task.getEnd().getTime().before(nextWorkingDayEnd)){
 
-            modifyTaskEndToNextWorkingEnd(task).commit();
+            return modifyTaskEnd(task, nextWorkingDayEnd);
 
-        }
 
+    }
+
+    /**
+     *
+     * @param task
+     * @return
+     */
+    public TaskMutator endEarlyCompletedTask(Task task) {
+
+
+
+        return modifyTaskEnd(task, previousWorkingDayEnd);
 
 
     }
 
 
-    public TaskMutator modifyTaskEndToNextWorkingEnd(Task task) {
+    /**
+     *
+     * @param task
+     * @param newDate
+     * @return an uncommited mutatator with the change
+     */
+    private TaskMutator modifyTaskEnd(Task task, Date newDate) {
 
         TaskMutator mutator = task.createMutator();
-        if(task.getEnd().getTime().equals(nextWorkingDayEnd)) {
+        if(task.getEnd().getTime().equals(newDate)) {
             return mutator;
         }else {
 
-            if(task.getStart().getTime().after(nextWorkingDayEnd) || task.getStart().getTime().equals(nextWorkingDayEnd)){
-
-                GanttCalendar newStartCalendar = CalendarFactory.createGanttCalendar(new Date (nextWorkingDayEnd.getTime() - 24*60*60*1000));
-                
-                mutator.setStart(newStartCalendar);
-
-            }
-
-            GanttCalendar newEndCalendar = CalendarFactory.createGanttCalendar(nextWorkingDayEnd);
+            GanttCalendar newEndCalendar = CalendarFactory.createGanttCalendar(newDate);
             if (getDiagnostic() != null) {
-                getDiagnostic().addModifiedTask(task, null, nextWorkingDayEnd);
+                getDiagnostic().addModifiedTask(task, null, newDate);
             }
             mutator.setEnd(newEndCalendar);
             return mutator;
@@ -184,21 +260,38 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         }
     }
 
-    public boolean taskBeforeNextWorkingEnd(Task task){
+    /**
+     *
+     * @param task
+     *
+     * @return true if the task ends before this or previous working day
+     */
+    public boolean taskBeforePrevWorkEnd(Task task){
 
-        return task.getEnd().getTime().before(nextWorkingDayEnd);
+        return task.getEnd().getTime().before(previousWorkingDayEnd);
+
+    }
+    /**
+     *
+     * @param task
+     *
+     * @return true if the task ends before this or after working day
+     */
+    public boolean taskAfterPrevWorkEnd(Task task){
+
+        return task.getEnd().getTime().after(previousWorkingDayEnd);
 
     }
 
-    public boolean taskAfterNextWorkingEnd(Task task){
+    /**
+     *
+     * @param task
+     *
+     * @return true if the task starts before this or previous working day
+     */
+    public boolean taskStartsBefPrevWorkEnd(Task task){
 
-        return task.getEnd().getTime().after(nextWorkingDayEnd);
-
-    }
-
-    public boolean taskStartsBeforeNextWorkingEnd(Task task){
-
-        return task.getStart().getTime().before(nextWorkingDayEnd);
+        return task.getStart().getTime().before(previousWorkingDayEnd);
 
     }
 }

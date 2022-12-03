@@ -4,3 +4,7 @@ Revisão: Sim de facto isto é um template método. A classe
 
 Singleton (Revisto por Francisco Vasco)
 Correto, implementação normal com Singleton Pattern.
+
+Memento (Revisto por Ricardo Gonçalo)
+Correto, é possível restaurar o estado anterior do documento
+a partir do método undo() ao manter uma snapshot do estado anterior.
