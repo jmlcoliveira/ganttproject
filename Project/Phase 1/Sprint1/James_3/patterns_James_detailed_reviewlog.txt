@@ -4,3 +4,6 @@ e notificam cada um ao efetuar mudanças ao calendário, o padrão parece-me cor
 
 Iterator Pattern (Revisto por Iago)
 De facto a classe tem um iterador e está a usa-lo para acessar elementos, logo é um Pattern Iterator
+
+Singleton (Revisto por Ricardo Gonçalo)
+Sim, não haveria melhor maneira de dizer que é singleton.

@@ -7,3 +7,6 @@ parâmetros e devolvem um produto
 Singleton (Revisto por Francisco Vasco)
 De facto este método em conjunto com a variável ourInstance
 assegura que apenas existe uma instância de GPCalendarProvider.
+
+Builder Pattern (Revisto por Ricardo Gonçalo)
+Sim, dá os métodos necessários para construir a aplicação.
