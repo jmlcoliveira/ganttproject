@@ -808,11 +808,11 @@
 												"$ref": "AAAAAAGEvz+Py5/fQC0="
 											},
 											"font": "Arial;13;1",
-											"left": 824.5,
+											"left": 829.5,
 											"top": 243.5,
-											"width": 81,
+											"width": 105,
 											"height": 13,
-											"text": "Personal info"
+											"text": "Set Personal info"
 										},
 										{
 											"_type": "LabelView",
@@ -843,9 +843,9 @@
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 819.5,
+									"left": 824.5,
 									"top": 236.5,
-									"width": 92.34814453125,
+									"width": 116.18994140625,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGEvz+Py5/grPc="
@@ -945,7 +945,7 @@
 							"containerChangeable": true,
 							"left": 800,
 							"top": 232,
-							"width": 130,
+							"width": 164,
 							"height": 35,
 							"nameCompartment": {
 								"$ref": "AAAAAAGEvz+Py5/fQC0="
@@ -1586,7 +1586,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 775,
+									"left": 783,
 									"top": 308,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -1606,7 +1606,7 @@
 										"$ref": "AAAAAAGEv0v5ZdWkf4Q="
 									},
 									"font": "Arial;13;0",
-									"left": 756,
+									"left": 764,
 									"top": 321,
 									"width": 53.49169921875,
 									"height": 13,
@@ -1629,7 +1629,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 760,
+									"left": 770,
 									"top": 281,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -1648,7 +1648,7 @@
 								"$ref": "AAAAAAGEvz+Py5/eeSo="
 							},
 							"lineStyle": 1,
-							"points": "831:267;706:335",
+							"points": "845:267;709:335",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGEv0v5ZdWnbwQ="
@@ -3796,7 +3796,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGEvzoYHZu+pZA="
 					},
-					"name": "Personal info",
+					"name": "Set Personal info",
 					"ownedElements": [
 						{
 							"_type": "UMLExtend",
