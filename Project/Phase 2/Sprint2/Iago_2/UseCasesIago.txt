@@ -1,3 +1,5 @@
+The only actor is the user, which can do all this use cases.
+
 Change project info: 
 	desc: User can change/add things like the name of the project, Organisation,
 	Web Link and description
