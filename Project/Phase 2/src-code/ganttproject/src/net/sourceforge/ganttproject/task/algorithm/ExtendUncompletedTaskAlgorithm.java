@@ -46,7 +46,8 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
     public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, WeekendCalendarImpl weekendCalendar, SchedulerImpl scheduler) {
         myGraph = graph;
 
-        defineEndWorkDay(weekendCalendar, System.currentTimeMillis());
+        //defineEndWorkDay(weekendCalendar, System.currentTimeMillis());
+        defineEndWorkDay(weekendCalendar, System.currentTimeMillis() - 24*60*60*1000*3);
 
     }
 
@@ -66,13 +67,20 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
         //is it a work date?
         Date closestWorkingDate = weekendCalendar.findClosestWorkingTime(currentDate);
 
-        //while it's not, we go backwards in time
-        while(!closestWorkingDate.equals(currentDate)){
+        if(!closestWorkingDate.equals(currentDate)) {
+
+            //while it's not, we go backwards in time until we find one
+            while (!closestWorkingDate.equals(currentDate)) {
 
 
-            currentMilliSeconds = currentMilliSeconds - 24*60*60*1000; //we move to yesterday
-            currentDate = new Date(currentMilliSeconds);
-            closestWorkingDate = weekendCalendar.findClosestWorkingTime(currentDate);
+                currentMilliSeconds -= 24 * 60 * 60 * 1000; //we move to yesterday
+                currentDate = new Date(currentMilliSeconds);
+                closestWorkingDate = weekendCalendar.findClosestWorkingTime(currentDate);
+
+            }
+
+            //this is because we want to render us completing the task before the pause of working days
+            currentMilliSeconds -= 24 * 60 * 60 * 1000;
 
         }
 
