@@ -10,11 +10,9 @@ import es.group.work.features.sliders.SliderManager;
 import es.group.work.features.statistics.Statistics;
 import net.sourceforge.ganttproject.ChartPanel;
 import net.sourceforge.ganttproject.GanttProject;
-import net.sourceforge.ganttproject.IGanttProject;
 import net.sourceforge.ganttproject.gui.UIFacade;
 import net.sourceforge.ganttproject.task.Task;
 import net.sourceforge.ganttproject.task.TaskManager;
-import net.sourceforge.ganttproject.task.algorithm.AlgorithmBase;
 import net.sourceforge.ganttproject.task.algorithm.ExtendUncompletedTaskAlgorithm;
 import net.sourceforge.ganttproject.task.event.*;
 
@@ -86,9 +84,9 @@ public class FeaturesSetup {
                 Task task = e.getTask();
                 ExtendUncompletedTaskAlgorithm extendAlg = taskManager.getAlgorithmCollection().getExtendUncompletedTaskAlgorithm();
 
-                if(task.getCompletionPercentage() == 100 && extendAlg.taskAfterNextWorkingEnd(task) && extendAlg.taskStartsBeforeNextWorkingEnd(task)){
+                if(task.getCompletionPercentage() == 100 && extendAlg.taskAfterWorkEnd(task) && extendAlg.taskStartsBefWorkEnd(task)){
 
-                    taskManager.taskCommitYesNo(extendAlg.modifyTaskEndToNextWorkingEnd(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
+                    taskManager.taskCommitYesNo(extendAlg.modifyTaskEnd(task), TASK_ENDED_EARLY_MESSAGE, TASK_ENDED_EARLY_TITLE);
 
                 }
 
