@@ -6,7 +6,7 @@ Parece-me correta a identificação.
 Embora se trate de apenas uma linha podem surgir erros
 após um futuro refactoring que se evitam com esta solução.
 
-Dead code (revisto por RIcardo Gonçalo)
+Dead code (revisto por Ricardo Gonçalo)
 Sim realmente é verdade e como é privada não é acessível de
 fora, a única coisa que poe estar a fazer é a impedir objetos de
 serem apanhados pelo garbage collector
