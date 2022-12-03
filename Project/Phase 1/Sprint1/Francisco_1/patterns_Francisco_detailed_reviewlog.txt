@@ -5,3 +5,8 @@ classes que estendem a classe.
 
 Singleton (Revisto por James Furtado)
 A inner class Access da class RoleManager usa mesmo o pattern singleton.
+
+
+Command Pattern (Revisto por Iago)
+Francisco diz ser um Command Pattern apesar de que para mim estar mais parecido 
+com um Observer Pattern devido às semelhanças dos métodos com o que vimos na aula prática sobre Observer Pattern

@@ -4,3 +4,6 @@ pode ser apagada em segurança sem afetar o programa
 
 No Comment (Revisto por James Furtado)
 A classe não tem nenhum comentário. Então eu concordo que isso é um code smell.
+
+Duplicated code (Revisto por Iago Paulo)
+Estes 2 pedaços de código são de facto exatamente iguais, um método auxiliar seria uma solução viável.
