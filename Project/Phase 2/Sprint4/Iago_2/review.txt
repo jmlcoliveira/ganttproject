@@ -1,0 +1,4 @@
+Reviewed by Francisco
+
+The conclusions Iago has reached from the collected metrics agree with the consensus of the team over the development period of the project,
+that is the project has a severe lack of comments which makes it more challenging to understand and improve.
