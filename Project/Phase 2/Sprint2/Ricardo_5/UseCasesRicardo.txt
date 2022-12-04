@@ -1,3 +1,6 @@
+Resource Manager:
+	desc: É o ator responsável por gerir os recursos (humanos), sendo o ator principal de todas estas ações
+
 Delete resource: 
 	desc: The user can delete a resource from the system
 
