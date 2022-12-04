@@ -37,6 +37,28 @@ Parece-me correta a identificação.
 Embora se trate de apenas uma linha podem surgir erros
 após um futuro refactoring que se evitam com esta solução.
 
+Data Class (Revisto por Iago Paulo)
+Seria uma solução viável tendo em conta a redução de complexidade
+
+Large Class (Revisto por Iago Paulo)
+Classe tem mais de 1200 linhas e é composto por 6 classes dentro do ficheiro, de facto é uma classe longa.
+
+Duplicated code (Revisto por Iago Paulo)
+Estes 2 pedaços de código são de facto exatamente iguais, um método auxiliar seria uma solução viável.
+
+Switch Statement (revisto por Ricardo Gonçalo)
+Fazer duas subclasses. Além de eliminar o atributo myType
+vai eliminar a exceção o que já é muito bom.
+
+Dead code (revisto por Ricardo Gonçalo)
+Sim realmente é verdade e como é privada não é acessível de
+fora, a única coisa que poe estar a fazer é a impedir objetos de
+serem apanhados pelo garbage collector
+
+No comments (Revisto por Ricardo Gonçalo)
+Sim, para uma class de 380 linhas tem muitos poucos
+comentários.
+
 ----------------------Design Patterns-------------------------------------------
 
 Behaviour Pattern (Revisto por João Oliveira)
@@ -77,3 +99,23 @@ assegura que apenas existe uma instância de GPCalendarProvider.
 
 Singleton (Revisto por Francisco Vasco)
 Correto, implementação normal com Singleton Pattern.
+
+Builder Pattern (Revisto por Iago Paulo)
+Tem as características de de um builder pattern padrão e aparenta funcionar como tal
+
+Iterator Pattern (Revisto por Iago)
+De facto a classe tem um iterador e está a usa-lo para acessar elementos, logo é um Pattern Iterator
+
+Command Pattern (Revisto por Iago)
+Francisco diz ser um Command Pattern apesar de que para mim estar mais parecido 
+com um Observer Pattern devido às semelhanças dos métodos com o que vimos na aula prática sobre Observer Pattern
+
+Singleton (Revisto por Ricardo Gonçalo)
+Sim, não haveria melhor maneira de dizer que é singleton.
+
+Memento (Revisto por Ricardo Gonçalo)
+Correto, é possível restaurar o estado anterior do documento
+a partir do método undo() ao manter uma snapshot do estado anterior.
+
+Builder Pattern (Revisto por Ricardo Gonçalo)
+Sim, dá os métodos necessários para construir a aplicação.
