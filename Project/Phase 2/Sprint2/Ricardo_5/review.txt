@@ -11,4 +11,4 @@ use case where everything that makes the use case extends it. What I think is th
 it should've been inherited by the uses cases that extends it (since these use cases have one thing
 in common - they changes some properties of a resource).
 
-I also think that it's a bit weird to make the use case add resourse inherit from "Edit resource".
+I also think that it's a bit weird to make the use case add resource inherit from "Edit resource".

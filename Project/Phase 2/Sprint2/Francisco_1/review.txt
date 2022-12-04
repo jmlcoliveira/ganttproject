@@ -1,2 +1,2 @@
-(Revisto por Ricardo Gonçalo)
-A ideia geral de manipulação de tasks é bem capturada
+Reviewed by Ricardo Gonçalo
+The overall idea and the manipulation of the task was well captured.

@@ -1,4 +1,4 @@
-Use case refering to the timeline manager.
+Use case referring to the timeline manager.
 Has two actors, one primary and one secondary. 
 The primary is the user that interacts with the system
 The secondary is the time.
