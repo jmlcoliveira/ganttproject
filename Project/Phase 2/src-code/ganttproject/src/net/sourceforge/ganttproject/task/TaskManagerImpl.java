@@ -270,7 +270,7 @@ public class TaskManagerImpl implements TaskManager {
     ChartBoundsAlgorithm alg5 = new ChartBoundsAlgorithm();
     CriticalPathAlgorithm alg6 = new CriticalPathAlgorithmImpl(this, getCalendar());
 
-    ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, weekendCalendar, myScheduler, project);
+    ExtendUncompletedTaskAlgorithm alg7 = new ExtendUncompletedTaskAlgorithm(myDependencyGraph, weekendCalendar, project);
 
     myAlgorithmCollection = new AlgorithmCollection(this, alg1, alg2, alg3, alg4, alg5, alg6, myScheduler, alg7);
     addTaskListener(myScheduler.getTaskModelListener());
