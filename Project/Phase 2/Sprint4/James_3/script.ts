@@ -11,13 +11,13 @@ const SPACE_BETWEEN_TABLES = 3
 const CATEGORY_COL = 4
 const NAME_COL = 5 // sub category :)
 
-type app_func = (start: number, end: number, cell?: number[]) => string
-
 const TABLE_HEADINGS = [
     'Metrics', "Average",
     "Maximum value", "Maximum count",
     "Minimum value", "Minimum count"
 ]
+
+type app_func = (start: number, end: number, cell?: number[]) => string
 
 function buildRanges(work: ExcelScript.Worksheet, height: number): object {
 
@@ -29,7 +29,7 @@ function buildRanges(work: ExcelScript.Worksheet, height: number): object {
 
         const innerKey = innerCell.getText()
         const cellKey = cell.getText()
-        const cellNum = i + 1
+        const cellRow = i + 1 // because the script api rows starts at 0 but in the formulas they start at 1
 
         let category: object = ranges[cellKey]
 
@@ -37,11 +37,11 @@ function buildRanges(work: ExcelScript.Worksheet, height: number): object {
 
         if (!category[innerKey]) {
             category[innerKey] = {
-                start: cellNum,
-                end: cellNum
+                start: cellRow,
+                end: cellRow
             }
         } else
-            category[innerKey].end = cellNum
+            category[innerKey].end = cellRow
 
     }
 
@@ -66,7 +66,7 @@ const valueCount: app_func = function (start, end, [row, col]) {
     const data_range = getDataRange(start, end)
     const value_range = getValueRange(start, end) // lookup_range
 
-    const target_cell = `${getRealCol(col - 1)}${row + 1}`;
+    const target_cell = `${getRealCol(col - 1)}${row + 1}`; // cell just before this one
 
     const count = `COUNTIF(${value_range}, ${target_cell})`
 
@@ -92,10 +92,7 @@ function buildTable(work: ExcelScript.Worksheet, title: string, ranges: object, 
     const init_col = col
     const category : object = ranges[title]
 
-    const titleCell = work.getCell(row, col)
-    titleCell.setValue(title)
-
-    row++
+    work.getCell(row++, col).setValue(title)
 
     // building the headers
     for (const header of TABLE_HEADINGS) {
