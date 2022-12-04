@@ -191,7 +191,7 @@ public class TestResourceAssignments extends TestCase {
             public NotificationManager getNotificationManager() {
               return null;
             }
-        });
+        }, null, null, null);
     }
 
     private TaskManager getTaskManager() {
