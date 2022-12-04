@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 public class Feature1Tests extends TestCase {
 
@@ -21,7 +19,6 @@ public class Feature1Tests extends TestCase {
     private WeekendCalendarImpl weekendCalendar;
 
     private ExtendUncompletedTaskAlgorithm alg;
-    private Random rand;
 
 
     ArrayList<Task> randomTasks;
@@ -30,7 +27,6 @@ public class Feature1Tests extends TestCase {
 
     public Feature1Tests(){
 
-        rand = new Random();
         setup();
     }
 
@@ -59,22 +55,6 @@ public class Feature1Tests extends TestCase {
 
     }
 
-    private void randomlyDistributeTasks(){
-
-
-        TaskMutator mutator;
-        Task task;
-        for(int i = 0; i < NUMBER_OF_TASKS; i++){
-
-            task = randomTasks.get(i);
-            mutator = task.createMutator();
-            mutator.setStart();
-
-        }
-
-
-    }
-
     public Task createTask(int id){
 
         return new TaskImpl(manager, id);
@@ -84,7 +64,12 @@ public class Feature1Tests extends TestCase {
     @Test
     void onlyExtendsTasks(){
 
+        randomTasks = new ArrayList<Task>(NUMBER_OF_TASKS);
+        for(int i = 0; i < NUMBER_OF_TASKS; i++){
 
+            onlyExtends(randomTasks.get(i));
+
+        }
 
 
     }
@@ -96,7 +81,32 @@ public class Feature1Tests extends TestCase {
         alg.extendUncompletedTask(task);
 
         assert(task.getEnd().getTime().after(endDate) || task.getEnd().getTime().equals(endDate));
-        assert(task.getStart().getTime().equals(endDate) || task.getEnd().getTime().equals(endDate));
+        assert(task.getStart().getTime().equals(endDate));
+
+
+    }
+
+    @Test
+    void onlyEndsTasksEarly(){
+
+        randomTasks = new ArrayList<Task>(NUMBER_OF_TASKS);
+        for(int i = 0; i < NUMBER_OF_TASKS; i++){
+
+            onlyEndskEarly(randomTasks.get(i));
+
+        }
+
+
+    }
+
+    private void onlyEndskEarly(Task task){
+
+        Date startDate = task.getStart().getTime();
+        Date endDate = task.getEnd().getTime();
+        alg.endEarlyCompletedTask(task);
+
+        assert(task.getEnd().getTime().before(endDate) || task.getEnd().getTime().equals(endDate));
+        assert(task.getStart().getTime().equals(endDate));
 
 
     }
