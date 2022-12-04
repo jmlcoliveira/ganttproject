@@ -1,3 +1,0 @@
-Realmente, concordo.
-Existem muitas classes acoupladas e dificulta a extensao de novas features.
-(Sendo que passamos por isso ao tentar adicionar nos mesmos novas features)

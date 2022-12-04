@@ -1,0 +1,3 @@
+Reviewed by Joao Oliveira
+The report is complete. Contains the average, sum, maximum and minimum.
+Each metric is well explained.

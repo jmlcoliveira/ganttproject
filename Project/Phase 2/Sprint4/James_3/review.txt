@@ -1,0 +1,4 @@
+Indeed I agree, (reviewed by Iago)
+There are classes that are really accoupled and this makes it hard to extend the project
+with new features.
+(Which means that we had some troubles trying to implement the new features)
