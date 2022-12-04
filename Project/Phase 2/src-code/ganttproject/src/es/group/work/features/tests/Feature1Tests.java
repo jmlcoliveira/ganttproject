@@ -5,10 +5,8 @@ import biz.ganttproject.core.time.CalendarFactory;
 import junit.framework.TestCase;
 import net.sourceforge.ganttproject.task.*;
 import net.sourceforge.ganttproject.task.algorithm.ExtendUncompletedTaskAlgorithm;
-import org.junit.Test;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -52,10 +50,9 @@ public class Feature1Tests extends TestCase {
 
         manager = new MockingManager();
         weekendCalendar = new WeekendCalendarImpl();
-        alg = new ExtendUncompletedTaskAlgorithm(null, null, null);
+        alg = new ExtendUncompletedTaskAlgorithm(null, weekendCalendar, null);
         alg.defineEndPreviousWorkDay(weekendCalendar, THIRD_DECEMBER_AT_TWELVE);
         alg.defineEndNextWorkDay(weekendCalendar, THIRD_DECEMBER_AT_TWELVE);
-
 
         createTasks();
 
@@ -87,7 +84,7 @@ public class Feature1Tests extends TestCase {
         setup();
 
         Task[] tasks = manager.getTasks();
-        for(int i = 0; i < NUMBER_OF_TASKS; i++){
+        for(int i = 0; i < tasks.length; i++){
 
             onlyExtends(tasks[i]);
 
@@ -110,11 +107,10 @@ public class Feature1Tests extends TestCase {
 
     }
 
-    @Test
-    void onlyEndsTasksEarly(){
+    public void testOnlyEndsTasksEarly(){
 
         Task[] tasks = manager.getTasks();
-        for(int i = 0; i < NUMBER_OF_TASKS; i++){
+        for(int i = 0; i < tasks.length; i++){
 
             onlyEndsEarly(tasks[i]);
 
