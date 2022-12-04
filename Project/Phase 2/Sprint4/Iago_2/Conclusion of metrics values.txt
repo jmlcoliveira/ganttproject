@@ -1,0 +1,15 @@
+Conclusion:
+
+As we can see in Sheet 1 and Sheet 2
+On sheet 1 we can see the total number of methods in the gantproject (6862)
+And on sheet 2, the number of methods without comments in the ganttproject in a whole (6030)
+
+Therefore, only 12% of the methods in the gantproject are commented out, which made it very difficult to
+understand the project over these weeks.
+
+This information is more notable on Sheet 3, where I marked in yellow the average of lines with
+comment per method (0.36 lines of comment per method and 0.2 javadoc comments) which makes it obvious that many
+methods are not commented.
+
+I also pointed out, on Sheet 3, the orange color that shows the maximum number
+of lines in a class (1032), a possible code smell that was accentuated in phase 1 of the project (Large Class).
