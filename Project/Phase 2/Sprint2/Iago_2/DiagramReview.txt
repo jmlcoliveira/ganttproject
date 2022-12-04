@@ -1,0 +1,5 @@
+Review by Francisco Vasco
+
+The diagram seems to encapsulate all the functionalities associated with the project properties.
+The usage of the «extends» keyword between "Manages days off" and it's related use cases seems
+correct as it is not required to use any of these use cases, they are optional.
