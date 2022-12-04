@@ -13,3 +13,6 @@ The major changes in the source code done by us are:
 -The addition of the net.sourceforge.ganttproject.task.algorithm.ExtendUncompletedTaskAlgorithm
 -The package es and all in it
 -The call FeaturesSetup.askToRunExtendAlg() in net.sourceforge.ganttproject.gui.ProjectOpenStrategy
+
+## Video:
+https://www.youtube.com/watch?v=hf-4qV2MCao
