@@ -140,7 +140,7 @@ public class TaskImpl implements Task {
 
   private static final TimeDuration EMPTY_DURATION = new TimeDurationImpl(GPTimeUnitStack.DAY, 0);
 
-  protected TaskImpl(TaskManagerImpl taskManager, int taskID) {
+  public TaskImpl(TaskManagerImpl taskManager, int taskID) {
     myManager = taskManager;
     myID = taskID;
 
