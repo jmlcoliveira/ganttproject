@@ -1,0 +1,14 @@
+Reviewed by James
+
+When looking at the use case diagram I agree with what was done regarding
+the use case "Delete Resource" and "Send email".
+
+Regarding "Manage columns" I don't think it's even a use case, I think that the column is a way
+to access others use cases.
+
+My major critic is regarding the use case "Edit resource" which seems to be an empty
+use case where everything that makes the use case extends it. What I think is that probably
+it should've been inherited by the uses cases that extends it (since these use cases have one thing
+in common - they changes some properties of a resource).
+
+I also think that it's a bit weird to make the use case add resourse inherit from "Edit resource".
