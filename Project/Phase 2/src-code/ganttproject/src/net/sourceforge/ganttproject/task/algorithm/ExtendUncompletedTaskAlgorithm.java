@@ -48,7 +48,7 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
     private Date previousWorkingDayEnd; //this is the end of the next working day, at 0:00:00 of the day
     private  GanttProject project;
 
-    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, WeekendCalendarImpl weekendCalendar, SchedulerImpl scheduler, GanttProject project) {
+    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, WeekendCalendarImpl weekendCalendar, GanttProject project) {
         myGraph = graph;
 
         long currentTimeMillis = System.currentTimeMillis();
@@ -60,6 +60,15 @@ public class ExtendUncompletedTaskAlgorithm extends AlgorithmBase {
 
 
     }
+
+    public ExtendUncompletedTaskAlgorithm(DependencyGraph graph, GanttProject project) {
+        myGraph = graph;
+
+        this.project = project;
+
+
+    }
+
 
         /**
          *
